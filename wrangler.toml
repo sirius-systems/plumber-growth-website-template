@@ -1,0 +1,16 @@
+# Cloudflare Pages configuration for the Plumber Growth System website template.
+# The Next.js static export is written to `out/`; Cloudflare Pages serves those
+# assets and runs the serverless endpoints in `/functions` (docs/05, docs/08).
+#
+# Secrets (GHL token, Turnstile secret, etc.) are NOT set here — configure them
+# per client as encrypted environment variables in the Cloudflare Pages project
+# (docs/11 §25). This file only carries non-secret build/runtime settings.
+
+name = "plumber-growth-website-template"
+compatibility_date = "2025-01-01"
+pages_build_output_dir = "out"
+
+[vars]
+# Non-secret defaults only. Real values are set per environment in the dashboard.
+IDEMPOTENCY_NAMESPACE = "pgs-idempotency"
+RATE_LIMIT_NAMESPACE = "pgs-rate-limit"
