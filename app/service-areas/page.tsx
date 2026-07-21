@@ -3,6 +3,7 @@ import Link from "next/link";
 import { clientConfig } from "@/config/client";
 import { LOCATION_CONTENT } from "@/config/location-content";
 import { Breadcrumb } from "@/components/sections/Breadcrumb";
+import { CardMedia, LocationIcon } from "@/components/sections/CardMedia";
 import { CallToAction } from "@/components/sections/CallToAction";
 
 export const metadata: Metadata = {
@@ -56,23 +57,28 @@ export default function ServiceAreasPage() {
                   border: "1px solid var(--color-border)",
                   borderRadius: "var(--radius-md)",
                   boxShadow: "var(--shadow-sm)",
-                  padding: "var(--space-6)",
+                  overflow: "hidden",
                 }}
               >
-                <h2 style={{ marginTop: 0, fontSize: "var(--font-size-lg)" }}>
-                  {href ? (
-                    <Link href={href}>
-                      {area.name}, {area.state}
-                    </Link>
-                  ) : (
-                    `${area.name}, ${area.state}`
+                <CardMedia>
+                  <LocationIcon />
+                </CardMedia>
+                <div style={{ padding: "var(--space-6)" }}>
+                  <h2 style={{ marginTop: 0, fontSize: "var(--font-size-lg)" }}>
+                    {href ? (
+                      <Link href={href}>
+                        {area.name}, {area.state}
+                      </Link>
+                    ) : (
+                      `${area.name}, ${area.state}`
+                    )}
+                  </h2>
+                  {content && (
+                    <p style={{ color: "var(--color-text-muted)", marginBottom: 0 }}>
+                      {content.intro}
+                    </p>
                   )}
-                </h2>
-                {content && (
-                  <p style={{ color: "var(--color-text-muted)", marginBottom: 0 }}>
-                    {content.intro}
-                  </p>
-                )}
+                </div>
               </li>
             );
           })}

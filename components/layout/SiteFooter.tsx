@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { clientConfig } from "@/config/client";
 import { enabledServices } from "@/config/services";
 import { telHref, formatPhoneDisplay } from "@/lib/utilities/format";
@@ -13,9 +14,9 @@ const DAY_LABELS: { key: keyof typeof clientConfig.operations.businessHours; lab
   { key: "sunday", label: "Sun" },
 ];
 
-/** Site footer (docs/04 §5.4). Lists only enabled services and capabilities. */
+/** Site footer (docs/04 §5.4). Six-column main grid + centered legal/copyright. */
 export function SiteFooter() {
-  const { business, location, operations, credentials, serviceAreas } = clientConfig;
+  const { business, location, operations, credentials, serviceAreas, seo, branding } = clientConfig;
   const services = enabledServices();
   const year = 2026; // Build-stamped; avoids runtime Date in static export.
 
@@ -26,13 +27,13 @@ export function SiteFooter() {
     .filter(Boolean)
     .join(" · ");
 
-  const licenseText =
-    credentials.licenseNumber && credentials.licenseJurisdiction
-      ? `${credentials.licenseJurisdiction} #${credentials.licenseNumber}`
-      : null;
-
-  const headingStyle = { fontWeight: 700, marginTop: 0 };
+  const headingStyle = { fontWeight: 700, marginTop: 0 } as const;
   const listStyle = { listStyle: "none", padding: 0, margin: 0 } as const;
+
+  // Copyright line: only verified facts (docs/07 §32).
+  const copyrightParts = [`© ${year} ${business.legalName}. All rights reserved.`];
+  if (credentials.licenseNumber && credentials.insured) copyrightParts.push("Licensed & Insured");
+  if (seo.primaryMarket) copyrightParts.push(`Serving ${seo.primaryMarket} and Surrounding Areas`);
 
   return (
     <footer
@@ -42,23 +43,35 @@ export function SiteFooter() {
         marginTop: "var(--space-16)",
       }}
     >
-      <div
-        className="container section"
-        style={{
-          display: "grid",
-          gap: "var(--space-8)",
-          gridTemplateColumns: "repeat(auto-fit, minmax(13rem, 1fr))",
-        }}
-      >
-        {/* Business identity + contact */}
+      <div className="container section footer-grid">
+        {/* Col 1 — logo placeholder + identity */}
         <div>
-          <p style={{ fontWeight: 700, fontSize: "var(--font-size-lg)" }}>
-            {business.publicName}
-          </p>
+          {branding.logoSrc ? (
+            <Image
+              src={branding.logoSrc}
+              alt={branding.logoAlt}
+              width={140}
+              height={36}
+              style={{ height: 36, width: "auto" }}
+            />
+          ) : (
+            <span
+              role="img"
+              aria-label={`${business.publicName} logo`}
+              style={{
+                display: "block",
+                width: 140,
+                height: 36,
+                background: "var(--color-neutral-200)",
+                borderRadius: "var(--radius-sm)",
+              }}
+            />
+          )}
+          <p style={{ fontWeight: 700, margin: "var(--space-3) 0 0" }}>{business.publicName}</p>
           <address style={{ fontStyle: "normal", color: "var(--color-text-muted)" }}>
             {addressLine}
           </address>
-          <p style={{ margin: "var(--space-3) 0 0" }}>
+          <p style={{ margin: "var(--space-2) 0 0" }}>
             <a href={telHref(business.phone)}>{formatPhoneDisplay(business.phone)}</a>
           </p>
           <p style={{ margin: "var(--space-2) 0 0" }}>
@@ -71,7 +84,7 @@ export function SiteFooter() {
           )}
         </div>
 
-        {/* Hours */}
+        {/* Col 2 — Hours */}
         <div>
           <p style={headingStyle}>Hours</p>
           <ul style={listStyle}>
@@ -81,7 +94,7 @@ export function SiteFooter() {
                 style={{
                   display: "flex",
                   justifyContent: "space-between",
-                  gap: "var(--space-4)",
+                  gap: "var(--space-3)",
                   color: "var(--color-text-muted)",
                   fontSize: "0.875rem",
                 }}
@@ -93,9 +106,9 @@ export function SiteFooter() {
           </ul>
         </div>
 
-        {/* Services */}
+        {/* Col 3 — Services */}
         <nav aria-label="Services">
-          <p style={headingStyle}>Plumbing Services</p>
+          <p style={headingStyle}>Services</p>
           <ul style={listStyle}>
             {services.map((s) => (
               <li key={s.slug}>
@@ -103,12 +116,12 @@ export function SiteFooter() {
               </li>
             ))}
             <li style={{ marginTop: "var(--space-2)" }}>
-              <Link href="/services/">View all services</Link>
+              <Link href="/services/">View all</Link>
             </li>
           </ul>
         </nav>
 
-        {/* Service areas */}
+        {/* Col 4 — Service areas */}
         <nav aria-label="Service areas">
           <p style={headingStyle}>Service Areas</p>
           <ul style={listStyle}>
@@ -122,12 +135,12 @@ export function SiteFooter() {
               </li>
             ))}
             <li style={{ marginTop: "var(--space-2)" }}>
-              <Link href="/service-areas/">All service areas</Link>
+              <Link href="/service-areas/">All areas</Link>
             </li>
           </ul>
         </nav>
 
-        {/* Company */}
+        {/* Col 5 — Company */}
         <nav aria-label="Company">
           <p style={headingStyle}>Company</p>
           <ul style={listStyle}>
@@ -151,7 +164,7 @@ export function SiteFooter() {
           </ul>
         </nav>
 
-        {/* Customer actions */}
+        {/* Col 6 — Get started */}
         <nav aria-label="Customer actions">
           <p style={headingStyle}>Get Started</p>
           <ul style={listStyle}>
@@ -171,35 +184,39 @@ export function SiteFooter() {
             </li>
           </ul>
         </nav>
-
-        {/* Legal */}
-        <nav aria-label="Legal">
-          <p style={headingStyle}>Legal</p>
-          <ul style={listStyle}>
-            <li>
-              <Link href="/privacy-policy/">Privacy Policy</Link>
-            </li>
-            <li>
-              <Link href="/terms/">Terms &amp; Conditions</Link>
-            </li>
-          </ul>
-        </nav>
       </div>
 
+      {/* Full-width line 1 — legal (centered) */}
       <div
         className="container"
         style={{
-          paddingBottom: "var(--space-8)",
+          textAlign: "center",
+          paddingBottom: "var(--space-4)",
           borderTop: "1px solid var(--color-border)",
           paddingTop: "var(--space-6)",
+        }}
+      >
+        <Link href="/privacy-policy/">Privacy Policy</Link>
+        <span style={{ color: "var(--color-text-muted)" }}> · </span>
+        <Link href="/terms/">Terms &amp; Conditions</Link>
+      </div>
+
+      {/* Full-width line 2 — copyright + verified statements (centered) */}
+      <div
+        className="container"
+        style={{
+          textAlign: "center",
+          paddingBottom: "var(--space-8)",
           color: "var(--color-text-muted)",
           fontSize: "0.875rem",
         }}
       >
-        <p style={{ margin: 0 }}>
-          © {year} {business.legalName}. All rights reserved.
-        </p>
-        {licenseText && <p style={{ margin: "var(--space-2) 0 0" }}>{licenseText}</p>}
+        <p style={{ margin: 0 }}>{copyrightParts.join(" · ")}</p>
+        {credentials.licenseNumber && credentials.licenseJurisdiction && (
+          <p style={{ margin: "var(--space-2) 0 0" }}>
+            {credentials.licenseJurisdiction} #{credentials.licenseNumber}
+          </p>
+        )}
         <p style={{ margin: "var(--space-2) 0 0" }}>
           Submitting a form does not guarantee service or immediate response.
         </p>

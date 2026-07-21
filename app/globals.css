@@ -276,6 +276,23 @@ body {
   }
 }
 
+/* Footer main grid: 6 columns desktop, 3 tablet, 1 mobile (docs/04 §5.4). */
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-8);
+}
+@media (min-width: 48rem) {
+  .footer-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (min-width: 64rem) {
+  .footer-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
 /* FAQ disclosure (docs/06 §35) — accessible native details/summary. */
 .faq-item {
   border: 1px solid var(--color-border);
