@@ -44,7 +44,7 @@ export default function RequestServicePage() {
 
       {/* useSearchParams (service preselection) requires a Suspense boundary under export. */}
       <Suspense fallback={<p>Loading form…</p>}>
-        <GeneralQuoteForm />
+        <GeneralQuoteForm paired />
       </Suspense>
 
       <p style={{ fontSize: "0.875rem", color: "var(--color-text-muted)" }}>

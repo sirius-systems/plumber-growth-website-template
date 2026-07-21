@@ -13,11 +13,30 @@ import { Field, ErrorSummary, Honeypot } from "@/components/forms/Field";
  * the other four forms: native controls, shared submit hook, accessible errors,
  * honeypot, duplicate-submit protection, service preselection (docs/08 §9.7).
  */
-export function GeneralQuoteForm() {
+/**
+ * @param paired         When true, First/Last name and City/State/ZIP render as
+ *                       multi-column rows (used in page heroes and on
+ *                       /request-service/). Default false keeps the single-column
+ *                       layout used inside the homepage hero and CTAWithForm.
+ * @param defaultService Optional service slug to preselect (e.g. on a service
+ *                       page hero). A `?service=` query param takes precedence.
+ */
+export function GeneralQuoteForm({
+  paired = false,
+  defaultService,
+}: {
+  paired?: boolean;
+  defaultService?: string;
+} = {}) {
   const searchParams = useSearchParams();
   const services = useMemo(() => enabledServices(), []);
   const preselected = searchParams.get("service") ?? "";
-  const validPreselect = services.some((s) => s.slug === preselected) ? preselected : "";
+  const urlPreselect = services.some((s) => s.slug === preselected) ? preselected : "";
+  const propPreselect =
+    defaultService && services.some((s) => s.slug === defaultService) ? defaultService : "";
+  const validPreselect = urlPreselect || propPreselect;
+  const describe = (field: string) =>
+    paired && fieldErrors[field] ? `error-${field}` : undefined;
 
   const { status, message, fieldErrors, summaryRef, submit } = useFormSubmit("general-quote");
 
@@ -56,12 +75,26 @@ export function GeneralQuoteForm() {
       <ErrorSummary summaryRef={summaryRef} message={message} fieldErrors={fieldErrors} />
       <Honeypot />
 
-      <Field id="firstName" label="First name" required error={fieldErrors.firstName}>
-        <input id="field-firstName" name="firstName" required autoComplete="given-name" />
-      </Field>
-      <Field id="lastName" label="Last name" required error={fieldErrors.lastName}>
-        <input id="field-lastName" name="lastName" required autoComplete="family-name" />
-      </Field>
+      <div className={paired ? "form-row-2col" : "form-row-flat"}>
+        <Field id="firstName" label="First name" required error={fieldErrors.firstName}>
+          <input
+            id="field-firstName"
+            name="firstName"
+            required
+            autoComplete="given-name"
+            aria-describedby={describe("firstName")}
+          />
+        </Field>
+        <Field id="lastName" label="Last name" required error={fieldErrors.lastName}>
+          <input
+            id="field-lastName"
+            name="lastName"
+            required
+            autoComplete="family-name"
+            aria-describedby={describe("lastName")}
+          />
+        </Field>
+      </div>
       <Field id="phone" label="Mobile phone" required error={fieldErrors.phone}>
         <input id="field-phone" name="phone" type="tel" inputMode="tel" required autoComplete="tel" />
       </Field>
@@ -97,15 +130,37 @@ export function GeneralQuoteForm() {
       <Field id="streetAddress" label="Service street address" required error={fieldErrors.streetAddress}>
         <input id="field-streetAddress" name="streetAddress" required autoComplete="address-line1" />
       </Field>
-      <Field id="city" label="City" required error={fieldErrors.city}>
-        <input id="field-city" name="city" required autoComplete="address-level2" />
-      </Field>
-      <Field id="state" label="State" required error={fieldErrors.state}>
-        <input id="field-state" name="state" required maxLength={2} autoComplete="address-level1" />
-      </Field>
-      <Field id="postalCode" label="ZIP code" required error={fieldErrors.postalCode}>
-        <input id="field-postalCode" name="postalCode" required inputMode="numeric" autoComplete="postal-code" />
-      </Field>
+      <div className={paired ? "form-row-3col" : "form-row-flat"}>
+        <Field id="city" label="City" required error={fieldErrors.city}>
+          <input
+            id="field-city"
+            name="city"
+            required
+            autoComplete="address-level2"
+            aria-describedby={describe("city")}
+          />
+        </Field>
+        <Field id="state" label="State" required error={fieldErrors.state}>
+          <input
+            id="field-state"
+            name="state"
+            required
+            maxLength={2}
+            autoComplete="address-level1"
+            aria-describedby={describe("state")}
+          />
+        </Field>
+        <Field id="postalCode" label="ZIP code" required error={fieldErrors.postalCode}>
+          <input
+            id="field-postalCode"
+            name="postalCode"
+            required
+            inputMode="numeric"
+            autoComplete="postal-code"
+            aria-describedby={describe("postalCode")}
+          />
+        </Field>
+      </div>
 
       <fieldset>
         <legend>Preferred contact method</legend>

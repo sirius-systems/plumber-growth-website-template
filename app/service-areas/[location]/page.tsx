@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import { clientConfig } from "@/config/client";
 import { findEnabledService } from "@/config/services";
 import { LOCATION_CONTENT } from "@/config/location-content";
+import { telHref, formatPhoneDisplay } from "@/lib/utilities/format";
 import { Breadcrumb } from "@/components/sections/Breadcrumb";
+import { GeneralQuoteForm } from "@/components/forms/GeneralQuoteForm";
 import { CallToAction } from "@/components/sections/CallToAction";
 
 interface Params {
@@ -45,6 +48,7 @@ export default async function LocationPage({ params }: { params: Promise<Params>
   const area = findArea(location);
   if (!area) notFound();
 
+  const { business } = clientConfig;
   const content = LOCATION_CONTENT[location];
   const featured = (content?.featuredServices ?? [])
     .map((slug) => findEnabledService(slug))
@@ -52,23 +56,49 @@ export default async function LocationPage({ params }: { params: Promise<Params>
 
   return (
     <>
-      <section className="container section">
-        <Breadcrumb
-          items={[
-            { label: "Home", href: "/" },
-            { label: "Service Areas", href: "/service-areas/" },
-            { label: area.name },
-          ]}
-        />
-        <h1 style={{ fontSize: "var(--font-size-3xl)" }}>
-          Plumber in {area.name}, {area.state}
-        </h1>
-        {content && (
-          <p style={{ maxWidth: "var(--measure-reading)", fontSize: "var(--font-size-lg)" }}>
-            {content.intro}
-          </p>
-        )}
+      {/* Two-column hero: content left, request form right (stacks on mobile). */}
+      <section className="section">
+        <div className="container container--wide">
+          <div className="hero-grid">
+            <div>
+              <Breadcrumb
+                items={[
+                  { label: "Home", href: "/" },
+                  { label: "Service Areas", href: "/service-areas/" },
+                  { label: area.name },
+                ]}
+              />
+              <h1 style={{ fontSize: "var(--font-size-3xl)" }}>
+                Plumber in {area.name}, {area.state}
+              </h1>
+              {content && (
+                <p style={{ maxWidth: "var(--measure-reading)", fontSize: "var(--font-size-lg)" }}>
+                  {content.intro}
+                </p>
+              )}
+              <div style={{ display: "flex", gap: "var(--space-3)", flexWrap: "wrap" }}>
+                <a className="btn btn--primary" href={telHref(business.phone)}>
+                  Call {formatPhoneDisplay(business.phone)}
+                </a>
+              </div>
+            </div>
 
+            <div className="hero-form-card">
+              <h2 style={{ marginTop: 0, fontSize: "var(--font-size-lg)" }}>Request service</h2>
+              <p style={{ color: "var(--color-text-muted)", marginTop: 0 }}>
+                Serving {area.name} and the surrounding valley. Submitting is a request, not a
+                confirmed appointment until we contact you.
+              </p>
+              <Suspense fallback={<p>Loading form…</p>}>
+                <GeneralQuoteForm paired />
+              </Suspense>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Location detail below the hero. */}
+      <section className="container section">
         {content?.body.map((para) => (
           <p key={para.slice(0, 24)} style={{ maxWidth: "var(--measure-reading)" }}>
             {para}
