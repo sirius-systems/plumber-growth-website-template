@@ -4,7 +4,6 @@ import "./globals.css";
 import { clientConfig } from "@/config/client";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { SiteFooter } from "@/components/layout/SiteFooter";
-import { DemoBanner } from "@/components/layout/DemoBanner";
 import { MobileActionBar } from "@/components/layout/MobileActionBar";
 
 export const metadata: Metadata = {
@@ -42,7 +41,8 @@ export default function RootLayout({
         <a className="skip-link" href="#main">
           Skip to content
         </a>
-        <DemoBanner />
+        {/* The demonstration banner is injected at the edge by
+            functions/_middleware.ts when DEMO_MODE=true (runtime, no rebuild). */}
         <SiteHeader />
         <main id="main">{children}</main>
         <SiteFooter />
