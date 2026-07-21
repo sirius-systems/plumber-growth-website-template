@@ -149,6 +149,8 @@ export interface ClientConfig {
   commercialStats?: CommercialStats;
   /** Commercial hero subheading override. */
   commercialSubheading?: string;
+  /** Emit FAQPage JSON-LD only when confirmed eligible per search guidelines. */
+  faqSchemaEligible?: boolean;
 }
 
 const day = (label: string, open = true): BusinessHoursDay => ({ label, open });
@@ -274,6 +276,9 @@ export const clientConfig: ClientConfig = {
   commercialStats: {},
   commercialSubheading:
     "Reliable plumbing for restaurants, offices, apartments, and commercial facilities across Las Vegas, Henderson, and Clark County.",
+  // Demo: fictional FAQ content is not schema-eligible. Set true only when a live
+  // client's FAQ content meets current FAQPage eligibility (docs/07 §22).
+  faqSchemaEligible: false,
 };
 
 /** Values that must not remain as the CONFIGURATION_REQUIRED sentinel at launch. */

@@ -98,6 +98,11 @@
 
 html {
   -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+/* Anchored sections clear the content top when jumped to. */
+[id] {
+  scroll-margin-top: 2rem;
 }
 
 body {
