@@ -1,22 +1,29 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { ThankYouMessage } from "@/components/ThankYouMessage";
+import { clientConfig } from "@/config/client";
+import { ConfirmationContent } from "@/components/thank-you/ConfirmationContent";
 
-/** Confirmation page (docs/04 §4.3). noindex; never exposes submitted data in URL. */
+/** Confirmation page (docs/04 §23). noindex; never exposes submitted data. */
 export const metadata: Metadata = {
-  title: "Thank You",
+  // `absolute` bypasses the root layout's "%s | publicName" template.
+  title: { absolute: `Request Received | ${clientConfig.business.publicName}` },
   robots: { index: false, follow: true },
-  alternates: { canonical: "/thank-you/" },
 };
+
+/** Minimal skeleton to reserve space while the ?type param resolves. */
+function ThankYouSkeleton() {
+  return (
+    <div style={{ maxWidth: "640px", margin: "0 auto", padding: "3rem 1.25rem", minHeight: "40vh" }} aria-hidden="true" />
+  );
+}
 
 export default function ThankYouPage() {
   return (
-    <section className="container section" style={{ maxWidth: "48rem" }}>
-      <h1>Thank you</h1>
-      {/* useSearchParams (?from) requires a Suspense boundary under static export. */}
-      <Suspense fallback={<p>Loading…</p>}>
-        <ThankYouMessage />
+    <div style={{ background: "var(--color-background-alt)", minHeight: "100vh" }}>
+      {/* useSearchParams requires a Suspense boundary under static export. */}
+      <Suspense fallback={<ThankYouSkeleton />}>
+        <ConfirmationContent />
       </Suspense>
-    </section>
+    </div>
   );
 }
