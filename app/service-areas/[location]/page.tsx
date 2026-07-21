@@ -8,6 +8,7 @@ import { LOCATION_CONTENT } from "@/config/location-content";
 import { telHref, formatPhoneDisplay } from "@/lib/utilities/format";
 import { Breadcrumb } from "@/components/sections/Breadcrumb";
 import { GeneralQuoteForm } from "@/components/forms/GeneralQuoteForm";
+import { Hero } from "@/components/sections/Hero";
 import { TrustBar } from "@/components/sections/TrustBar";
 import { CallToAction } from "@/components/sections/CallToAction";
 
@@ -58,10 +59,9 @@ export default async function LocationPage({ params }: { params: Promise<Params>
   return (
     <>
       {/* Two-column hero: content left, request form right (stacks on mobile). */}
-      <section className="section">
-        <div className="container container--wide">
-          <div className="hero-grid">
-            <div>
+      <Hero contentClassName="container container--wide">
+        <div className="hero-grid">
+          <div className="hero-copy">
               <Breadcrumb
                 items={[
                   { label: "Home", href: "/" },
@@ -95,8 +95,7 @@ export default async function LocationPage({ params }: { params: Promise<Params>
               </Suspense>
             </div>
           </div>
-        </div>
-      </section>
+      </Hero>
 
       <TrustBar />
 

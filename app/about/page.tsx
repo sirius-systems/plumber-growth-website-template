@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { clientConfig } from "@/config/client";
+import { telHref, formatPhoneDisplay } from "@/lib/utilities/format";
 import { Breadcrumb } from "@/components/sections/Breadcrumb";
+import { Hero } from "@/components/sections/Hero";
 import { ReviewsSection } from "@/components/sections/ReviewsSection";
 import { CallToAction } from "@/components/sections/CallToAction";
 
@@ -24,16 +26,24 @@ export default function AboutPage() {
 
   return (
     <>
+      <Hero contentClassName="container hero-compact">
+        <div className="hero-copy">
+          <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "About" }]} />
+          <h1>About {business.publicName}</h1>
+          <p style={{ fontSize: "18px" }}>
+            {OWNER} founded {business.publicName} in 2013 on a simple idea: treat people honestly
+            and do reliable work. {credentials.yearsInBusiness} years later, we&rsquo;re still
+            serving the Las Vegas valley the same way.
+          </p>
+          <div style={{ display: "flex", gap: "var(--space-3)", flexWrap: "wrap" }}>
+            <a className="btn btn--primary" href={telHref(business.phone)}>
+              Call {formatPhoneDisplay(business.phone)}
+            </a>
+          </div>
+        </div>
+      </Hero>
+
       <section className="container section" style={{ maxWidth: "52rem" }}>
-        <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "About" }]} />
-        <h1>About {business.publicName}</h1>
-
-        <p style={{ fontSize: "var(--font-size-lg)" }}>
-          {OWNER} founded {business.publicName} in 2013 on a simple idea: treat people honestly and
-          do reliable work. {credentials.yearsInBusiness} years later, we&rsquo;re still serving the
-          Las Vegas valley the same way.
-        </p>
-
         {/* Team photo placeholder, no real person's image is used on the demo. */}
         <div
           role="img"

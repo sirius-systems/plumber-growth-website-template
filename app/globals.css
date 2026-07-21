@@ -70,6 +70,7 @@
   /* Radius + shadow (docs/06 §15–§16) */
   --radius-sm: 0.375rem;
   --radius-md: 0.625rem;
+  --radius-lg: 1rem;
   --shadow-sm: 0 1px 2px rgb(15 23 42 / 0.08);
   --shadow-md: 0 8px 24px rgb(15 23 42 / 0.1);
 }
@@ -337,6 +338,50 @@ body {
   max-width: var(--container-xl);
 }
 
+/* Hero with full-bleed background image + dark overlay (docs/06 §26). Content
+   sits above the overlay at z-index 1. */
+.hero {
+  position: relative;
+  isolation: isolate;
+}
+.hero-media,
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.hero-overlay {
+  background: linear-gradient(90deg, rgba(16, 43, 73, 0.82), rgba(16, 43, 73, 0.65));
+}
+.hero-content {
+  position: relative;
+  z-index: 1;
+}
+/* Compact single-column interior hero. */
+.hero-compact {
+  max-width: 720px;
+}
+/* White copy for text on the overlay. Uses inheritance (not broad descendant
+   selectors) so nested cards/notices with their own colors are unaffected. */
+.hero-copy {
+  color: #fff;
+}
+.hero-copy h1,
+.hero-copy h2,
+.hero-copy h3 {
+  color: #fff;
+}
+.hero-copy a:not(.btn) {
+  color: #fff;
+  text-decoration: underline;
+}
+/* Outline button on the dark hero becomes white so it stays visible. */
+.hero-copy .btn--secondary {
+  border-color: #fff;
+  color: #fff;
+  background: transparent;
+}
+
 /* Two-column hero: content left (~55%), form right (~45%). Stacks below 48rem
    to match the homepage hero's mobile behavior. */
 .hero-grid {
@@ -377,13 +422,12 @@ body {
   }
 }
 
-/* Card that holds the request form inside a hero. */
+/* Elevated white card that holds the request form inside a hero (docs/06 §26). */
 .hero-form-card {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
+  background: #fff;
+  border-radius: var(--radius-lg);
   box-shadow: var(--shadow-md);
-  padding: var(--space-6);
+  padding: 1.5rem;
 }
 
 /* Multi-column form field rows. Collapse to a single column below 48rem. The

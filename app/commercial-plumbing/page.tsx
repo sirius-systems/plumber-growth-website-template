@@ -1,7 +1,12 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import { clientConfig } from "@/config/client";
+import { telHref, formatPhoneDisplay } from "@/lib/utilities/format";
 import { Breadcrumb } from "@/components/sections/Breadcrumb";
+import { Hero } from "@/components/sections/Hero";
+import { TrustBar } from "@/components/sections/TrustBar";
+import { GeneralQuoteForm } from "@/components/forms/GeneralQuoteForm";
 import { ServiceGrid } from "@/components/sections/ServiceGrid";
 import { ServiceAreaList } from "@/components/sections/ServiceAreaList";
 import { FAQAccordion, type FAQItem } from "@/components/sections/FAQAccordion";
@@ -44,20 +49,44 @@ export default function CommercialPage() {
   // Rendered only when the client offers commercial plumbing (docs/06 §38).
   if (!clientConfig.operations.commercialPlumbing) notFound();
 
+  const { business } = clientConfig;
+
   return (
     <>
-      <section className="container section">
-        <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Commercial Plumbing" }]} />
-        <h1>
-          Commercial Plumbing Services in {clientConfig.seo.primaryMarket}
-        </h1>
-        <p style={{ maxWidth: "var(--measure-reading)", fontSize: "var(--font-size-lg)" }}>
-          {clientConfig.business.publicName} keeps Las Vegas businesses running with dependable
-          commercial plumbing, scheduled around your operations and backed by licensed, insured
-          work.
-        </p>
+      <Hero contentClassName="container container--wide">
+        <div className="hero-grid">
+          <div className="hero-copy">
+            <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Commercial Plumbing" }]} />
+            <h1 className="heading-accent">
+              Commercial Plumbing Services in {clientConfig.seo.primaryMarket}
+            </h1>
+            <p style={{ maxWidth: "var(--measure-reading)", fontSize: "18px" }}>
+              {business.publicName} keeps Las Vegas businesses running with dependable commercial
+              plumbing, scheduled around your operations and backed by licensed, insured work.
+            </p>
+            <div style={{ display: "flex", gap: "var(--space-3)", flexWrap: "wrap" }}>
+              <a className="btn btn--primary" href={telHref(business.phone)}>
+                Call {formatPhoneDisplay(business.phone)}
+              </a>
+            </div>
+          </div>
 
-        <h2 style={{ fontSize: "var(--font-size-2xl)" }}>Facilities we serve</h2>
+          <div className="hero-form-card">
+            <h2 style={{ marginTop: 0, fontSize: "var(--font-size-lg)" }}>Request service</h2>
+            <p style={{ color: "var(--color-text-muted)", marginTop: 0 }}>
+              Submitting is a request, not a confirmed appointment until we contact you.
+            </p>
+            <Suspense fallback={<p>Loading form…</p>}>
+              <GeneralQuoteForm paired />
+            </Suspense>
+          </div>
+        </div>
+      </Hero>
+
+      <TrustBar />
+
+      <section className="container section">
+        <h2 style={{ fontSize: "var(--font-size-2xl)", marginTop: 0 }}>Facilities we serve</h2>
         <ul style={{ color: "var(--color-text-muted)", maxWidth: "var(--measure-reading)" }}>
           {FACILITY_TYPES.map((f) => (
             <li key={f}>{f}</li>

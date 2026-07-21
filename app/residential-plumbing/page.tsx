@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { clientConfig } from "@/config/client";
+import { telHref, formatPhoneDisplay } from "@/lib/utilities/format";
 import { Breadcrumb } from "@/components/sections/Breadcrumb";
+import { Hero } from "@/components/sections/Hero";
+import { TrustBar } from "@/components/sections/TrustBar";
+import { GeneralQuoteForm } from "@/components/forms/GeneralQuoteForm";
 import { ServiceGrid } from "@/components/sections/ServiceGrid";
 import { ServiceAreaList } from "@/components/sections/ServiceAreaList";
 import { FAQAccordion, type FAQItem } from "@/components/sections/FAQAccordion";
@@ -32,20 +37,45 @@ const RESIDENTIAL_FAQS: FAQItem[] = [
 ];
 
 export default function ResidentialPage() {
+  const { business } = clientConfig;
+
   return (
     <>
-      <section className="container section">
-        <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Residential Plumbing" }]} />
-        <h1>
-          Residential Plumbing Services in {clientConfig.seo.primaryMarket}
-        </h1>
-        <p style={{ maxWidth: "var(--measure-reading)", fontSize: "var(--font-size-lg)" }}>
-          {clientConfig.business.publicName} helps homeowners across the Las Vegas valley with
-          everyday repairs and urgent problems alike, honest pricing, licensed work, and clear
-          explanations before we start.
-        </p>
+      <Hero contentClassName="container container--wide">
+        <div className="hero-grid">
+          <div className="hero-copy">
+            <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Residential Plumbing" }]} />
+            <h1 className="heading-accent">
+              Residential Plumbing Services in {clientConfig.seo.primaryMarket}
+            </h1>
+            <p style={{ maxWidth: "var(--measure-reading)", fontSize: "18px" }}>
+              {business.publicName} helps homeowners across the Las Vegas valley with everyday
+              repairs and urgent problems alike, with honest pricing, licensed work, and clear
+              explanations before we start.
+            </p>
+            <div style={{ display: "flex", gap: "var(--space-3)", flexWrap: "wrap" }}>
+              <a className="btn btn--primary" href={telHref(business.phone)}>
+                Call {formatPhoneDisplay(business.phone)}
+              </a>
+            </div>
+          </div>
 
-        <h2 style={{ fontSize: "var(--font-size-2xl)" }}>
+          <div className="hero-form-card">
+            <h2 style={{ marginTop: 0, fontSize: "var(--font-size-lg)" }}>Request service</h2>
+            <p style={{ color: "var(--color-text-muted)", marginTop: 0 }}>
+              Submitting is a request, not a confirmed appointment until we contact you.
+            </p>
+            <Suspense fallback={<p>Loading form…</p>}>
+              <GeneralQuoteForm paired />
+            </Suspense>
+          </div>
+        </div>
+      </Hero>
+
+      <TrustBar />
+
+      <section className="container section">
+        <h2 style={{ fontSize: "var(--font-size-2xl)", marginTop: 0 }}>
           Common problems for Las Vegas homeowners
         </h2>
         <ul style={{ color: "var(--color-text-muted)", maxWidth: "var(--measure-reading)" }}>

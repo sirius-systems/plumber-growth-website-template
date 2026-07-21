@@ -4,6 +4,7 @@ import { ContactForm } from "@/components/forms/ContactForm";
 import { clientConfig } from "@/config/client";
 import { telHref, formatPhoneDisplay } from "@/lib/utilities/format";
 import { Breadcrumb } from "@/components/sections/Breadcrumb";
+import { Hero } from "@/components/sections/Hero";
 
 export const metadata: Metadata = {
   title: "Contact Us",
@@ -32,10 +33,24 @@ export default function ContactPage() {
     .join(", ");
 
   return (
-    <section className="container section">
-      <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Contact" }]} />
-      <h1>Contact {business.publicName}</h1>
+    <>
+      <Hero contentClassName="container hero-compact">
+        <div className="hero-copy">
+          <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Contact" }]} />
+          <h1>Contact {business.publicName}</h1>
+          <p style={{ fontSize: "18px" }}>
+            Reach us by phone, email, or the form below. 24/7 emergency service is available across
+            the Las Vegas valley.
+          </p>
+          <div style={{ display: "flex", gap: "var(--space-3)", flexWrap: "wrap" }}>
+            <a className="btn btn--primary" href={telHref(business.phone)}>
+              Call {formatPhoneDisplay(business.phone)}
+            </a>
+          </div>
+        </div>
+      </Hero>
 
+      <section className="container section">
       <div
         style={{
           display: "grid",
@@ -93,6 +108,7 @@ export default function ContactPage() {
           </p>
         </div>
       </div>
-    </section>
+      </section>
+    </>
   );
 }

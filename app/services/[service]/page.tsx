@@ -7,6 +7,7 @@ import { enabledServices, findEnabledService, SERVICES } from "@/config/services
 import { SERVICE_CONTENT } from "@/config/service-content";
 import { telHref, formatPhoneDisplay } from "@/lib/utilities/format";
 import { GeneralQuoteForm } from "@/components/forms/GeneralQuoteForm";
+import { Hero } from "@/components/sections/Hero";
 import { TrustBar } from "@/components/sections/TrustBar";
 import { WhyChooseUs } from "@/components/sections/WhyChooseUs";
 import { ProcessSteps } from "@/components/sections/ProcessSteps";
@@ -62,10 +63,9 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
   return (
     <>
       {/* Two-column hero: content left, request form right (stacks on mobile). */}
-      <section className="section">
-        <div className="container container--wide">
-          <div className="hero-grid">
-            <div>
+      <Hero contentClassName="container container--wide">
+        <div className="hero-grid">
+          <div className="hero-copy">
               <nav aria-label="Breadcrumb" style={{ fontSize: "0.875rem" }}>
                 <Link href="/">Home</Link> {" › "}
                 <Link href="/services/">Services</Link> {" › "}
@@ -109,8 +109,7 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
               </Suspense>
             </div>
           </div>
-        </div>
-      </section>
+      </Hero>
 
       <TrustBar />
 
