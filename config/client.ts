@@ -37,6 +37,8 @@ export interface ServiceAreaReference {
   /** When true a dedicated /service-areas/{slug}/ page exists (upgrade — docs/04 §9). */
   hasDetailPage: boolean;
   slug?: string;
+  /** Card image path; null/undefined falls back to the shared placeholder. */
+  image?: string | null;
 }
 
 export interface BrandConfig {

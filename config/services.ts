@@ -36,6 +36,8 @@ export interface PlumbingService {
   indexable: boolean;
   /** Related service slugs for internal linking (docs/04 §8.2). */
   relatedServices: ServiceSlug[];
+  /** Card image path; null/undefined falls back to the shared placeholder. */
+  image?: string | null;
 }
 
 /**

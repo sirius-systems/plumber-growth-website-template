@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 400" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Service area">
+  <defs>
+    <linearGradient id="lc" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e6f2f1"/>
+      <stop offset="1" stop-color="#cfe6e2"/>
+    </linearGradient>
+  </defs>
+  <rect width="700" height="400" fill="url(#lc)"/>
+  <!-- street grid -->
+  <g stroke="#2b7a72" stroke-width="6" opacity="0.22">
+    <path d="M0 120 H700 M0 210 H700 M0 300 H700"/>
+    <path d="M160 0 V400 M340 0 V400 M520 0 V400"/>
+  </g>
+  <g stroke="#2b7a72" stroke-width="10" opacity="0.35">
+    <path d="M0 250 C180 250 200 90 380 90 S560 250 700 250"/>
+  </g>
+  <!-- map pin -->
+  <g transform="translate(350 205)">
+    <path d="M0 -70 a58 58 0 0 1 58 58 c0 44 -58 96 -58 96 s-58 -52 -58 -96 a58 58 0 0 1 58 -58z" fill="#1B4F8A" opacity="0.9"/>
+    <circle cx="0" cy="-12" r="22" fill="#F5A623"/>
+  </g>
+</svg>

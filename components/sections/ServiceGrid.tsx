@@ -1,6 +1,5 @@
-import Link from "next/link";
 import { enabledServices, type PlumbingService } from "@/config/services";
-import { CardMedia, ServiceIcon } from "@/components/sections/CardMedia";
+import { ServiceCard } from "@/components/sections/ServiceCard";
 
 interface ServiceGridProps {
   heading?: string;
@@ -49,27 +48,8 @@ export function ServiceGrid({
           }}
         >
           {services.map((s) => (
-            <li
-              key={s.slug}
-              style={{
-                background: "var(--color-surface)",
-                border: "1px solid var(--color-border)",
-                borderRadius: "var(--radius-md)",
-                boxShadow: "var(--shadow-sm)",
-                overflow: "hidden",
-              }}
-            >
-              <CardMedia>
-                <ServiceIcon slug={s.slug} />
-              </CardMedia>
-              <div style={{ padding: "var(--space-6)" }}>
-                <h3 style={{ marginTop: 0, fontSize: "var(--font-size-lg)" }}>
-                  <Link href={`/services/${s.slug}/`}>{s.name}</Link>
-                </h3>
-                <p style={{ color: "var(--color-text-muted)", marginBottom: 0 }}>
-                  {s.shortDescription}
-                </p>
-              </div>
+            <li key={s.slug} style={{ display: "flex" }}>
+              <ServiceCard service={s} />
             </li>
           ))}
         </ul>

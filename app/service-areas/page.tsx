@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { clientConfig } from "@/config/client";
-import { LOCATION_CONTENT } from "@/config/location-content";
 import { Breadcrumb } from "@/components/sections/Breadcrumb";
-import { CardMedia, LocationIcon } from "@/components/sections/CardMedia";
+import { LocationCard } from "@/components/sections/LocationCard";
 import { CallToAction } from "@/components/sections/CallToAction";
 
 export const metadata: Metadata = {
@@ -46,42 +44,11 @@ export default function ServiceAreasPage() {
             marginTop: "var(--space-8)",
           }}
         >
-          {areas.map((area) => {
-            const content = area.slug ? LOCATION_CONTENT[area.slug] : undefined;
-            const href = area.hasDetailPage && area.slug ? `/service-areas/${area.slug}/` : undefined;
-            return (
-              <li
-                key={area.name}
-                style={{
-                  background: "var(--color-surface)",
-                  border: "1px solid var(--color-border)",
-                  borderRadius: "var(--radius-md)",
-                  boxShadow: "var(--shadow-sm)",
-                  overflow: "hidden",
-                }}
-              >
-                <CardMedia>
-                  <LocationIcon />
-                </CardMedia>
-                <div style={{ padding: "var(--space-6)" }}>
-                  <h2 style={{ marginTop: 0, fontSize: "var(--font-size-lg)" }}>
-                    {href ? (
-                      <Link href={href}>
-                        {area.name}, {area.state}
-                      </Link>
-                    ) : (
-                      `${area.name}, ${area.state}`
-                    )}
-                  </h2>
-                  {content && (
-                    <p style={{ color: "var(--color-text-muted)", marginBottom: 0 }}>
-                      {content.intro}
-                    </p>
-                  )}
-                </div>
-              </li>
-            );
-          })}
+          {areas.map((area) => (
+            <li key={area.name} style={{ display: "flex" }}>
+              <LocationCard area={area} />
+            </li>
+          ))}
         </ul>
       </section>
 

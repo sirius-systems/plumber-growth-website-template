@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 400" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Plumbing service">
+  <defs>
+    <linearGradient id="sc" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#eaf1f8"/>
+      <stop offset="1" stop-color="#cfe0f0"/>
+    </linearGradient>
+  </defs>
+  <rect width="700" height="400" fill="url(#sc)"/>
+  <polygon points="0,300 700,150 700,260 0,360" fill="#ffffff" opacity="0.35"/>
+  <!-- pipe bend -->
+  <g stroke="#1B4F8A" stroke-width="30" fill="none" opacity="0.55" stroke-linecap="round">
+    <path d="M120 90 V210 a60 60 0 0 0 60 60 H430"/>
+  </g>
+  <g fill="#1B4F8A" opacity="0.55">
+    <rect x="96" y="70" width="48" height="26" rx="4"/>
+    <rect x="410" y="248" width="26" height="48" rx="4"/>
+  </g>
+  <!-- wrench -->
+  <g transform="translate(470 250) rotate(-38)" fill="#F5A623" opacity="0.85">
+    <path d="M0 0 a34 34 0 1 1 30 52 l70 70 -20 20 -70 -70 A34 34 0 0 1 0 0 z m10 16 a18 18 0 1 0 18 -2 l-8 12 -14 -4 -4 -14 8 -12z"/>
+  </g>
+</svg>

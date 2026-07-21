@@ -8,7 +8,7 @@ import { EmergencyCallout } from "@/components/sections/EmergencyCallout";
 import { WhyChooseUs } from "@/components/sections/WhyChooseUs";
 import { ProcessSteps } from "@/components/sections/ProcessSteps";
 import { ServicePathways } from "@/components/sections/ServicePathways";
-import { ServiceAreaList } from "@/components/sections/ServiceAreaList";
+import { LocationGrid } from "@/components/sections/LocationGrid";
 import { ReviewsSection } from "@/components/sections/ReviewsSection";
 import { FAQAccordion, type FAQItem } from "@/components/sections/FAQAccordion";
 
@@ -134,7 +134,7 @@ export default function HomePage() {
       <ServicePathways />
 
       {/* 9. Service-area summary */}
-      <ServiceAreaList
+      <LocationGrid
         altBackground
         intro="We provide plumbing service across Las Vegas and the surrounding communities."
       />
