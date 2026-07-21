@@ -101,7 +101,7 @@ export function ContactForm() {
       </fieldset>
 
       <p style={{ fontSize: "0.875rem", color: "var(--color-text-muted)" }}>
-        See our <a href="/privacy-policy/">Privacy Policy</a>.
+        By submitting you agree to our <a href="/privacy-policy/">Privacy Policy</a>.
       </p>
 
       <button className="btn btn--primary" type="submit" disabled={status === "submitting"}>

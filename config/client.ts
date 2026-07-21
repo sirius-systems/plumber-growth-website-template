@@ -151,6 +151,18 @@ export interface ClientConfig {
   commercialSubheading?: string;
   /** Emit FAQPage JSON-LD only when confirmed eligible per search guidelines. */
   faqSchemaEligible?: boolean;
+  legal?: LegalConfig;
+}
+
+export interface LegalConfig {
+  /** e.g. "July 1, 2025" — shown in the policy header. */
+  privacyPolicyEffectiveDate?: string;
+  /** Email for privacy requests; falls back to phone when unset. */
+  privacyContactEmail?: string;
+  /** Full state name for legal references, e.g. "Nevada". */
+  businessState?: string;
+  /** True after legal review; hides the review-required notice. */
+  reviewComplete?: boolean;
 }
 
 const day = (label: string, open = true): BusinessHoursDay => ({ label, open });
@@ -279,6 +291,14 @@ export const clientConfig: ClientConfig = {
   // Demo: fictional FAQ content is not schema-eligible. Set true only when a live
   // client's FAQ content meets current FAQPage eligibility (docs/07 §22).
   faqSchemaEligible: false,
+  legal: {
+    privacyPolicyEffectiveDate: "July 1, 2025",
+    // Populate when the client provides a verified privacy-request email.
+    privacyContactEmail: undefined,
+    businessState: "Nevada",
+    // Set true after qualified legal review; hides the on-page review notice.
+    reviewComplete: false,
+  },
 };
 
 /** Values that must not remain as the CONFIGURATION_REQUIRED sentinel at launch. */

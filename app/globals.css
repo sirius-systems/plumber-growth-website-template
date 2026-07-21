@@ -250,6 +250,45 @@ img {
   text-align: center;
 }
 
+/* Legal pages: two-column (sticky TOC + content), single column on mobile. */
+.legal-layout {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 3rem;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 64px 2rem;
+}
+.legal-toc {
+  position: sticky;
+  top: 80px;
+  align-self: flex-start;
+  max-height: calc(100vh - 100px);
+  overflow-y: auto;
+}
+@media (max-width: 48rem) {
+  .legal-layout {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  .legal-toc {
+    position: static;
+    max-height: none;
+  }
+}
+.legal-toc a {
+  display: block;
+  padding: 0.375rem 0 0.375rem 0.75rem;
+  font-size: 13px;
+  color: var(--color-text-muted);
+  text-decoration: none;
+  border-left: 2px solid transparent;
+}
+.legal-toc a:hover {
+  color: var(--color-primary-600);
+  border-left-color: var(--color-primary-100);
+}
+
 /* Rebuild FAQ accordion (docs/06 §35) with a rotating chevron. */
 .faq-q {
   border-bottom: 1px solid var(--color-border);
