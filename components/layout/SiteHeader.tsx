@@ -68,15 +68,6 @@ export function SiteHeader() {
               <Link href="/service-areas/">Service Areas</Link>
             </li>
             <li>
-              <Link href="/about/">About</Link>
-            </li>
-            <li>
-              <Link href="/reviews/">Reviews</Link>
-            </li>
-            <li>
-              <Link href="/faqs/">FAQs</Link>
-            </li>
-            <li>
               <Link href="/contact/">Contact</Link>
             </li>
           </ul>

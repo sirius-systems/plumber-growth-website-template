@@ -43,7 +43,7 @@ export function SiteFooter() {
         marginTop: "var(--space-16)",
       }}
     >
-      <div className="container section footer-grid">
+      <div className="container container--wide section footer-grid">
         {/* Col 1 — logo placeholder + identity */}
         <div>
           {branding.logoSrc ? (
