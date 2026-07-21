@@ -68,7 +68,7 @@ export default function FaqsPage() {
     <>
       <section className="container section">
         <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "FAQs" }]} />
-        <h1 style={{ fontSize: "var(--font-size-3xl)" }}>Plumbing FAQs</h1>
+        <h1>Plumbing FAQs</h1>
         <p style={{ maxWidth: "var(--measure-reading)", fontSize: "var(--font-size-lg)" }}>
           Answers to the questions we hear most from Las Vegas homeowners and businesses.
         </p>

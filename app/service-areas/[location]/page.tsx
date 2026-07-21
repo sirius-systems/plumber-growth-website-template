@@ -69,7 +69,7 @@ export default async function LocationPage({ params }: { params: Promise<Params>
                   { label: area.name },
                 ]}
               />
-              <h1 className="heading-accent" style={{ fontSize: "var(--font-size-3xl)" }}>
+              <h1 className="heading-accent">
                 Plumber in {area.name}, {area.state}
               </h1>
               {content && (

@@ -1,7 +1,17 @@
 import type { Metadata, Viewport } from "next";
 import type { CSSProperties } from "react";
+import { DM_Serif_Display } from "next/font/google";
 import "./globals.css";
 import { clientConfig } from "@/config/client";
+
+/** Display face for H1s only (docs/06 typography). Inter remains the body font. */
+const dmSerifDisplay = DM_Serif_Display({
+  weight: "400",
+  subsets: ["latin"],
+  display: "swap",
+  preload: true,
+  variable: "--font-dm-serif",
+});
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { MobileActionBar } from "@/components/layout/MobileActionBar";
@@ -36,7 +46,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" style={brandStyle}>
+    <html lang="en" className={dmSerifDisplay.variable} style={brandStyle}>
       <body>
         <a className="skip-link" href="#main">
           Skip to content

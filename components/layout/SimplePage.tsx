@@ -14,7 +14,7 @@ export function SimplePage({
 }) {
   return (
     <section className="container section" style={{ maxWidth: "48rem" }}>
-      <h1 style={{ fontSize: "var(--font-size-3xl)" }}>{title}</h1>
+      <h1>{title}</h1>
       {intro && <p style={{ fontSize: "var(--font-size-lg)" }}>{intro}</p>}
       {children}
     </section>

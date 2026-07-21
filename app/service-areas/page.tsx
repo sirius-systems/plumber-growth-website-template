@@ -21,7 +21,7 @@ export default function ServiceAreasPage() {
     <>
       <section className="container section">
         <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Service Areas" }]} />
-        <h1 style={{ fontSize: "var(--font-size-3xl)" }}>Plumbing Services in the Las Vegas Area</h1>
+        <h1>Plumbing Services in the Las Vegas Area</h1>
         <p style={{ maxWidth: "var(--measure-reading)", fontSize: "var(--font-size-lg)" }}>
           {clientConfig.business.publicName} serves communities across the Las Vegas valley. Choose
           your area to learn more, or call{" "}

@@ -72,7 +72,7 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
                 <span aria-current="page">{svc.name}</span>
               </nav>
 
-              <h1 className="heading-accent" style={{ fontSize: "var(--font-size-3xl)" }}>
+              <h1 className="heading-accent">
                 {svc.name} in {clientConfig.seo.primaryMarket}
               </h1>
               <p style={{ maxWidth: "var(--measure-reading)", fontSize: "var(--font-size-lg)" }}>

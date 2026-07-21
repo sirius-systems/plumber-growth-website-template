@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 export default function ClientOnboardingPage() {
   return (
     <section className="container section" style={{ maxWidth: "48rem" }}>
-      <h1 style={{ fontSize: "var(--font-size-3xl)" }}>
+      <h1>
         Plumber Growth System, Website Onboarding
       </h1>
       <p style={{ fontSize: "var(--font-size-lg)" }}>

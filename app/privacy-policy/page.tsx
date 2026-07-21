@@ -19,7 +19,7 @@ export default function PrivacyPolicyPage() {
 
   return (
     <section className="container section" style={{ maxWidth: "48rem" }}>
-      <h1 style={{ fontSize: "var(--font-size-3xl)" }}>Privacy Policy</h1>
+      <h1>Privacy Policy</h1>
 
       <div
         role="note"

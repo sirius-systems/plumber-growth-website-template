@@ -26,7 +26,7 @@ export default function AboutPage() {
     <>
       <section className="container section" style={{ maxWidth: "52rem" }}>
         <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "About" }]} />
-        <h1 style={{ fontSize: "var(--font-size-3xl)" }}>About {business.publicName}</h1>
+        <h1>About {business.publicName}</h1>
 
         <p style={{ fontSize: "var(--font-size-lg)" }}>
           {OWNER} founded {business.publicName} in 2013 on a simple idea: treat people honestly and

@@ -48,7 +48,7 @@ export default function CommercialPage() {
     <>
       <section className="container section">
         <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Commercial Plumbing" }]} />
-        <h1 style={{ fontSize: "var(--font-size-3xl)" }}>
+        <h1>
           Commercial Plumbing Services in {clientConfig.seo.primaryMarket}
         </h1>
         <p style={{ maxWidth: "var(--measure-reading)", fontSize: "var(--font-size-lg)" }}>

@@ -38,7 +38,7 @@ export default function ServicesHubPage() {
   return (
     <>
       <section className="container section">
-        <h1 style={{ fontSize: "var(--font-size-3xl)" }}>
+        <h1>
           Plumbing Services in {clientConfig.seo.primaryMarket}
         </h1>
         <p style={{ maxWidth: "var(--measure-reading)", fontSize: "var(--font-size-lg)" }}>

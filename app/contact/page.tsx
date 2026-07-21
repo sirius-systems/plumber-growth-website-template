@@ -34,7 +34,7 @@ export default function ContactPage() {
   return (
     <section className="container section">
       <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Contact" }]} />
-      <h1 style={{ fontSize: "var(--font-size-3xl)" }}>Contact {business.publicName}</h1>
+      <h1>Contact {business.publicName}</h1>
 
       <div
         style={{

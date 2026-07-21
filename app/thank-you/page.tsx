@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default function ThankYouPage() {
   return (
     <section className="container section" style={{ maxWidth: "48rem" }}>
-      <h1 style={{ fontSize: "var(--font-size-3xl)" }}>Thank you</h1>
+      <h1>Thank you</h1>
       {/* useSearchParams (?from) requires a Suspense boundary under static export. */}
       <Suspense fallback={<p>Loading…</p>}>
         <ThankYouMessage />

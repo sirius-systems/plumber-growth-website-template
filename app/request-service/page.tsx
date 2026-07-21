@@ -18,7 +18,7 @@ export default function RequestServicePage() {
 
   return (
     <section className="container section" style={{ maxWidth: "48rem" }}>
-      <h1 style={{ fontSize: "var(--font-size-3xl)" }}>Request Plumbing Service</h1>
+      <h1>Request Plumbing Service</h1>
       <p style={{ fontSize: "var(--font-size-lg)" }}>
         Tell us what&rsquo;s going on and how to reach you. Submitting this form is a request, 
         your appointment is not confirmed until {business.publicName} contacts you.

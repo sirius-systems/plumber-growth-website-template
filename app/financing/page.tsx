@@ -21,7 +21,7 @@ export default function FinancingPage() {
     <>
       <section className="container section" style={{ maxWidth: "48rem" }}>
         <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Financing" }]} />
-        <h1 style={{ fontSize: "var(--font-size-3xl)" }}>Plumbing Financing Options</h1>
+        <h1>Plumbing Financing Options</h1>
 
         <p style={{ fontSize: "var(--font-size-lg)" }}>
           Financing options are available for qualified customers. Contact {business.publicName} to

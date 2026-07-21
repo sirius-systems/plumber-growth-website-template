@@ -16,7 +16,7 @@ export default function TermsPage() {
 
   return (
     <section className="container section" style={{ maxWidth: "48rem" }}>
-      <h1 style={{ fontSize: "var(--font-size-3xl)" }}>Terms &amp; Conditions</h1>
+      <h1>Terms &amp; Conditions</h1>
 
       <div
         role="note"

@@ -21,7 +21,7 @@ export default function ReviewsPage() {
     <>
       <section className="container section">
         <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Reviews" }]} />
-        <h1 style={{ fontSize: "var(--font-size-3xl)" }}>What Our Customers Say</h1>
+        <h1>What Our Customers Say</h1>
       </section>
 
       {/* All reviews + aggregate display. No AggregateRating structured data is

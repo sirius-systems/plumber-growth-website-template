@@ -27,7 +27,7 @@ export default function EmergencyRequestPage() {
       {/* Safety notice first, before the heading and the form. */}
       <EmergencySafetyNotice />
 
-      <h1 style={{ fontSize: "var(--font-size-3xl)" }}>Emergency Plumbing Request</h1>
+      <h1>Emergency Plumbing Request</h1>
 
       {/* Call is the primary, most prominent action. */}
       <a
