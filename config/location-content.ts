@@ -9,6 +9,12 @@
  * Keyed by the service-area slug in config/client.ts.
  */
 
+export interface LocalProblem {
+  icon: string;
+  title: string;
+  description: string;
+}
+
 export interface LocationContent {
   /** Short lead paragraph under the H1. */
   intro: string;
@@ -18,6 +24,11 @@ export interface LocationContent {
   neighborhoods: string[];
   /** Service slugs most relevant to this area (internal links). */
   featuredServices: string[];
+  /** AEO "Quick Answer" paragraph. Falls back to an assembled default.
+   * Scaffolding until client-approved copy is written (docs/07 §20). */
+  quickAnswer?: string;
+  /** Area-specific plumbing issues (falls back to a generic set). */
+  localProblems?: LocalProblem[];
 }
 
 export const LOCATION_CONTENT: Record<string, LocationContent> = {
@@ -40,8 +51,26 @@ export const LOCATION_CONTENT: Record<string, LocationContent> = {
       "As in the rest of the valley, hard water drives a lot of water heater installation and replacement work here, sediment buildup shortens tank life without regular maintenance.",
       "We serve both residential and commercial properties across Henderson, with emergency help available 24/7.",
     ],
-    neighborhoods: ["Green Valley", "Anthem", "Cadence", "MacDonald Ranch"],
+    neighborhoods: [
+      "Green Valley",
+      "Anthem",
+      "Seven Hills",
+      "Whitney Ranch",
+      "Black Mountain",
+      "Inspirada",
+      "Cadence",
+    ],
     featuredServices: ["water-heater-installation", "drain-cleaning", "leak-detection"],
+    quickAnswer:
+      "Las Vegas Pro Plumbing provides licensed plumbing service throughout Henderson, NV, including Green Valley, Anthem, Seven Hills, and surrounding neighborhoods. Henderson homeowners and businesses call us for drain cleaning, water heater repair, leak detection, pipe repair, and emergency plumbing across the city's diverse mix of established communities and new master-planned developments. Call (888) 308-3262 or submit a service request and we will confirm timing for your Henderson service.",
+    localProblems: [
+      { icon: "Droplets", title: "Hard Water Buildup", description: "Las Vegas valley water runs 16+ grains per gallon, leaving scale that shortens water heater and fixture life across Henderson homes." },
+      { icon: "Thermometer", title: "Summer Water Heater Stress", description: "Extreme summer heat and hard water accelerate sediment buildup, a common cause of Henderson water heater failures." },
+      { icon: "Home", title: "Caliche Soil Movement", description: "Henderson's caliche soil shifts with moisture and settling, stressing underground pipes and contributing to slab leaks." },
+      { icon: "AlertTriangle", title: "Aging East Henderson Pipes", description: "Older construction in established East Henderson neighborhoods often has corroded galvanized or copper lines prone to pinhole leaks." },
+      { icon: "Waves", title: "New-Build Warranty Issues", description: "Rapid construction in Anthem and Inspirada sometimes leaves fixture and connection issues that surface in the first few years." },
+      { icon: "Gauge", title: "Low Water Pressure", description: "Mineral deposits, partially closed valves, or supply-line issues can reduce pressure in both older and newer Henderson homes." },
+    ],
   },
   "north-las-vegas": {
     intro:
