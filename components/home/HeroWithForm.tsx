@@ -34,7 +34,7 @@ export function HeroWithForm() {
           <p style={{ color: "var(--color-text-muted)", margin: 0 }}>
             Plumbing services in {seo.primaryMarket}
           </p>
-          <h1 style={{ fontSize: "var(--font-size-4xl)", maxWidth: "18ch" }}>
+          <h1 className="heading-accent" style={{ fontSize: "var(--font-size-4xl)", maxWidth: "18ch" }}>
             {marketing.heroHeadline}
           </h1>
           <p style={{ maxWidth: "var(--measure-reading)", fontSize: "var(--font-size-lg)" }}>

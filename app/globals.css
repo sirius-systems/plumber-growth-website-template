@@ -90,6 +90,38 @@ body {
   background: var(--color-background);
 }
 
+/* Brand accent stripe across the very top of every page (decorative). */
+body::before {
+  content: "";
+  display: block;
+  height: 4px;
+  background: var(--brand-accent);
+}
+
+/* Amber underline mark under a heading (decorative — heading text stays blue). */
+.heading-accent::after {
+  content: "";
+  display: block;
+  width: 3rem;
+  height: 4px;
+  margin-top: var(--space-3);
+  border-radius: 999px;
+  background: var(--brand-accent);
+}
+.heading-accent--center::after {
+  margin-inline: auto;
+}
+
+/* Primary-nav hover/focus indicator in amber (contrasts with blue nav text). */
+header nav[aria-label="Primary"] a {
+  border-bottom: 2px solid transparent;
+  padding-bottom: 2px;
+}
+header nav[aria-label="Primary"] a:hover,
+header nav[aria-label="Primary"] a:focus-visible {
+  border-bottom-color: var(--brand-accent);
+}
+
 h1,
 h2,
 h3 {
@@ -165,6 +197,18 @@ img {
   background: transparent;
   border-color: var(--color-action);
   color: var(--color-action);
+}
+/* Amber conversion-emphasis button (docs/06 §5 accent). Dark label on amber
+   passes WCAG AA (~8:1). Used for the closing CTA band, not the primary
+   nav/hero actions, which stay blue. */
+.btn--accent {
+  background: var(--brand-accent);
+  color: var(--color-neutral-900);
+  border-color: transparent;
+}
+.btn--accent:hover {
+  filter: brightness(0.93);
+  color: var(--color-neutral-900);
 }
 .btn[disabled] {
   opacity: 0.6;

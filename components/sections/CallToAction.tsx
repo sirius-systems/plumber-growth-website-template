@@ -28,7 +28,10 @@ export function CallToAction({
       style={{ background: "var(--brand-primary-dark)", color: "var(--color-text-inverse)" }}
     >
       <div className="container" style={{ textAlign: "center" }}>
-        <h2 style={{ fontSize: "var(--font-size-2xl)", marginTop: 0, color: "var(--color-text-inverse)" }}>
+        <h2
+          className="heading-accent heading-accent--center"
+          style={{ fontSize: "var(--font-size-2xl)", marginTop: 0, color: "var(--color-text-inverse)" }}
+        >
           {heading}
         </h2>
         <p style={{ maxWidth: "var(--measure-reading)", marginInline: "auto" }}>
@@ -43,7 +46,7 @@ export function CallToAction({
             justifyContent: "center",
           }}
         >
-          <Link className="btn btn--primary" href={primaryHref}>
+          <Link className="btn btn--accent" href={primaryHref}>
             {primaryLabel}
           </Link>
           <a

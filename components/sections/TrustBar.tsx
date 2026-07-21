@@ -23,7 +23,11 @@ export function TrustBar() {
   return (
     <section
       aria-label="Trust signals"
-      style={{ background: "var(--brand-primary-dark)", color: "var(--color-text-inverse)" }}
+      style={{
+        background: "var(--brand-primary-dark)",
+        color: "var(--color-text-inverse)",
+        borderTop: "4px solid var(--brand-accent)",
+      }}
     >
       <ul
         className="container"
