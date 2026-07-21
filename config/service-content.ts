@@ -15,6 +15,11 @@ export interface ServiceFAQ {
 export interface ServiceContent {
   /** 1–2 sentence lead under the H1. */
   intro: string;
+  /** Hero supporting copy (falls back to `intro`). */
+  subheading?: string;
+  /** AEO "Quick Answer" paragraph (2–4 sentences). Falls back to an assembled
+   * default. Scaffolding until client-approved copy is written (docs/07 §20). */
+  quickAnswer?: string;
   /** What the service covers. */
   overview: string;
   /** Bulleted list of what the service includes. */
@@ -64,6 +69,8 @@ export const SERVICE_CONTENT: Record<string, ServiceContent> = {
   },
   "drain-cleaning": {
     intro: "Slow or clogged drains rarely fix themselves, and store-bought chemicals often make things worse.",
+    quickAnswer:
+      "Drain cleaning in Henderson and Las Vegas removes blockages from kitchen drains, bathroom drains, floor drains, and main sewer lines using professional snaking or hydrojetting equipment. Las Vegas Pro Plumbing provides drain cleaning throughout Clark County for homeowners and commercial properties dealing with slow drains, recurring clogs, or complete backups. Call (888) 308-3262 or submit a service request to schedule a same-day or next-day appointment.",
     overview:
       "We clear slow and stopped drains throughout the home, kitchen, bathroom, laundry, and floor drains. Depending on the blockage, we use professional drain snaking or hydrojetting to remove buildup and restore full flow, then identify what caused the clog so it's less likely to come back.",
     covers: [
