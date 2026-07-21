@@ -1,0 +1,71 @@
+import {
+  Flame,
+  Droplets,
+  Droplet,
+  AlertTriangle,
+  Search,
+  Wind,
+  Gauge,
+  Home,
+  Thermometer,
+  Waves,
+  CheckCircle,
+  Check,
+  BadgeCheck,
+  Shield,
+  ShieldCheck,
+  Star,
+  Award,
+  Phone,
+  ClipboardList,
+  CalendarCheck,
+  ChevronDown,
+  ChevronRight,
+  MapPin,
+  Clock,
+  Wrench,
+  Layers,
+  Settings,
+  HelpCircle,
+  type LucideProps,
+} from "lucide-react";
+
+/**
+ * Icon registry: content/config files reference Lucide icons by NAME (string),
+ * and this maps them to the imported components. Named imports keep the bundle
+ * tree-shaken. Add new icons here as needed.
+ */
+const ICONS: Record<string, React.ComponentType<LucideProps>> = {
+  Flame,
+  Droplets,
+  Droplet,
+  AlertTriangle,
+  Search,
+  Wind,
+  Gauge,
+  Home,
+  Thermometer,
+  Waves,
+  CheckCircle,
+  Check,
+  BadgeCheck,
+  Shield,
+  ShieldCheck,
+  Star,
+  Award,
+  Phone,
+  ClipboardList,
+  CalendarCheck,
+  ChevronDown,
+  ChevronRight,
+  MapPin,
+  Clock,
+  Wrench,
+  Layers,
+  Settings,
+};
+
+export function LucideIcon({ name, ...props }: { name: string } & LucideProps) {
+  const Icon = ICONS[name] ?? HelpCircle;
+  return <Icon aria-hidden="true" focusable={false} {...props} />;
+}

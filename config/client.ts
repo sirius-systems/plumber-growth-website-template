@@ -39,6 +39,8 @@ export interface ServiceAreaReference {
   slug?: string;
   /** Card image path; null/undefined falls back to the shared placeholder. */
   image?: string | null;
+  /** True for the primary market location (used for the featured pill). */
+  primary?: boolean;
 }
 
 export interface BrandConfig {
@@ -83,6 +85,10 @@ export interface MarketingConfig {
   heroSubheadline: string;
   /** Short tagline reused in header/brand contexts. */
   tagline: string;
+  /** Hero background image path (falls back to the committed placeholder). */
+  heroImageSrc: string;
+  /** Hero background image alt text; empty when the image is decorative. */
+  heroImageAlt: string;
 }
 
 export interface ClientConfig {
@@ -182,7 +188,7 @@ export const clientConfig: ClientConfig = {
     accentColor: "#F5A623",
   },
   serviceAreas: [
-    { name: "Las Vegas", state: "NV", hasDetailPage: true, slug: "las-vegas" },
+    { name: "Las Vegas", state: "NV", hasDetailPage: true, slug: "las-vegas", primary: true },
     { name: "Henderson", state: "NV", hasDetailPage: true, slug: "henderson" },
     { name: "North Las Vegas", state: "NV", hasDetailPage: true, slug: "north-las-vegas" },
     { name: "Summerlin", state: "NV", hasDetailPage: true, slug: "summerlin" },
@@ -205,6 +211,9 @@ export const clientConfig: ClientConfig = {
     heroSubheadline:
       "Serving Las Vegas, Henderson, North Las Vegas, and surrounding areas with licensed, upfront plumbing service.",
     tagline: "Fast Response, Honest Pricing",
+    // Decorative placeholder (SVG) — swap for a real Las Vegas Pro Plumbing photo.
+    heroImageSrc: "/images/hero-placeholder.svg",
+    heroImageAlt: "",
   },
 };
 

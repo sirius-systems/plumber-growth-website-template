@@ -1,7 +1,8 @@
 "use client";
 
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { useSearchParams } from "next/navigation";
+import { HERO_QUOTE_KEY } from "@/components/forms/HeroQuoteForm";
 import { enabledServices } from "@/config/services";
 import { clientConfig } from "@/config/client";
 import { formatPhoneDisplay, telHref } from "@/lib/utilities/format";
@@ -39,6 +40,22 @@ export function GeneralQuoteForm({
     paired && fieldErrors[field] ? `error-${field}` : undefined;
 
   const { status, message, fieldErrors, summaryRef, submit } = useFormSubmit("general-quote");
+
+  // Prefill from a hero/CTA short form handoff (client-only; no PII in the URL).
+  useEffect(() => {
+    try {
+      const raw = sessionStorage.getItem(HERO_QUOTE_KEY);
+      if (!raw) return;
+      const d = JSON.parse(raw) as Record<string, string>;
+      for (const name of ["firstName", "lastName", "phone", "problemDescription"]) {
+        const el = document.querySelector<HTMLInputElement | HTMLTextAreaElement>(`[name="${name}"]`);
+        if (el && d[name]) el.value = d[name];
+      }
+      sessionStorage.removeItem(HERO_QUOTE_KEY);
+    } catch {
+      /* ignore */
+    }
+  }, []);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();

@@ -245,6 +245,71 @@ img {
   text-align: center;
 }
 
+/* Rebuild FAQ accordion (docs/06 §35) with a rotating chevron. */
+.faq-q {
+  border-bottom: 1px solid var(--color-border);
+}
+.faq-q > summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 0;
+  cursor: pointer;
+  list-style: none;
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--color-primary-900);
+}
+.faq-q > summary::-webkit-details-marker {
+  display: none;
+}
+.faq-q > summary svg {
+  flex: none;
+  transition: transform 150ms ease;
+}
+.faq-q[open] > summary svg {
+  transform: rotate(180deg);
+}
+.faq-q > div {
+  padding: 0 0 1rem;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--color-text);
+}
+
+/* Location / service-area pills. */
+.pill {
+  display: inline-block;
+  border-radius: var(--radius-pill);
+  padding: 0.5rem 1.25rem;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background 150ms ease;
+}
+.pill--filled {
+  background: var(--color-primary-600);
+  color: #fff;
+}
+.pill--filled:hover {
+  background: var(--color-primary-700);
+  color: #fff;
+}
+.pill--outline {
+  border: 1.5px solid var(--color-primary-600);
+  color: var(--color-primary-600);
+  background: transparent;
+}
+.pill--outline:hover {
+  background: var(--color-primary-50);
+}
+.pill--info {
+  border: 1.5px solid var(--color-primary-100);
+  color: var(--color-primary-700);
+  background: var(--color-primary-50);
+}
+
 /* Buttons (docs/06 §23) — min 44px touch target */
 .btn {
   display: inline-flex;
@@ -418,6 +483,24 @@ body {
 .hero-compact {
   max-width: 720px;
 }
+/* 60/40 hero split used by the rebuilt heroes; stacks below 48rem. */
+.hero-2col {
+  display: grid;
+  grid-template-columns: 60fr 40fr;
+  gap: 3rem;
+  align-items: center;
+}
+@media (max-width: 48rem) {
+  .hero-2col {
+    grid-template-columns: 1fr;
+  }
+}
+/* Hero eyebrow — hidden on mobile per spec. */
+@media (max-width: 48rem) {
+  .hero-eyebrow {
+    display: none;
+  }
+}
 /* White copy for text on the overlay. Uses inheritance (not broad descendant
    selectors) so nested cards/notices with their own colors are unaffected. */
 .hero-copy {
@@ -518,6 +601,43 @@ body {
   .form-row-2col,
   .form-row-3col {
     grid-template-columns: 1fr;
+  }
+}
+
+/* Reviews carousel (docs/06 §36). Auto-scroll one set width; JS sets duration. */
+@keyframes carousel-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.carousel {
+  overflow: hidden;
+  position: relative;
+}
+.carousel-track {
+  display: flex;
+  gap: 1.5rem;
+  width: max-content;
+  padding: 0.5rem 2rem;
+  animation: carousel-scroll linear infinite;
+}
+.carousel--reduced {
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+}
+.carousel--reduced .carousel-track {
+  animation: none;
+  width: max-content;
+}
+.carousel--reduced .carousel-card {
+  scroll-snap-align: start;
+}
+@media (prefers-reduced-motion: reduce) {
+  .carousel-track {
+    animation: none;
   }
 }
 
