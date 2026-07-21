@@ -1,18 +1,15 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { SimplePage } from "@/components/layout/SimplePage";
 import { EmergencyRequestForm } from "@/components/forms/EmergencyRequestForm";
+import { EmergencySafetyNotice } from "@/components/sections/EmergencySafetyNotice";
 import { clientConfig } from "@/config/client";
 import { telHref, formatPhoneDisplay } from "@/lib/utilities/format";
 
 /**
  * Emergency Request form page (docs/04 §20, docs/08 §10). noindex,follow — the
  * indexable page is the emergency SERVICE page /services/emergency-plumbing/.
- * The mandatory safety notice (docs/08 §10.5, docs/14 §31) renders before any form.
- *
- * Scaffold note: the full EmergencyRequestForm (schema already defined in
- * lib/forms/schemas.ts) is wired next; this page establishes the route, safety
- * language, and call fallback.
+ * The mandatory safety notice renders before any form (docs/08 §10.5, docs/14 §31)
+ * and the call action is more prominent than the form (UX-003).
  */
 export const metadata: Metadata = {
   title: "Emergency Plumbing Request",
@@ -26,29 +23,30 @@ export default function EmergencyRequestPage() {
   if (!operations.emergencyServiceAvailable) notFound();
 
   return (
-    <SimplePage title="Emergency Plumbing Request">
-      <div
-        role="alert"
-        style={{
-          border: "2px solid var(--color-danger)",
-          borderRadius: "var(--radius-sm)",
-          padding: "var(--space-4)",
-          marginBottom: "var(--space-6)",
-        }}
+    <section className="container section" style={{ maxWidth: "48rem" }}>
+      {/* Safety notice first — before the heading and the form. */}
+      <EmergencySafetyNotice />
+
+      <h1 style={{ fontSize: "var(--font-size-3xl)" }}>Emergency Plumbing Request</h1>
+
+      {/* Call is the primary, most prominent action. */}
+      <a
+        className="btn btn--primary btn--block"
+        href={telHref(business.phone)}
+        style={{ fontSize: "var(--font-size-lg)", marginBottom: "var(--space-4)" }}
       >
-        <p style={{ marginTop: 0 }}>
-          Submitting this form does not guarantee immediate service or confirm that a
-          technician has been dispatched. If there is a gas odor, fire, electrical danger,
-          serious injury, or another immediate threat to life or property, leave the affected
-          area and contact the appropriate emergency service or utility provider.
-        </p>
-        <p style={{ marginBottom: 0 }}>
-          For the fastest response, call {business.publicName}:{" "}
-          <a href={telHref(business.phone)}>{formatPhoneDisplay(business.phone)}</a>.
-        </p>
-      </div>
+        Call Now: {formatPhoneDisplay(business.phone)}
+      </a>
+      <p style={{ color: "var(--color-text-muted)" }}>
+        Calling is the fastest way to reach us in an emergency. If you&rsquo;d still like to send
+        details, use the form below.
+      </p>
 
       <EmergencyRequestForm />
-    </SimplePage>
+
+      <p style={{ fontSize: "0.875rem", color: "var(--color-text-muted)", marginTop: "var(--space-6)" }}>
+        Submitting this form does not guarantee immediate dispatch or service.
+      </p>
+    </section>
   );
 }

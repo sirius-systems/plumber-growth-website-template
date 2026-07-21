@@ -39,7 +39,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     .filter((s) => s.indexable)
     .map((s) => `/services/${s.slug}/`);
 
-  return [...staticPaths, ...servicePaths].map((path) => ({
+  // Per-area detail pages (docs/04 §12) — only those with a real detail page.
+  const locationPaths = clientConfig.serviceAreas
+    .filter((a) => a.hasDetailPage && a.slug)
+    .map((a) => `/service-areas/${a.slug}/`);
+
+  return [...staticPaths, ...servicePaths, ...locationPaths].map((path) => ({
     url: `${base}${path}`,
   }));
 }

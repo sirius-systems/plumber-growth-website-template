@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { clientConfig } from "@/config/client";
-import { telHref } from "@/lib/utilities/format";
+import { telHref, formatPhoneDisplay } from "@/lib/utilities/format";
 
 /**
  * Primary site header (docs/04 §5.1). Navigation reflects enabled client
@@ -69,7 +69,7 @@ export function SiteHeader() {
 
         <div style={{ display: "flex", gap: "var(--space-3)" }}>
           <a className="btn btn--secondary" href={telHref(business.phone)}>
-            Call now
+            Call {formatPhoneDisplay(business.phone)}
           </a>
           <Link className="btn btn--primary" href="/request-service/">
             Request Service

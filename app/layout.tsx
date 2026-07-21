@@ -4,6 +4,8 @@ import "./globals.css";
 import { clientConfig } from "@/config/client";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { SiteFooter } from "@/components/layout/SiteFooter";
+import { DemoBanner } from "@/components/layout/DemoBanner";
+import { MobileActionBar } from "@/components/layout/MobileActionBar";
 
 export const metadata: Metadata = {
   metadataBase: new URL(clientConfig.business.websiteUrl),
@@ -13,6 +15,10 @@ export const metadata: Metadata = {
   },
   description: clientConfig.seo.defaultDescription,
   alternates: { canonical: "/" },
+  // DEMO deployment: keep the entire fictional site out of search indexes
+  // (docs/07 §38 — preview/staging must not be indexable). Remove this global
+  // override for a live client and rely on per-page indexation rules instead.
+  robots: { index: false, follow: true },
 };
 
 export const viewport: Viewport = {
@@ -36,9 +42,11 @@ export default function RootLayout({
         <a className="skip-link" href="#main">
           Skip to content
         </a>
+        <DemoBanner />
         <SiteHeader />
         <main id="main">{children}</main>
         <SiteFooter />
+        <MobileActionBar />
       </body>
     </html>
   );

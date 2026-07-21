@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { SimplePage } from "@/components/layout/SimplePage";
-import { clientConfig } from "@/config/client";
-import { telHref, formatPhoneDisplay } from "@/lib/utilities/format";
+import { Suspense } from "react";
+import { ThankYouMessage } from "@/components/ThankYouMessage";
 
 /** Confirmation page (docs/04 §4.3). noindex; never exposes submitted data in URL. */
 export const metadata: Metadata = {
@@ -12,22 +10,13 @@ export const metadata: Metadata = {
 };
 
 export default function ThankYouPage() {
-  const { business } = clientConfig;
   return (
-    <SimplePage title="Thank you" intro={`${business.publicName} received your submission.`}>
-      <p>
-        A team member will review your request. This confirmation does not guarantee immediate
-        service or a confirmed appointment.
-      </p>
-      <p>
-        Need help sooner?{" "}
-        <a href={telHref(business.phone)}>Call {formatPhoneDisplay(business.phone)}</a>.
-      </p>
-      <p>
-        <Link className="btn btn--secondary" href="/">
-          Return home
-        </Link>
-      </p>
-    </SimplePage>
+    <section className="container section" style={{ maxWidth: "48rem" }}>
+      <h1 style={{ fontSize: "var(--font-size-3xl)" }}>Thank you</h1>
+      {/* useSearchParams (?from) requires a Suspense boundary under static export. */}
+      <Suspense fallback={<p>Loading…</p>}>
+        <ThankYouMessage />
+      </Suspense>
+    </section>
   );
 }

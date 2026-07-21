@@ -74,6 +74,15 @@ export interface SeoConfig {
   defaultDescription: string;
 }
 
+export interface MarketingConfig {
+  /** Homepage hero H1 (client-approved marketing copy — docs/07). */
+  heroHeadline: string;
+  /** Homepage hero supporting line. */
+  heroSubheadline: string;
+  /** Short tagline reused in header/brand contexts. */
+  tagline: string;
+}
+
 export interface ClientConfig {
   business: {
     legalName: string;
@@ -105,70 +114,95 @@ export interface ClientConfig {
   serviceAreas: ServiceAreaReference[];
   integrations: PublicIntegrationConfig;
   seo: SeoConfig;
+  marketing: MarketingConfig;
 }
 
 const day = (label: string, open = true): BusinessHoursDay => ({ label, open });
 
 /**
- * EXAMPLE client used for local development and the template preview. Replace
- * wholesale per client (docs/12 §16). Values are obviously fictional so nothing
- * here can be mistaken for a real business.
+ * Active client configuration: Las Vegas Pro Plumbing (DEMO deployment).
+ *
+ * ⚠ DEMONSTRATION DATA. This is a demo site — the business name, address,
+ * license number, phone number, hours, and reviews are illustrative and must be
+ * verified before any live launch. In particular:
+ *   - phone `+18883083262` is an AGENCY-CONTROLLED tracking number; confirm it is
+ *     active and routed (to Sirius Systems / the demo GHL account) before go-live.
+ *   - license `NV-PL-2024-08847` is placeholder demo data, not a verified license.
+ * Replace wholesale per real client (docs/12 §16, docs/17 §22).
  */
 export const clientConfig: ClientConfig = {
   business: {
-    legalName: "Example Plumbing Co. LLC",
-    publicName: "Example Plumbing Co.",
+    legalName: "Las Vegas Pro Plumbing LLC",
+    publicName: "Las Vegas Pro Plumbing",
     description:
-      "Example Plumbing Co. is a demonstration plumbing company used to preview the Plumber Growth System website template.",
-    phone: "+15555550100",
-    smsPhone: "+15555550100",
-    email: "office@example-plumbing.test",
-    websiteUrl: "https://example.com",
+      "Las Vegas Pro Plumbing provides fast, honest plumbing service across the Las Vegas valley — emergency repairs, drain cleaning, water heaters, leak detection, and more. Licensed, local, and trusted since 2013.",
+    phone: "+18883083262",
+    smsPhone: "+18883083262",
+    email: "info@lasvegasproplumbing.com",
+    websiteUrl: "https://lasvegasproplumbing.com",
   },
   location: {
-    addressDisplayMode: "service-area",
-    city: "Anytown",
-    state: "TX",
+    addressDisplayMode: "full",
+    streetAddress: "4820 W Sahara Ave Ste 110",
+    city: "Las Vegas",
+    state: "NV",
+    postalCode: "89102",
     country: "US",
   },
   operations: {
     businessHours: {
-      monday: day("8:00 AM – 5:00 PM"),
-      tuesday: day("8:00 AM – 5:00 PM"),
-      wednesday: day("8:00 AM – 5:00 PM"),
-      thursday: day("8:00 AM – 5:00 PM"),
-      friday: day("8:00 AM – 5:00 PM"),
-      saturday: day("By appointment"),
-      sunday: day("Closed", false),
+      monday: day("7:00 AM – 6:00 PM"),
+      tuesday: day("7:00 AM – 6:00 PM"),
+      wednesday: day("7:00 AM – 6:00 PM"),
+      thursday: day("7:00 AM – 6:00 PM"),
+      friday: day("7:00 AM – 6:00 PM"),
+      saturday: day("8:00 AM – 4:00 PM"),
+      sunday: day("Emergency service only", false),
     },
     emergencyServiceAvailable: true,
-    twentyFourSevenService: false,
+    twentyFourSevenService: true,
     residentialPlumbing: true,
-    commercialPlumbing: false,
-    financingOffered: false,
+    commercialPlumbing: true,
+    financingOffered: true,
   },
   credentials: {
+    licenseNumber: "NV-PL-2024-08847",
+    licenseJurisdiction: "Nevada State Contractor License",
     insured: true,
     bonded: true,
-    yearsInBusiness: 10,
+    yearsInBusiness: 11,
   },
   branding: {
-    logoAlt: "Example Plumbing Co.",
-    wordmark: "Example Plumbing Co.",
-    primaryColor: "#0f4f94",
-    primaryDarkColor: "#12345a",
-    accentColor: "#e9a51c",
+    logoAlt: "Las Vegas Pro Plumbing",
+    wordmark: "Las Vegas Pro Plumbing",
+    primaryColor: "#1B4F8A",
+    primaryDarkColor: "#123A66",
+    accentColor: "#F5A623",
   },
   serviceAreas: [
-    { name: "Anytown", state: "TX", hasDetailPage: false },
-    { name: "Springfield", state: "TX", hasDetailPage: false },
+    { name: "Las Vegas", state: "NV", hasDetailPage: true, slug: "las-vegas" },
+    { name: "Henderson", state: "NV", hasDetailPage: true, slug: "henderson" },
+    { name: "North Las Vegas", state: "NV", hasDetailPage: true, slug: "north-las-vegas" },
+    { name: "Summerlin", state: "NV", hasDetailPage: true, slug: "summerlin" },
+    { name: "Spring Valley", state: "NV", hasDetailPage: true, slug: "spring-valley" },
+    { name: "Enterprise", state: "NV", hasDetailPage: true, slug: "enterprise" },
   ],
-  integrations: {},
+  integrations: {
+    // reviewUrl intentionally unset for the demo — the public review CTA falls
+    // back to a placeholder. Set a verified Google review URL for a live client
+    // (docs/11 §30); never gate the public review link on rating (SEO-003).
+  },
   seo: {
-    primaryMarket: "Anytown, TX",
-    defaultTitle: "Plumber in Anytown, TX | Example Plumbing Co.",
+    primaryMarket: "Las Vegas, NV",
+    defaultTitle: "Plumber in Las Vegas, NV | Las Vegas Pro Plumbing",
     defaultDescription:
-      "Example Plumbing Co. provides residential plumbing services in Anytown, TX. Request service or call today.",
+      "Las Vegas Pro Plumbing provides fast, honest plumbing services in Las Vegas, Henderson, North Las Vegas, and surrounding areas. Call (888) 308-3262 or request service online.",
+  },
+  marketing: {
+    heroHeadline: "Las Vegas's Trusted Plumber — Fast Response, Honest Pricing",
+    heroSubheadline:
+      "Serving Las Vegas, Henderson, North Las Vegas, and surrounding areas with licensed, upfront plumbing service.",
+    tagline: "Fast Response, Honest Pricing",
   },
 };
 

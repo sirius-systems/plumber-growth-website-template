@@ -40,7 +40,9 @@ describe("generalQuoteSchema", () => {
   });
 
   it("rejects a disabled/unknown service value", () => {
-    const result = generalQuoteSchema.safeParse({ ...validPayload, plumbingService: "pipe-repair" });
+    // commercial-plumbing is a real slug but disabled for this client (served by
+    // the standalone /commercial-plumbing/ page), so the quote form rejects it.
+    const result = generalQuoteSchema.safeParse({ ...validPayload, plumbingService: "commercial-plumbing" });
     expect(result.success).toBe(false);
   });
 
