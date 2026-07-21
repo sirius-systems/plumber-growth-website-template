@@ -1,91 +1,51 @@
 import type { Metadata } from "next";
 import { clientConfig } from "@/config/client";
-import { telHref, formatPhoneDisplay } from "@/lib/utilities/format";
+import { termsEffectiveDateLabel, termsSections } from "@/content/legal/terms";
+import { PolicyToc } from "@/components/legal/PolicyToc";
+import { PolicyContent } from "@/components/legal/PolicyContent";
 
 export const metadata: Metadata = {
-  title: "Terms & Conditions",
-  description: "The terms that govern use of the Las Vegas Pro Plumbing website.",
+  title: `Terms and Conditions | ${clientConfig.business.publicName}`,
+  description:
+    "Terms and Conditions for Las Vegas Pro Plumbing. Read our service terms, payment policies, warranties, and website use terms for plumbing services in Clark County.",
   alternates: { canonical: "/terms/" },
 };
 
-/** Legal page (docs/04 §4.4). Requires legal review before launch (docs/14 §20). */
+/** Legal page (docs/04 §4.4). Content requires legal review before production. */
 export default function TermsPage() {
-  const { business, location } = clientConfig;
-  const muted = { color: "var(--color-text-muted)" } as const;
-  const h2 = { fontSize: "var(--font-size-2xl)" } as const;
+  const { business } = clientConfig;
+  const canonical = `${business.websiteUrl}/terms/`;
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: `${business.websiteUrl}/` },
+      { "@type": "ListItem", position: 2, name: "Terms and Conditions", item: canonical },
+    ],
+  };
+  const webPageJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: "Terms and Conditions",
+    url: canonical,
+    publisher: { "@type": "Plumber", name: business.publicName },
+  };
 
   return (
-    <section className="container section" style={{ maxWidth: "48rem" }}>
-      <h1>Terms &amp; Conditions</h1>
+    <div style={{ background: "var(--color-background-alt)" }}>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageJsonLd) }} />
 
-      <div
-        role="note"
-        style={{
-          border: "2px solid var(--color-warning)",
-          borderRadius: "var(--radius-md)",
-          padding: "var(--space-4) var(--space-6)",
-          marginBottom: "var(--space-6)",
-        }}
-      >
-        <p style={{ margin: 0, fontWeight: 600 }}>
-          ⚠ Demo Notice: This is a demonstration site. These terms are a placeholder for
-          demonstration purposes only. Final legal documents require review by qualified legal
-          counsel before publication on a live client site.
-        </p>
+      <div className="legal-layout">
+        <PolicyToc sections={termsSections} />
+        <PolicyContent
+          title="Terms and Conditions"
+          effectiveDateLabel={termsEffectiveDateLabel}
+          reviewNotice="These terms and conditions are a template starting point and have not been reviewed by legal counsel. Do not deploy to production without legal review."
+          sections={termsSections}
+        />
       </div>
-
-      <p style={muted}>
-        <em>The following is placeholder legal language for demonstration only.</em>
-      </p>
-
-      <h2 style={h2}>Acceptance of terms</h2>
-      <p style={muted}>
-        By accessing and using this website, you agree to these terms. If you do not agree, please
-        do not use the site.
-      </p>
-
-      <h2 style={h2}>Use of the site</h2>
-      <p style={muted}>
-        You agree to use this site only for lawful purposes and not to misuse it or interfere with
-        its operation. Content on this site is provided for general information about our plumbing
-        services.
-      </p>
-
-      <h2 style={h2}>No guarantee of service</h2>
-      <p style={muted}>
-        Submitting a form on this site is a request for service, it does not create a contract,
-        guarantee service, guarantee a response time, or confirm an appointment. An appointment is
-        confirmed only when we contact you directly.
-      </p>
-
-      <h2 style={h2}>Intellectual property</h2>
-      <p style={muted}>
-        The content, branding, and materials on this site are owned by {business.legalName} or its
-        licensors and may not be reproduced without permission.
-      </p>
-
-      <h2 style={h2}>Limitation of liability</h2>
-      <p style={muted}>
-        To the fullest extent permitted by law, {business.legalName} is not liable for damages
-        arising from your use of this website. (Placeholder, confirm with legal counsel.)
-      </p>
-
-      <h2 style={h2}>Changes to these terms</h2>
-      <p style={muted}>
-        We may update these terms from time to time. Continued use of the site after changes
-        constitutes acceptance of the revised terms.
-      </p>
-
-      <h2 style={h2}>Contact us</h2>
-      <p style={muted}>
-        {business.legalName}
-        <br />
-        {location.streetAddress}, {location.city}, {location.state} {location.postalCode}
-        <br />
-        <a href={telHref(business.phone)}>{formatPhoneDisplay(business.phone)}</a>
-        <br />
-        <a href={`mailto:${business.email}`}>{business.email}</a>
-      </p>
-    </section>
+    </div>
   );
 }

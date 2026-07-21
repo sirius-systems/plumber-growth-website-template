@@ -163,6 +163,18 @@ export interface LegalConfig {
   businessState?: string;
   /** True after legal review; hides the review-required notice. */
   reviewComplete?: boolean;
+  /** Effective date for the terms and conditions. */
+  termsEffectiveDate?: string;
+  /** Verified accepted payment methods; unset renders fallback copy. */
+  paymentMethods?: string[];
+  /** Deposit policy statement; unset renders fallback copy. */
+  depositPolicy?: string;
+  /** Cancellation policy statement; unset renders fallback copy. */
+  cancellationPolicy?: string;
+  /** Warranty statement; NEVER fabricate — unset renders fallback copy. */
+  warrantyPolicy?: string;
+  /** Full legal business name; falls back to business.legalName/publicName. */
+  legalBusinessName?: string;
 }
 
 const day = (label: string, open = true): BusinessHoursDay => ({ label, open });
@@ -298,6 +310,15 @@ export const clientConfig: ClientConfig = {
     businessState: "Nevada",
     // Set true after qualified legal review; hides the on-page review notice.
     reviewComplete: false,
+    termsEffectiveDate: "July 1, 2025",
+    // The following are unset for the demo — the Terms page renders fallback copy.
+    // Populate only with client-confirmed, legally reviewed values (never fabricate,
+    // especially warrantyPolicy).
+    paymentMethods: undefined,
+    depositPolicy: undefined,
+    cancellationPolicy: undefined,
+    warrantyPolicy: undefined,
+    legalBusinessName: undefined,
   },
 };
 
