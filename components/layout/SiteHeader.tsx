@@ -1,31 +1,46 @@
 import Link from "next/link";
+import Image from "next/image";
 import { clientConfig } from "@/config/client";
 import { telHref, formatPhoneDisplay } from "@/lib/utilities/format";
 
 /**
- * Primary site header (docs/04 §5.1). Navigation reflects enabled client
- * capabilities: Commercial only when the client serves commercial. Call + Request
- * Service are persistent actions (docs/04 §5, WEB-003).
+ * Primary site header (docs/04 §5.1). Single desktop row: logo, primary nav, and
+ * the persistent Call + Request Service actions, all vertically centered. The
+ * brand is a logo (config-driven src, or a neutral placeholder until a real
+ * asset exists) — no business-name text. Wraps on small screens.
  */
 export function SiteHeader() {
-  const { business, operations } = clientConfig;
+  const { business, operations, branding } = clientConfig;
 
   return (
     <header className="container" style={{ paddingBlock: "var(--space-4)" }}>
-      <div
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          alignItems: "center",
-          justifyContent: "space-between",
-          gap: "var(--space-4)",
-        }}
-      >
-        <Link href="/" style={{ fontWeight: 700, fontSize: "var(--font-size-lg)" }}>
-          {business.publicName}
+      <div className="site-header-inner">
+        <Link href="/" style={{ display: "inline-flex", flexShrink: 0 }}>
+          {branding.logoSrc ? (
+            <Image
+              src={branding.logoSrc}
+              alt={branding.logoAlt}
+              width={160}
+              height={40}
+              priority
+              style={{ height: 40, width: "auto" }}
+            />
+          ) : (
+            <span
+              role="img"
+              aria-label={`${business.publicName} logo`}
+              style={{
+                display: "block",
+                width: 160,
+                height: 40,
+                background: "var(--color-neutral-200)",
+                borderRadius: "var(--radius-sm)",
+              }}
+            />
+          )}
         </Link>
 
-        <nav aria-label="Primary">
+        <nav className="site-header-nav" aria-label="Primary">
           <ul
             style={{
               display: "flex",
@@ -67,11 +82,11 @@ export function SiteHeader() {
           </ul>
         </nav>
 
-        <div style={{ display: "flex", gap: "var(--space-3)" }}>
-          <a className="btn btn--secondary" href={telHref(business.phone)}>
+        <div style={{ display: "flex", gap: "var(--space-3)", flexShrink: 0 }}>
+          <a className="btn btn--secondary btn--sm" href={telHref(business.phone)}>
             Call {formatPhoneDisplay(business.phone)}
           </a>
-          <Link className="btn btn--primary" href="/request-service/">
+          <Link className="btn btn--primary btn--sm" href="/request-service/">
             Request Service
           </Link>
         </div>

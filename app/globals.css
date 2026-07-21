@@ -41,6 +41,7 @@
 
   /* Typography (docs/06 §8–§10) */
   --font-sans: "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-size-sm: 0.875rem;
   --font-size-base: 1rem;
   --font-size-lg: 1.125rem;
   --font-size-2xl: clamp(1.5rem, 2vw, 1.875rem);
@@ -311,11 +312,37 @@ body {
   display: grid;
   grid-template-columns: 55fr 45fr;
   gap: var(--space-12);
-  align-items: start;
+  align-items: center;
 }
 @media (max-width: 48rem) {
   .hero-grid {
     grid-template-columns: 1fr;
+    align-items: stretch;
+  }
+}
+
+/* Compact button for the header row. Keeps the 44px touch target (accessibility)
+   while trimming padding + type so the actions fit on one line with the nav. */
+.btn--sm {
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--font-size-sm);
+}
+
+/* Desktop header: single row (logo | nav | actions), vertically centered. Wraps
+   on smaller screens; the desktop breakpoint (64rem) forces a single row. */
+.site-header-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+.site-header-nav ul {
+  font-size: var(--font-size-sm);
+}
+@media (min-width: 64rem) {
+  .site-header-inner {
+    flex-wrap: nowrap;
   }
 }
 

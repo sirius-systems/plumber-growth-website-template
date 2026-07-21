@@ -27,7 +27,7 @@ export function HeroWithForm() {
           display: "grid",
           gap: "var(--space-12)",
           gridTemplateColumns: "repeat(auto-fit, minmax(20rem, 1fr))",
-          alignItems: "start",
+          alignItems: "center",
         }}
       >
         <div>
