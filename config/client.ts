@@ -41,6 +41,19 @@ export interface ServiceAreaReference {
   image?: string | null;
   /** True for the primary market location (used for the featured pill). */
   primary?: boolean;
+  /** True = full card in the hub grid; false = secondary pill. */
+  featured?: boolean;
+  /** One-line coverage summary used on the hub location card. */
+  hubDescription?: string;
+}
+
+export interface RegionConfig {
+  /** e.g. "Clark County" — used in the hub H1 and structured data. */
+  name: string;
+  /** Static region map image path; null renders a placeholder panel. */
+  mapImage: string | null;
+  /** Region coverage sentence for the hub hero. */
+  subheading: string;
 }
 
 export interface BrandConfig {
@@ -123,6 +136,7 @@ export interface ClientConfig {
   integrations: PublicIntegrationConfig;
   seo: SeoConfig;
   marketing: MarketingConfig;
+  region: RegionConfig;
 }
 
 const day = (label: string, open = true): BusinessHoursDay => ({ label, open });
@@ -188,12 +202,34 @@ export const clientConfig: ClientConfig = {
     accentColor: "#F5A623",
   },
   serviceAreas: [
-    { name: "Las Vegas", state: "NV", hasDetailPage: true, slug: "las-vegas", primary: true },
-    { name: "Henderson", state: "NV", hasDetailPage: true, slug: "henderson" },
-    { name: "North Las Vegas", state: "NV", hasDetailPage: true, slug: "north-las-vegas" },
-    { name: "Summerlin", state: "NV", hasDetailPage: true, slug: "summerlin" },
-    { name: "Spring Valley", state: "NV", hasDetailPage: true, slug: "spring-valley" },
-    { name: "Enterprise", state: "NV", hasDetailPage: true, slug: "enterprise" },
+    {
+      name: "Las Vegas",
+      state: "NV",
+      hasDetailPage: true,
+      slug: "las-vegas",
+      primary: true,
+      featured: true,
+      hubDescription: "Licensed plumbing service throughout Las Vegas for residential and commercial properties.",
+    },
+    {
+      name: "Henderson",
+      state: "NV",
+      hasDetailPage: true,
+      slug: "henderson",
+      featured: true,
+      hubDescription: "Full plumbing service for Henderson homes and businesses across Green Valley, Anthem, and surrounding neighborhoods.",
+    },
+    {
+      name: "North Las Vegas",
+      state: "NV",
+      hasDetailPage: true,
+      slug: "north-las-vegas",
+      featured: true,
+      hubDescription: "Reliable plumbing service for North Las Vegas homes and businesses.",
+    },
+    { name: "Summerlin", state: "NV", hasDetailPage: true, slug: "summerlin", featured: false },
+    { name: "Spring Valley", state: "NV", hasDetailPage: true, slug: "spring-valley", featured: false },
+    { name: "Enterprise", state: "NV", hasDetailPage: true, slug: "enterprise", featured: false },
   ],
   integrations: {
     // reviewUrl intentionally unset for the demo — the public review CTA falls
@@ -214,6 +250,12 @@ export const clientConfig: ClientConfig = {
     // Decorative placeholder (SVG) — swap for a real Las Vegas Pro Plumbing photo.
     heroImageSrc: "/images/hero-placeholder.svg",
     heroImageAlt: "",
+  },
+  region: {
+    name: "Clark County",
+    mapImage: null,
+    subheading:
+      "Serving Las Vegas, Henderson, North Las Vegas, Summerlin, Spring Valley, and surrounding areas.",
   },
 };
 

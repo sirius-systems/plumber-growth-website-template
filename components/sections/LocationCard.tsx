@@ -15,7 +15,9 @@ export function LocationCard({ area }: { area: ServiceAreaReference }) {
   const content = area.slug ? LOCATION_CONTENT[area.slug] : undefined;
   const href = area.hasDetailPage && area.slug ? `/service-areas/${area.slug}/` : undefined;
   const description =
-    content?.intro ?? `Plumbing service across ${area.name}, ${area.state} and nearby.`;
+    area.hubDescription ??
+    content?.intro ??
+    `Plumbing service across ${area.name}, ${area.state} and nearby.`;
 
   return (
     <article

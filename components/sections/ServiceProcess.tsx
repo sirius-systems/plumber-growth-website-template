@@ -20,7 +20,7 @@ const DEFAULT_STEPS: { icon: string; title: string; body: string }[] = [
   {
     icon: "CalendarCheck",
     title: "Appointment Confirmed",
-    body: "Once we've spoken and agreed on timing, your appointment is confirmed. We will not show up unannounced — your appointment is scheduled with your knowledge and agreement.",
+    body: "Once we've spoken and agreed on timing, your appointment is confirmed. We will not show up unannounced, your appointment is scheduled with your knowledge and agreement.",
   },
   {
     icon: "CheckCircle",

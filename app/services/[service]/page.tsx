@@ -91,7 +91,7 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
       <ServiceProblems svc={svc} content={content} />
       <ServiceProcess svc={svc} />
       <ServiceBenefits svc={svc} />
-      <FaqSection items={faqs} subheading={`${svc.name} — pricing, timing, and what to expect`} />
+      <FaqSection items={faqs} subheading={`${svc.name}, pricing, timing, and what to expect`} />
       <ServiceLinks svc={svc} />
       <FinalCta heading={`Request ${svc.name} in ${seo.primaryMarket}`} currentService={svc.slug} />
     </>

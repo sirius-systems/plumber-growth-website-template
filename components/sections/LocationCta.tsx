@@ -31,7 +31,7 @@ export function LocationCta({ area, content }: { area: ServiceAreaReference; con
                 {formatPhoneDisplay(business.phone)}
               </a>
             </p>
-            {/* Static map placeholder — signals a real map image is needed. */}
+            {/* Static map placeholder, signals a real map image is needed. */}
             <div
               role="img"
               aria-label={`Service area map for ${area.name}`}
@@ -46,7 +46,7 @@ export function LocationCta({ area, content }: { area: ServiceAreaReference; con
             >
               <LucideIcon name="MapPin" size={32} color="rgba(255,255,255,0.5)" />
               <p style={{ margin: "var(--space-2) 0 0", fontSize: "13px", color: "rgba(255,255,255,0.50)" }}>
-                Service area map — {area.name}
+                Service area map, {area.name}
               </p>
             </div>
             {neighborhoods.length > 0 && (

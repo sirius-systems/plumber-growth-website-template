@@ -5,7 +5,7 @@
 const STEPS = [
   { title: "Request Service", body: "Call us or submit the request form with a few details about the problem." },
   { title: "We Review Your Request", body: "Our team reviews the details and reaches out to confirm timing and next steps." },
-  { title: "Appointment Confirmed", body: "Once we've spoken, your appointment is confirmed — it isn't guaranteed until then." },
+  { title: "Appointment Confirmed", body: "Once we've spoken, your appointment is confirmed, it isn't guaranteed until then." },
   { title: "Problem Solved", body: "A licensed plumber completes the work and explains what was done before leaving." },
 ];
 

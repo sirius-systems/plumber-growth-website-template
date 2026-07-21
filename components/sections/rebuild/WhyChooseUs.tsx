@@ -13,7 +13,7 @@ export function WhyChooseUs() {
     {
       icon: "BadgeCheck",
       title: "Honest Pricing",
-      desc: "Clear, upfront pricing explained before work begins — no surprise invoices.",
+      desc: "Clear, upfront pricing explained before work begins, no surprise invoices.",
     },
     {
       icon: "Clock",

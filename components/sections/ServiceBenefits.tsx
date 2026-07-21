@@ -7,7 +7,7 @@ import { LucideIcon } from "@/components/ui/LucideIcon";
 export function ServiceBenefits({ svc }: { svc: PlumbingService }) {
   const { business, credentials } = clientConfig;
   const benefits: { icon: string; title: string; desc: string }[] = [
-    { icon: "BadgeCheck", title: "Honest, Upfront Pricing", desc: "We explain pricing before work begins — no surprise invoices." },
+    { icon: "BadgeCheck", title: "Honest, Upfront Pricing", desc: "We explain pricing before work begins, no surprise invoices." },
     { icon: "Clock", title: "Fast, Around-the-Clock Response", desc: "Emergency plumbing help is available 24/7 across the valley." },
     {
       icon: "Shield",

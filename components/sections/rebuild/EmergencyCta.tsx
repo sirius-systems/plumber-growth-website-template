@@ -17,7 +17,7 @@ export function EmergencyCta() {
         <h2 style={{ marginTop: 0, fontSize: "var(--font-size-2xl)" }}>Plumbing Emergency?</h2>
         <p style={{ color: "rgba(255,255,255,0.80)" }}>
           Burst pipe, active leak, or no water? Calling is the fastest way to reach us
-          {operations.twentyFourSevenService ? " — 24/7." : "."}
+          {operations.twentyFourSevenService ? ", 24/7." : "."}
         </p>
         <div
           style={{

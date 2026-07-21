@@ -44,7 +44,7 @@ export function SiteFooter() {
       }}
     >
       <div className="container container--wide section footer-grid">
-        {/* Col 1 — logo placeholder + identity */}
+        {/* Col 1, logo placeholder + identity */}
         <div>
           {branding.logoSrc ? (
             <Image
@@ -84,7 +84,7 @@ export function SiteFooter() {
           )}
         </div>
 
-        {/* Col 2 — Hours */}
+        {/* Col 2, Hours */}
         <div>
           <p style={headingStyle}>Hours</p>
           <ul style={listStyle}>
@@ -106,7 +106,7 @@ export function SiteFooter() {
           </ul>
         </div>
 
-        {/* Col 3 — Services */}
+        {/* Col 3, Services */}
         <nav aria-label="Services">
           <p style={headingStyle}>Services</p>
           <ul style={listStyle}>
@@ -121,7 +121,7 @@ export function SiteFooter() {
           </ul>
         </nav>
 
-        {/* Col 4 — Service areas */}
+        {/* Col 4, Service areas */}
         <nav aria-label="Service areas">
           <p style={headingStyle}>Service Areas</p>
           <ul style={listStyle}>
@@ -140,7 +140,7 @@ export function SiteFooter() {
           </ul>
         </nav>
 
-        {/* Col 5 — Company */}
+        {/* Col 5, Company */}
         <nav aria-label="Company">
           <p style={headingStyle}>Company</p>
           <ul style={listStyle}>
@@ -164,7 +164,7 @@ export function SiteFooter() {
           </ul>
         </nav>
 
-        {/* Col 6 — Get started */}
+        {/* Col 6, Get started */}
         <nav aria-label="Customer actions">
           <p style={headingStyle}>Get Started</p>
           <ul style={listStyle}>
@@ -186,7 +186,7 @@ export function SiteFooter() {
         </nav>
       </div>
 
-      {/* Full-width line 1 — legal (centered) */}
+      {/* Full-width line 1, legal (centered) */}
       <div
         className="container"
         style={{
@@ -201,7 +201,7 @@ export function SiteFooter() {
         <Link href="/terms/">Terms &amp; Conditions</Link>
       </div>
 
-      {/* Full-width line 2 — copyright + verified statements (centered) */}
+      {/* Full-width line 2, copyright + verified statements (centered) */}
       <div
         className="container"
         style={{

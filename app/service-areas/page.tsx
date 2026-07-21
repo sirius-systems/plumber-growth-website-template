@@ -1,8 +1,15 @@
 import type { Metadata } from "next";
 import { clientConfig } from "@/config/client";
-import { Breadcrumb } from "@/components/sections/Breadcrumb";
-import { LocationCard } from "@/components/sections/LocationCard";
-import { CallToAction } from "@/components/sections/CallToAction";
+import { hubFaqs } from "@/content/service-areas/faqs";
+import { HubHero } from "@/components/sections/hub/HubHero";
+import { CoverageIntro } from "@/components/sections/hub/CoverageIntro";
+import { FeaturedLocations } from "@/components/sections/hub/FeaturedLocations";
+import { SecondaryLocations } from "@/components/sections/hub/SecondaryLocations";
+import { RegionMap } from "@/components/sections/hub/RegionMap";
+import { RegionServices } from "@/components/sections/hub/RegionServices";
+import { WhyChooseUs } from "@/components/sections/rebuild/WhyChooseUs";
+import { FaqSection } from "@/components/sections/rebuild/FaqSection";
+import { FinalCta } from "@/components/sections/rebuild/FinalCta";
 
 export const metadata: Metadata = {
   title: "Service Areas",
@@ -11,48 +18,42 @@ export const metadata: Metadata = {
   alternates: { canonical: "/service-areas/" },
 };
 
-/** Service-areas hub (docs/04 §12). Links to per-area detail pages; no doorway pages. */
+/** Service-areas hub (docs/04 §12). Rebuilt section stack. */
 export default function ServiceAreasPage() {
-  const areas = clientConfig.serviceAreas;
+  const { business, region } = clientConfig;
+  const canonical = `${business.websiteUrl}/service-areas/`;
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: `${business.websiteUrl}/` },
+      { "@type": "ListItem", position: 2, name: "Service Areas", item: canonical },
+    ],
+  };
+  const collectionJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: `Plumbing Services in ${region.name}`,
+    url: canonical,
+    description: region.subheading,
+    provider: { "@type": "Plumber", name: business.publicName },
+  };
 
   return (
     <>
-      <section className="container section">
-        <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Service Areas" }]} />
-        <h1>Plumbing Services in the Las Vegas Area</h1>
-        <p style={{ maxWidth: "var(--measure-reading)", fontSize: "var(--font-size-lg)" }}>
-          {clientConfig.business.publicName} serves communities across the Las Vegas valley. Choose
-          your area to learn more, or call{" "}
-          <a href={`tel:${clientConfig.business.phone.replace(/[^\d+]/g, "")}`}>
-            (888) 308-3262
-          </a>{" "}
-          to confirm availability in your neighborhood.
-        </p>
-        {clientConfig.operations.twentyFourSevenService && (
-          <p style={{ color: "var(--color-text-muted)" }}>
-            Emergency plumbing help is available 24/7 across every area we serve.
-          </p>
-        )}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionJsonLd) }} />
 
-        <ul
-          style={{
-            display: "grid",
-            gap: "var(--space-6)",
-            gridTemplateColumns: "repeat(auto-fit, minmax(16rem, 1fr))",
-            listStyle: "none",
-            padding: 0,
-            marginTop: "var(--space-8)",
-          }}
-        >
-          {areas.map((area) => (
-            <li key={area.name} style={{ display: "flex" }}>
-              <LocationCard area={area} />
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      <CallToAction />
+      <HubHero />
+      <CoverageIntro />
+      <FeaturedLocations />
+      <SecondaryLocations />
+      <RegionMap />
+      <RegionServices />
+      <WhyChooseUs />
+      <FaqSection items={hubFaqs} subheading={`Plumbing service across ${region.name}`} />
+      <FinalCta />
     </>
   );
 }
