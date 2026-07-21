@@ -101,7 +101,7 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
                 Request {svc.name.toLowerCase()}
               </h2>
               <p style={{ color: "var(--color-text-muted)", marginTop: 0 }}>
-                Submitting is a request — not a confirmed appointment until we contact you.
+                Submitting is a request, not a confirmed appointment until we contact you.
               </p>
               <Suspense fallback={<p>Loading form…</p>}>
                 <GeneralQuoteForm paired defaultService={svc.slug} />
@@ -158,7 +158,7 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
       {content && (
         <FAQAccordion
           items={content.faqs}
-          heading={`${svc.name} — Frequently Asked Questions`}
+          heading={`${svc.name}, Frequently Asked Questions`}
           altBackground
         />
       )}

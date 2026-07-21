@@ -119,7 +119,7 @@ export default async function LocationPage({ params }: { params: Promise<Params>
             <ul>
               {featured.map((s) => (
                 <li key={s.slug}>
-                  <Link href={`/services/${s.slug}/`}>{s.name}</Link> — {s.shortDescription}
+                  <Link href={`/services/${s.slug}/`}>{s.name}</Link>, {s.shortDescription}
                 </li>
               ))}
             </ul>

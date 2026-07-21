@@ -53,7 +53,7 @@ export default function TermsPage() {
 
       <h2 style={h2}>No guarantee of service</h2>
       <p style={muted}>
-        Submitting a form on this site is a request for service — it does not create a contract,
+        Submitting a form on this site is a request for service, it does not create a contract,
         guarantee service, guarantee a response time, or confirm an appointment. An appointment is
         confirmed only when we contact you directly.
       </p>
@@ -67,7 +67,7 @@ export default function TermsPage() {
       <h2 style={h2}>Limitation of liability</h2>
       <p style={muted}>
         To the fullest extent permitted by law, {business.legalName} is not liable for damages
-        arising from your use of this website. (Placeholder — confirm with legal counsel.)
+        arising from your use of this website. (Placeholder, confirm with legal counsel.)
       </p>
 
       <h2 style={h2}>Changes to these terms</h2>

@@ -3,7 +3,6 @@ import { notFound } from "next/navigation";
 import { clientConfig } from "@/config/client";
 import { Breadcrumb } from "@/components/sections/Breadcrumb";
 import { ServiceGrid } from "@/components/sections/ServiceGrid";
-import { TrustBar } from "@/components/sections/TrustBar";
 import { ServiceAreaList } from "@/components/sections/ServiceAreaList";
 import { FAQAccordion, type FAQItem } from "@/components/sections/FAQAccordion";
 import { CallToAction } from "@/components/sections/CallToAction";
@@ -27,7 +26,7 @@ const COMMERCIAL_FAQS: FAQItem[] = [
   {
     question: "What types of commercial properties do you serve?",
     answer:
-      "Offices, retail, restaurants, multifamily, and light commercial buildings across the Las Vegas area. For large industrial or municipal projects, we scope the work separately — contact us to discuss.",
+      "Offices, retail, restaurants, multifamily, and light commercial buildings across the Las Vegas area. For large industrial or municipal projects, we scope the work separately, contact us to discuss.",
   },
   {
     question: "Can you schedule work around our business hours?",
@@ -54,7 +53,7 @@ export default function CommercialPage() {
         </h1>
         <p style={{ maxWidth: "var(--measure-reading)", fontSize: "var(--font-size-lg)" }}>
           {clientConfig.business.publicName} keeps Las Vegas businesses running with dependable
-          commercial plumbing — scheduled around your operations and backed by licensed, insured
+          commercial plumbing, scheduled around your operations and backed by licensed, insured
           work.
         </p>
 
@@ -71,12 +70,11 @@ export default function CommercialPage() {
           maintenance, repairs, and installations we can plan around your hours.
         </p>
         <p style={{ maxWidth: "var(--measure-reading)", color: "var(--color-text-muted)" }}>
-          Large industrial or municipal projects require separate scoping — reach out and we&rsquo;ll
+          Large industrial or municipal projects require separate scoping, reach out and we&rsquo;ll
           talk through what your property needs.
         </p>
       </section>
 
-      <TrustBar />
       <ServiceGrid
         heading="Commercial Plumbing Services"
         intro="Our full range of plumbing services, available for commercial properties."
@@ -85,7 +83,7 @@ export default function CommercialPage() {
       <ServiceAreaList intro="Serving commercial properties across Las Vegas and the surrounding valley." />
       <FAQAccordion
         items={COMMERCIAL_FAQS}
-        heading="Commercial Plumbing — Frequently Asked Questions"
+        heading="Commercial Plumbing, Frequently Asked Questions"
         altBackground
       />
       <CallToAction heading="Plumbing service for your business?" />

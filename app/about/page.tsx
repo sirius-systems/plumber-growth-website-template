@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { clientConfig } from "@/config/client";
 import { Breadcrumb } from "@/components/sections/Breadcrumb";
-import { TrustBar } from "@/components/sections/TrustBar";
 import { ReviewsSection } from "@/components/sections/ReviewsSection";
 import { CallToAction } from "@/components/sections/CallToAction";
 
@@ -35,7 +34,7 @@ export default function AboutPage() {
           Las Vegas valley the same way.
         </p>
 
-        {/* Team photo placeholder — no real person's image is used on the demo. */}
+        {/* Team photo placeholder, no real person's image is used on the demo. */}
         <div
           role="img"
           aria-label="Team photo coming soon"
@@ -57,7 +56,7 @@ export default function AboutPage() {
         <h2 style={{ fontSize: "var(--font-size-2xl)" }}>Meet the owner</h2>
         <p>
           {OWNER} is the founder and lead plumber at {business.publicName}. Nevada licensed and
-          hands-on, he built the company around transparent communication and fair pricing — no
+          hands-on, he built the company around transparent communication and fair pricing, no
           pressure and no surprises on the invoice.
         </p>
 
@@ -71,7 +70,7 @@ export default function AboutPage() {
         <h2 style={{ fontSize: "var(--font-size-2xl)" }}>How we work</h2>
         <ul style={{ color: "var(--color-text-muted)" }}>
           <li>Honest, upfront pricing explained before work begins</li>
-          <li>No unnecessary upsells — only what the job actually needs</li>
+          <li>No unnecessary upsells, only what the job actually needs</li>
           <li>Clear explanations of the problem and your options</li>
           <li>Clean work areas and respect for your home or business</li>
         </ul>
@@ -83,7 +82,6 @@ export default function AboutPage() {
         </p>
       </section>
 
-      <TrustBar />
       <ReviewsSection heading="What our customers say" showSummary={false} limit={2} altBackground />
       <CallToAction />
     </>

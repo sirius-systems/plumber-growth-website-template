@@ -34,7 +34,7 @@ export function WebsiteOnboardingForm() {
         <p>
           Thank you. Your onboarding details were received and the {clientConfig.business.publicName}{" "}
           / Sirius Systems team will be in touch to confirm next steps. Please do not send any
-          passwords — we will never ask for them.
+          passwords, we will never ask for them.
         </p>
       </div>
     );

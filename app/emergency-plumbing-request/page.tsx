@@ -24,7 +24,7 @@ export default function EmergencyRequestPage() {
 
   return (
     <section className="container section" style={{ maxWidth: "48rem" }}>
-      {/* Safety notice first — before the heading and the form. */}
+      {/* Safety notice first, before the heading and the form. */}
       <EmergencySafetyNotice />
 
       <h1 style={{ fontSize: "var(--font-size-3xl)" }}>Emergency Plumbing Request</h1>

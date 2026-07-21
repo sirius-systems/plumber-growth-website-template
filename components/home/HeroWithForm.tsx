@@ -79,7 +79,7 @@ export function HeroWithForm() {
         >
           <h2 style={{ marginTop: 0, fontSize: "var(--font-size-lg)" }}>Request service</h2>
           <p style={{ color: "var(--color-text-muted)", marginTop: 0 }}>
-            Tell us what&rsquo;s going on — submitting is a request, not a confirmed
+            Tell us what&rsquo;s going on, submitting is a request, not a confirmed
             appointment until we contact you.
           </p>
           <Suspense fallback={<p>Loading form…</p>}>

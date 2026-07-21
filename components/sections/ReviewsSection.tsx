@@ -80,7 +80,7 @@ export function ReviewsSection({
                 {review.author}
                 <span style={{ color: "var(--color-text-muted)", fontWeight: 400 }}>
                   {" "}
-                  — {review.location}
+, {review.location}
                 </span>
               </p>
             </li>

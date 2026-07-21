@@ -23,7 +23,7 @@ export interface LocationContent {
 export const LOCATION_CONTENT: Record<string, LocationContent> = {
   "las-vegas": {
     intro:
-      "Las Vegas Pro Plumbing serves the full Las Vegas valley — from downtown and the east side out to the Summerlin foothills.",
+      "Las Vegas Pro Plumbing serves the full Las Vegas valley, from downtown and the east side out to the Summerlin foothills.",
     body: [
       "The Colorado River gives Las Vegas some of the hardest water in the country, and it's tough on plumbing. Sediment buildup in water heaters and mineral scale in pipes and fixtures are among the most common issues we see, which is why water heater service and drain cleaning are frequent calls across the city.",
       "In older neighborhoods, aging copper pipe and slab leaks are a recurring concern. We use electronic leak detection to find hidden and slab leaks with minimal disruption before recommending a targeted repair.",
@@ -37,7 +37,7 @@ export const LOCATION_CONTENT: Record<string, LocationContent> = {
       "Las Vegas Pro Plumbing serves Henderson homes and businesses, from established neighborhoods to the newest master-planned communities.",
     body: [
       "Henderson is a fast-growing community with a mix of newer construction and long-established neighborhoods. In newer homes we're often called for water heater service and fixture work; in established areas, drain cleaning and pipe repair are more common.",
-      "As in the rest of the valley, hard water drives a lot of water heater installation and replacement work here — sediment buildup shortens tank life without regular maintenance.",
+      "As in the rest of the valley, hard water drives a lot of water heater installation and replacement work here, sediment buildup shortens tank life without regular maintenance.",
       "We serve both residential and commercial properties across Henderson, with emergency help available 24/7.",
     ],
     neighborhoods: ["Green Valley", "Anthem", "Cadence", "MacDonald Ranch"],
@@ -81,7 +81,7 @@ export const LOCATION_CONTENT: Record<string, LocationContent> = {
       "Las Vegas Pro Plumbing serves Enterprise, the fast-growing area south of Las Vegas.",
     body: [
       "Enterprise is one of the valley's fastest-growing communities, with a lot of newer residential construction and an expanding commercial sector. Water heater installation, new-construction-era plumbing service, and drain cleaning are common here.",
-      "Because much of the housing stock is newer, we're often installing and maintaining systems rather than replacing failed older ones — though hard water still means water heaters need attention over time.",
+      "Because much of the housing stock is newer, we're often installing and maintaining systems rather than replacing failed older ones, though hard water still means water heaters need attention over time.",
       "We provide both residential and commercial plumbing across Enterprise, with emergency service available around the clock.",
     ],
     neighborhoods: ["Mountain's Edge", "Southern Highlands edge", "Rhodes Ranch area"],

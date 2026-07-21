@@ -30,7 +30,7 @@ export const SERVICE_CONTENT: Record<string, ServiceContent> = {
     intro:
       "Plumbing emergencies don't wait for business hours. When water is where it shouldn't be, calling is the fastest way to reach us.",
     overview:
-      "Our emergency plumbing service covers urgent problems that can't wait — burst pipes, active leaks, sewage backups, and sudden loss of water. Emergency help is available 24/7. Call us and we'll tell you what to do right now and confirm current availability for your area. We never promise a specific arrival time.",
+      "Our emergency plumbing service covers urgent problems that can't wait, burst pipes, active leaks, sewage backups, and sudden loss of water. Emergency help is available 24/7. Call us and we'll tell you what to do right now and confirm current availability for your area. We never promise a specific arrival time.",
     covers: [
       "Burst and leaking pipes",
       "Active flooding from plumbing failures",
@@ -63,9 +63,9 @@ export const SERVICE_CONTENT: Record<string, ServiceContent> = {
     ],
   },
   "drain-cleaning": {
-    intro: "Slow or clogged drains rarely fix themselves — and store-bought chemicals often make things worse.",
+    intro: "Slow or clogged drains rarely fix themselves, and store-bought chemicals often make things worse.",
     overview:
-      "We clear slow and stopped drains throughout the home — kitchen, bathroom, laundry, and floor drains. Depending on the blockage, we use professional drain snaking or hydrojetting to remove buildup and restore full flow, then identify what caused the clog so it's less likely to come back.",
+      "We clear slow and stopped drains throughout the home, kitchen, bathroom, laundry, and floor drains. Depending on the blockage, we use professional drain snaking or hydrojetting to remove buildup and restore full flow, then identify what caused the clog so it's less likely to come back.",
     covers: [
       "Kitchen and bathroom sink drains",
       "Tub and shower drains",
@@ -98,9 +98,9 @@ export const SERVICE_CONTENT: Record<string, ServiceContent> = {
     ],
   },
   "water-heater-repair": {
-    intro: "No hot water is more than an inconvenience — and Las Vegas's hard water is tough on water heaters.",
+    intro: "No hot water is more than an inconvenience, and Las Vegas's hard water is tough on water heaters.",
     overview:
-      "We diagnose and repair both tank and tankless water heaters — restoring hot water, stopping leaks, and addressing the sediment buildup that Las Vegas's hard water accelerates. We'll tell you honestly whether a repair makes sense or whether replacement is the better value.",
+      "We diagnose and repair both tank and tankless water heaters, restoring hot water, stopping leaks, and addressing the sediment buildup that Las Vegas's hard water accelerates. We'll tell you honestly whether a repair makes sense or whether replacement is the better value.",
     covers: [
       "No hot water or not enough hot water",
       "Leaking tanks and fittings",
@@ -128,14 +128,14 @@ export const SERVICE_CONTENT: Record<string, ServiceContent> = {
       {
         question: "Why is my water heater making noise?",
         answer:
-          "Popping or rumbling usually means sediment has collected at the bottom of the tank — common with hard water. Flushing the tank often helps.",
+          "Popping or rumbling usually means sediment has collected at the bottom of the tank, common with hard water. Flushing the tank often helps.",
       },
     ],
   },
   "water-heater-installation": {
     intro: "Replacing a water heater is a chance to right-size the system for your home and cut operating costs.",
     overview:
-      "We install and replace tank and tankless water heaters sized for your household's hot-water demand. We'll walk you through the tank-versus-tankless decision, energy efficiency, and the permit considerations that apply in the Las Vegas area — then handle the installation cleanly and correctly.",
+      "We install and replace tank and tankless water heaters sized for your household's hot-water demand. We'll walk you through the tank-versus-tankless decision, energy efficiency, and the permit considerations that apply in the Las Vegas area, then handle the installation cleanly and correctly.",
     covers: [
       "Tank water heater replacement",
       "Tankless water heater installation",
@@ -151,7 +151,7 @@ export const SERVICE_CONTENT: Record<string, ServiceContent> = {
     ],
     faqs: [
       {
-        question: "Tank or tankless — which is better?",
+        question: "Tank or tankless, which is better?",
         answer:
           "Tankless units save space and can be more efficient since they heat on demand, but have a higher upfront cost. Tank units cost less initially and suit many households. The right choice depends on your usage, budget, and space.",
       },
@@ -170,7 +170,7 @@ export const SERVICE_CONTENT: Record<string, ServiceContent> = {
   "leak-detection": {
     intro: "A hidden leak can quietly waste water and damage your home long before you see it.",
     overview:
-      "We locate hidden leaks — including slab leaks, which are common in Las Vegas due to soil conditions and hard-water corrosion of aging pipes. Using electronic leak-detection methods, we pinpoint the source with minimal disruption so the repair can be as targeted as possible.",
+      "We locate hidden leaks, including slab leaks, which are common in Las Vegas due to soil conditions and hard-water corrosion of aging pipes. Using electronic leak-detection methods, we pinpoint the source with minimal disruption so the repair can be as targeted as possible.",
     covers: [
       "Slab leak detection",
       "Hidden leaks behind walls and under floors",
@@ -205,7 +205,7 @@ export const SERVICE_CONTENT: Record<string, ServiceContent> = {
   "pipe-repair": {
     intro: "From a pinhole drip to a burst line, pipe problems get more expensive the longer they wait.",
     overview:
-      "We repair and replace damaged, corroded, and leaking pipes — including burst pipes, pinhole leaks, and aging lines. Where it fits the situation, we can discuss trenchless options that reduce digging and disruption. We'll explain what's wrong and what your repair and replacement options are.",
+      "We repair and replace damaged, corroded, and leaking pipes, including burst pipes, pinhole leaks, and aging lines. Where it fits the situation, we can discuss trenchless options that reduce digging and disruption. We'll explain what's wrong and what your repair and replacement options are.",
     covers: [
       "Burst pipe repair",
       "Corroded and aging pipe replacement",
@@ -238,7 +238,7 @@ export const SERVICE_CONTENT: Record<string, ServiceContent> = {
     ],
   },
   "sewer-line-repair": {
-    intro: "Sewer problems are unpleasant and urgent — and they're often caused by issues you can't see.",
+    intro: "Sewer problems are unpleasant and urgent, and they're often caused by issues you can't see.",
     overview:
       "We diagnose and repair sewer line problems, from backups and root intrusion to collapsed lines. A camera inspection lets us see exactly what's happening inside the line so the repair is based on evidence, not guesswork. Where suitable, trenchless repair reduces excavation.",
     covers: [
@@ -258,7 +258,7 @@ export const SERVICE_CONTENT: Record<string, ServiceContent> = {
       {
         question: "How do you find out what's wrong with a sewer line?",
         answer:
-          "We run a camera inspection through the line to see the actual condition inside — roots, breaks, blockages, or collapse — so the repair addresses the real problem.",
+          "We run a camera inspection through the line to see the actual condition inside, roots, breaks, blockages, or collapse, so the repair addresses the real problem.",
       },
       {
         question: "What causes sewer line damage?",
@@ -275,7 +275,7 @@ export const SERVICE_CONTENT: Record<string, ServiceContent> = {
   "toilet-repair": {
     intro: "A running or weak-flushing toilet wastes water every day it goes unfixed.",
     overview:
-      "We repair toilets that run, clog, flush weakly, or leak. Most issues come down to worn internal parts — flappers, fill valves, and wax rings — that are straightforward to replace. If a toilet is beyond economical repair, we'll tell you honestly.",
+      "We repair toilets that run, clog, flush weakly, or leak. Most issues come down to worn internal parts, flappers, fill valves, and wax rings, that are straightforward to replace. If a toilet is beyond economical repair, we'll tell you honestly.",
     covers: [
       "Running and constantly refilling toilets",
       "Clogs and weak flushing",
@@ -296,21 +296,21 @@ export const SERVICE_CONTENT: Record<string, ServiceContent> = {
           "Usually a worn flapper or a fill valve that isn't shutting off. Both are common, inexpensive parts to replace and stop the constant water waste.",
       },
       {
-        question: "There's water around the base of my toilet — what is it?",
+        question: "There's water around the base of my toilet, what is it?",
         answer:
           "Often a failed wax ring where the toilet meets the floor. Left alone it can damage the subfloor, so it's worth addressing promptly.",
       },
       {
         question: "Is it worth repairing an old toilet?",
         answer:
-          "Often yes — most problems are worn parts. If a toilet is cracked, very old, or inefficient, replacement may be the better value, and we'll give you a straight recommendation.",
+          "Often yes, most problems are worn parts. If a toilet is cracked, very old, or inefficient, replacement may be the better value, and we'll give you a straight recommendation.",
       },
     ],
   },
   "faucet-repair": {
     intro: "A dripping faucet is a small annoyance that adds up to real water waste.",
     overview:
-      "We repair and replace faucets throughout the home — fixing drips, restoring water pressure, and replacing worn cartridges and fixtures. Whether it's a kitchen, bathroom, or utility faucet, we'll stop the drip and get it working smoothly again.",
+      "We repair and replace faucets throughout the home, fixing drips, restoring water pressure, and replacing worn cartridges and fixtures. Whether it's a kitchen, bathroom, or utility faucet, we'll stop the drip and get it working smoothly again.",
     covers: [
       "Dripping and leaking faucets",
       "Low water pressure at the fixture",
@@ -345,7 +345,7 @@ export const SERVICE_CONTENT: Record<string, ServiceContent> = {
   "garbage-disposal-repair": {
     intro: "When the disposal jams or quits, the whole kitchen sink is out of commission.",
     overview:
-      "We repair and replace garbage disposals — clearing jams, fixing units that hum but won't spin, and addressing leaks. When a disposal is worn out or not worth repairing, we'll replace it with a properly sized unit.",
+      "We repair and replace garbage disposals, clearing jams, fixing units that hum but won't spin, and addressing leaks. When a disposal is worn out or not worth repairing, we'll replace it with a properly sized unit.",
     covers: [
       "Jammed disposals",
       "Units that hum but don't spin",
@@ -361,7 +361,7 @@ export const SERVICE_CONTENT: Record<string, ServiceContent> = {
     ],
     faqs: [
       {
-        question: "My disposal hums but won't spin — what's wrong?",
+        question: "My disposal hums but won't spin, what's wrong?",
         answer:
           "Usually something is jammed in the grinding chamber, or the motor is stuck. Sometimes the reset button resolves it; if not, it needs to be cleared or serviced. Never put your hand inside a disposal.",
       },

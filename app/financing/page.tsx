@@ -25,7 +25,7 @@ export default function FinancingPage() {
 
         <p style={{ fontSize: "var(--font-size-lg)" }}>
           Financing options are available for qualified customers. Contact {business.publicName} to
-          discuss financing for larger plumbing projects — including water heater installation,
+          discuss financing for larger plumbing projects, including water heater installation,
           sewer line repair, and pipe replacement.
         </p>
 

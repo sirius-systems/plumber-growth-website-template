@@ -135,7 +135,7 @@ export const clientConfig: ClientConfig = {
     legalName: "Las Vegas Pro Plumbing LLC",
     publicName: "Las Vegas Pro Plumbing",
     description:
-      "Las Vegas Pro Plumbing provides fast, honest plumbing service across the Las Vegas valley — emergency repairs, drain cleaning, water heaters, leak detection, and more. Licensed, local, and trusted since 2013.",
+      "Las Vegas Pro Plumbing provides fast, honest plumbing service across the Las Vegas valley, emergency repairs, drain cleaning, water heaters, leak detection, and more. Licensed, local, and trusted since 2013.",
     phone: "+18883083262",
     smsPhone: "+18883083262",
     email: "info@lasvegasproplumbing.com",
@@ -199,7 +199,7 @@ export const clientConfig: ClientConfig = {
       "Las Vegas Pro Plumbing provides fast, honest plumbing services in Las Vegas, Henderson, North Las Vegas, and surrounding areas. Call (888) 308-3262 or request service online.",
   },
   marketing: {
-    heroHeadline: "Las Vegas's Trusted Plumber — Fast Response, Honest Pricing",
+    heroHeadline: "Las Vegas's Trusted Plumber: Fast Response, Honest Pricing",
     heroSubheadline:
       "Serving Las Vegas, Henderson, North Las Vegas, and surrounding areas with licensed, upfront plumbing service.",
     tagline: "Fast Response, Honest Pricing",

@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { clientConfig } from "@/config/client";
 import { Breadcrumb } from "@/components/sections/Breadcrumb";
 import { ServiceGrid } from "@/components/sections/ServiceGrid";
-import { TrustBar } from "@/components/sections/TrustBar";
 import { ServiceAreaList } from "@/components/sections/ServiceAreaList";
 import { FAQAccordion, type FAQItem } from "@/components/sections/FAQAccordion";
 import { CallToAction } from "@/components/sections/CallToAction";
@@ -28,7 +27,7 @@ const RESIDENTIAL_FAQS: FAQItem[] = [
   {
     question: "Can you help with a plumbing emergency at home?",
     answer:
-      "Yes. We respond to residential plumbing emergencies around the clock. Call (888) 308-3262 — for gas, fire, or electrical danger, call 911 or your utility provider first.",
+      "Yes. We respond to residential plumbing emergencies around the clock. Call (888) 308-3262, for gas, fire, or electrical danger, call 911 or your utility provider first.",
   },
 ];
 
@@ -42,7 +41,7 @@ export default function ResidentialPage() {
         </h1>
         <p style={{ maxWidth: "var(--measure-reading)", fontSize: "var(--font-size-lg)" }}>
           {clientConfig.business.publicName} helps homeowners across the Las Vegas valley with
-          everyday repairs and urgent problems alike — honest pricing, licensed work, and clear
+          everyday repairs and urgent problems alike, honest pricing, licensed work, and clear
           explanations before we start.
         </p>
 
@@ -63,7 +62,6 @@ export default function ResidentialPage() {
         </ul>
       </section>
 
-      <TrustBar />
       <ServiceGrid
         heading="Residential Plumbing Services"
         intro="Everything a homeowner needs, from emergencies to installations."
@@ -72,7 +70,7 @@ export default function ResidentialPage() {
       <ServiceAreaList intro="We serve homeowners across Las Vegas and the surrounding communities." />
       <FAQAccordion
         items={RESIDENTIAL_FAQS}
-        heading="Residential Plumbing — Frequently Asked Questions"
+        heading="Residential Plumbing, Frequently Asked Questions"
         altBackground
       />
       <CallToAction heading="Need a plumber for your home?" />

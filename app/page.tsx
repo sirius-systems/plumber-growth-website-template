@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { clientConfig } from "@/config/client";
 import { HeroWithForm } from "@/components/home/HeroWithForm";
 import { CTAWithForm } from "@/components/home/CTAWithForm";
-import { TrustBar } from "@/components/sections/TrustBar";
 import { ServiceGrid } from "@/components/sections/ServiceGrid";
 import { EmergencyCallout } from "@/components/sections/EmergencyCallout";
 import { WhyChooseUs } from "@/components/sections/WhyChooseUs";
@@ -87,10 +86,7 @@ export default function HomePage() {
       {/* 1. Hero */}
       <HeroWithForm />
 
-      {/* 2. Credibility indicators */}
-      <TrustBar />
-
-      {/* 3. Primary services */}
+      {/* 2. Primary services */}
       <ServiceGrid
         heading="Our Plumbing Services"
         intro="From emergencies to everyday repairs and installations, our licensed team handles it across the Las Vegas valley."

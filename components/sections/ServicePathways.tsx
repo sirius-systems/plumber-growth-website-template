@@ -13,7 +13,7 @@ export function ServicePathways() {
     pathways.push({
       href: "/residential-plumbing/",
       title: "Residential Plumbing",
-      body: "Repairs, replacements, and installations for homeowners — drains, water heaters, leaks, fixtures, and emergencies.",
+      body: "Repairs, replacements, and installations for homeowners, drains, water heaters, leaks, fixtures, and emergencies.",
     });
   }
   if (operations.commercialPlumbing) {

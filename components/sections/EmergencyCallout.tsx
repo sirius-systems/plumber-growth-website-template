@@ -20,7 +20,7 @@ export function EmergencyCallout() {
         </h2>
         <p style={{ color: "var(--color-text-muted)" }}>
           Burst pipe, active leak, sewage backup, or no water? Calling is the fastest way to
-          reach us{operations.twentyFourSevenService ? " — emergency help is available 24/7." : "."}
+          reach us{operations.twentyFourSevenService ? ", emergency help is available 24/7." : "."}
         </p>
         <div
           style={{

@@ -23,7 +23,7 @@ export function EmergencySafetyNotice() {
     >
       <p style={{ margin: 0, fontWeight: 700, color: "var(--color-danger)" }}>
         If you smell gas, see fire, face electrical danger, have a serious injury, or
-        flooding that threatens life or property — call 911 or your utility provider
+        flooding that threatens life or property, call 911 or your utility provider
         first.
       </p>
       <p style={{ margin: "var(--space-2) 0 0", color: "var(--color-text-muted)" }}>

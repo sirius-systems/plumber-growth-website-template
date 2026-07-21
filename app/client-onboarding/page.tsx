@@ -17,7 +17,7 @@ export default function ClientOnboardingPage() {
   return (
     <section className="container section" style={{ maxWidth: "48rem" }}>
       <h1 style={{ fontSize: "var(--font-size-3xl)" }}>
-        Plumber Growth System — Website Onboarding
+        Plumber Growth System, Website Onboarding
       </h1>
       <p style={{ fontSize: "var(--font-size-lg)" }}>
         This form is for new Plumber Growth System clients setting up their website. If you are a

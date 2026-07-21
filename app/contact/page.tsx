@@ -58,7 +58,7 @@ export default function ContactPage() {
 
           {operations.emergencyServiceAvailable && (
             <p style={{ color: "var(--color-text-muted)" }}>
-              <strong>24/7 emergency service</strong> — call{" "}
+              <strong>24/7 emergency service</strong>, call{" "}
               <a href={telHref(business.phone)}>{formatPhoneDisplay(business.phone)}</a>.
             </p>
           )}

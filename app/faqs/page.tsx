@@ -14,7 +14,7 @@ const FAQS: FAQItem[] = [
   {
     question: "Do you offer 24/7 emergency plumbing?",
     answer:
-      "Yes. We respond to plumbing emergencies around the clock — call (888) 308-3262. For life-safety threats involving gas, fire, or electrical danger, call 911 or your utility provider first.",
+      "Yes. We respond to plumbing emergencies around the clock, call (888) 308-3262. For life-safety threats involving gas, fire, or electrical danger, call 911 or your utility provider first.",
   },
   {
     question: "What areas do you serve?",
@@ -49,7 +49,7 @@ const FAQS: FAQItem[] = [
   {
     question: "Do you work on commercial properties?",
     answer:
-      "Yes. We serve offices, restaurants, retail, and multifamily properties. Large industrial projects require separate scoping — contact us to discuss.",
+      "Yes. We serve offices, restaurants, retail, and multifamily properties. Large industrial projects require separate scoping, contact us to discuss.",
   },
   {
     question: "How does the estimate process work?",
@@ -59,7 +59,7 @@ const FAQS: FAQItem[] = [
   {
     question: "What payment methods do you accept?",
     answer:
-      "Contact us for payment details. We don't publish specific payment terms on this site — call (888) 308-3262 and we'll be glad to go over the options.",
+      "Contact us for payment details. We don't publish specific payment terms on this site, call (888) 308-3262 and we'll be glad to go over the options.",
   },
 ];
 

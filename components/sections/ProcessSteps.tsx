@@ -14,7 +14,7 @@ const STEPS: { title: string; body: string }[] = [
   },
   {
     title: "Appointment Confirmed",
-    body: "Once we've spoken, your appointment is confirmed — it isn't guaranteed until then.",
+    body: "Once we've spoken, your appointment is confirmed, it isn't guaranteed until then.",
   },
   {
     title: "Problem Solved",

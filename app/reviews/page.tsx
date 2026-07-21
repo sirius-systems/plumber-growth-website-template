@@ -41,7 +41,7 @@ export default function ReviewsPage() {
 
         <h2 style={{ fontSize: "var(--font-size-2xl)" }}>Have private feedback?</h2>
         <p style={{ color: "var(--color-text-muted)" }}>
-          We want to hear it — good or bad. All ratings are welcome, and your feedback helps us
+          We want to hear it, good or bad. All ratings are welcome, and your feedback helps us
           improve.
         </p>
         <p>

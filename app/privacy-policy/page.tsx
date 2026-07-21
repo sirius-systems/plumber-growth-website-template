@@ -43,7 +43,7 @@ export default function PrivacyPolicyPage() {
 
       <h2 style={h2}>Information we collect</h2>
       <p style={muted}>
-        When you submit a form on this site, we collect the information you provide — such as your
+        When you submit a form on this site, we collect the information you provide, such as your
         name, email address, phone number, service address, and the details of your request. We may
         also collect limited technical and analytics data as you use the site.
       </p>
@@ -64,7 +64,7 @@ export default function PrivacyPolicyPage() {
       <h2 style={h2}>Data retention</h2>
       <p style={muted}>
         We retain your information for as long as needed to provide services and meet legal and
-        business requirements, after which it is deleted or anonymized. (Placeholder — confirm
+        business requirements, after which it is deleted or anonymized. (Placeholder, confirm
         retention periods with legal counsel.)
       </p>
 

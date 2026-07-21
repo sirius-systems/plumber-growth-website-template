@@ -10,7 +10,7 @@ export function WhyChooseUs() {
   const reasons: { title: string; body: string }[] = [
     {
       title: "Honest Pricing",
-      body: "Clear, upfront pricing explained before work begins — no surprise invoices and no pressure to buy what you don't need.",
+      body: "Clear, upfront pricing explained before work begins, no surprise invoices and no pressure to buy what you don't need.",
     },
     {
       title: "Fast Response",
@@ -19,7 +19,7 @@ export function WhyChooseUs() {
     {
       title: credentials.licenseNumber ? "Nevada Licensed" : "Licensed & Insured",
       body: credentials.licenseNumber
-        ? `Fully licensed and insured — ${credentials.licenseJurisdiction} #${credentials.licenseNumber}.`
+        ? `Fully licensed and insured, ${credentials.licenseJurisdiction} #${credentials.licenseNumber}.`
         : "Fully licensed and insured for your protection.",
     },
     {

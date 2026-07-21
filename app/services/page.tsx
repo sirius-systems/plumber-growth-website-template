@@ -19,7 +19,7 @@ const SERVICES_FAQS: FAQItem[] = [
   {
     question: "What plumbing services do you offer?",
     answer:
-      "We cover emergency plumbing, drain cleaning, water heater repair and installation, leak detection, pipe repair, sewer line repair, toilet repair, faucet repair, and garbage disposal repair — for both homes and businesses.",
+      "We cover emergency plumbing, drain cleaning, water heater repair and installation, leak detection, pipe repair, sewer line repair, toilet repair, faucet repair, and garbage disposal repair, for both homes and businesses.",
   },
   {
     question: "Do you handle both emergencies and routine work?",
@@ -43,7 +43,7 @@ export default function ServicesHubPage() {
         </h1>
         <p style={{ maxWidth: "var(--measure-reading)", fontSize: "var(--font-size-lg)" }}>
           {clientConfig.business.publicName} provides a full range of residential and commercial
-          plumbing services across {clientConfig.seo.primaryMarket} and the surrounding valley —
+          plumbing services across {clientConfig.seo.primaryMarket} and the surrounding valley, 
           from urgent emergencies to everyday repairs, replacements, and installations.
         </p>
       </section>
@@ -53,7 +53,7 @@ export default function ServicesHubPage() {
       <ServicePathways />
       <ProcessSteps />
       <ServiceAreaList altBackground />
-      <FAQAccordion items={SERVICES_FAQS} heading="Services — Frequently Asked Questions" />
+      <FAQAccordion items={SERVICES_FAQS} heading="Services, Frequently Asked Questions" />
       <CallToAction />
     </>
   );
