@@ -47,8 +47,10 @@ export function GeneralQuoteForm({
       const raw = sessionStorage.getItem(HERO_QUOTE_KEY);
       if (!raw) return;
       const d = JSON.parse(raw) as Record<string, string>;
-      for (const name of ["firstName", "lastName", "phone", "problemDescription"]) {
-        const el = document.querySelector<HTMLInputElement | HTMLTextAreaElement>(`[name="${name}"]`);
+      for (const name of ["firstName", "lastName", "phone", "email", "problemDescription", "customerType"]) {
+        const el = document.querySelector<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>(
+          `[name="${name}"]`,
+        );
         if (el && d[name]) el.value = d[name];
       }
       sessionStorage.removeItem(HERO_QUOTE_KEY);

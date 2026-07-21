@@ -56,6 +56,14 @@ export interface RegionConfig {
   subheading: string;
 }
 
+export interface CommercialStats {
+  /** Only render when verified — never fabricate. */
+  emergencyResponseTime?: string;
+  activeContracts?: number;
+  yearsServingBusinesses?: number;
+  buildingsServicedAnnually?: number;
+}
+
 export interface BrandConfig {
   logoSrc?: string;
   logoAlt: string;
@@ -137,6 +145,10 @@ export interface ClientConfig {
   seo: SeoConfig;
   marketing: MarketingConfig;
   region: RegionConfig;
+  /** Verified commercial reliability stats; empty/partial hides the metrics band. */
+  commercialStats?: CommercialStats;
+  /** Commercial hero subheading override. */
+  commercialSubheading?: string;
 }
 
 const day = (label: string, open = true): BusinessHoursDay => ({ label, open });
@@ -257,6 +269,11 @@ export const clientConfig: ClientConfig = {
     subheading:
       "Serving Las Vegas, Henderson, North Las Vegas, Summerlin, Spring Valley, and surrounding areas.",
   },
+  // Empty for the demo — the commercial metrics band hides gracefully (no
+  // fabricated stats). Populate with verified values for a live client.
+  commercialStats: {},
+  commercialSubheading:
+    "Reliable plumbing for restaurants, offices, apartments, and commercial facilities across Las Vegas, Henderson, and Clark County.",
 };
 
 /** Values that must not remain as the CONFIGURATION_REQUIRED sentinel at launch. */

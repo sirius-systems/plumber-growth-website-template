@@ -26,6 +26,15 @@ import {
   Wrench,
   Layers,
   Settings,
+  UtensilsCrossed,
+  Building2,
+  Landmark,
+  ShoppingBag,
+  GraduationCap,
+  Warehouse,
+  Filter,
+  FileText,
+  FileCheck,
   HelpCircle,
   type LucideProps,
 } from "lucide-react";
@@ -63,6 +72,15 @@ const ICONS: Record<string, React.ComponentType<LucideProps>> = {
   Wrench,
   Layers,
   Settings,
+  UtensilsCrossed,
+  Building2,
+  Landmark,
+  ShoppingBag,
+  GraduationCap,
+  Warehouse,
+  Filter,
+  FileText,
+  FileCheck,
 };
 
 export function LucideIcon({ name, ...props }: { name: string } & LucideProps) {

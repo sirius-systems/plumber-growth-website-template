@@ -10,13 +10,15 @@ export function FaqSection({
   items,
   heading = "Frequently Asked Questions",
   subheading,
+  id,
 }: {
   items: FAQItem[];
   heading?: string;
   subheading?: string;
+  id?: string;
 }) {
   return (
-    <section className="section section-default">
+    <section id={id} className="section section-default">
       <div className="section__inner" style={{ maxWidth: "800px" }}>
         <h2 className="section-heading" style={{ fontSize: "var(--font-size-2xl)", marginTop: 0 }}>
           {heading}
