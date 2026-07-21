@@ -7,6 +7,7 @@ import { enabledServices, findEnabledService, SERVICES } from "@/config/services
 import { SERVICE_CONTENT } from "@/config/service-content";
 import { telHref, formatPhoneDisplay } from "@/lib/utilities/format";
 import { GeneralQuoteForm } from "@/components/forms/GeneralQuoteForm";
+import { TrustBar } from "@/components/sections/TrustBar";
 import { WhyChooseUs } from "@/components/sections/WhyChooseUs";
 import { ProcessSteps } from "@/components/sections/ProcessSteps";
 import { ServiceAreaList } from "@/components/sections/ServiceAreaList";
@@ -110,6 +111,8 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
           </div>
         </div>
       </section>
+
+      <TrustBar />
 
       {/* Detail content below the hero. */}
       {(content || related.length > 0) && (

@@ -5,7 +5,6 @@ import { clientConfig } from "@/config/client";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { MobileActionBar } from "@/components/layout/MobileActionBar";
-import { TrustBarSlot } from "@/components/layout/TrustBarSlot";
 
 export const metadata: Metadata = {
   metadataBase: new URL(clientConfig.business.websiteUrl),
@@ -45,7 +44,6 @@ export default function RootLayout({
         {/* The demonstration banner is injected at the edge by
             functions/_middleware.ts when DEMO_MODE=true (runtime, no rebuild). */}
         <SiteHeader />
-        <TrustBarSlot />
         <main id="main">{children}</main>
         <SiteFooter />
         <MobileActionBar />

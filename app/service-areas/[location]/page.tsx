@@ -8,6 +8,7 @@ import { LOCATION_CONTENT } from "@/config/location-content";
 import { telHref, formatPhoneDisplay } from "@/lib/utilities/format";
 import { Breadcrumb } from "@/components/sections/Breadcrumb";
 import { GeneralQuoteForm } from "@/components/forms/GeneralQuoteForm";
+import { TrustBar } from "@/components/sections/TrustBar";
 import { CallToAction } from "@/components/sections/CallToAction";
 
 interface Params {
@@ -96,6 +97,8 @@ export default async function LocationPage({ params }: { params: Promise<Params>
           </div>
         </div>
       </section>
+
+      <TrustBar />
 
       {/* Location detail below the hero. */}
       <section className="container section">
