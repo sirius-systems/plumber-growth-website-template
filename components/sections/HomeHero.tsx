@@ -2,6 +2,7 @@ import Image from "next/image";
 import { clientConfig } from "@/config/client";
 import { reviewsSummary } from "@/config/reviews";
 import { telHref, formatPhoneDisplay } from "@/lib/utilities/format";
+import { LucideIcon } from "@/components/ui/LucideIcon";
 import { HeroFormCard } from "@/components/forms/HeroFormCard";
 
 /**
@@ -76,9 +77,9 @@ export function HomeHero() {
                 color: "rgba(255,255,255,0.70)",
               }}
             >
-              {trust.map((t, i) => (
-                <li key={t}>
-                  {i > 0 && <span aria-hidden="true" style={{ margin: "0 var(--space-2)" }}>·</span>}
+              {trust.map((t) => (
+                <li key={t} style={{ display: "inline-flex", alignItems: "center", gap: "4px" }}>
+                  <LucideIcon name="CheckCircle" size={14} color="var(--color-accent-500)" />
                   {t}
                 </li>
               ))}
