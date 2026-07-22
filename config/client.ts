@@ -151,6 +151,8 @@ export interface ClientConfig {
   commercialSubheading?: string;
   /** Emit FAQPage JSON-LD only when confirmed eligible per search guidelines. */
   faqSchemaEligible?: boolean;
+  /** Verified response-time phrase for the contact page; unset renders fallback. */
+  responseTime?: string;
   legal?: LegalConfig;
 }
 

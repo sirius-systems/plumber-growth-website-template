@@ -1,114 +1,55 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { ContactForm } from "@/components/forms/ContactForm";
 import { clientConfig } from "@/config/client";
-import { telHref, formatPhoneDisplay } from "@/lib/utilities/format";
-import { Breadcrumb } from "@/components/sections/Breadcrumb";
-import { Hero } from "@/components/sections/Hero";
+import { ContactHero } from "@/components/sections/contact/ContactHero";
+import { ContactMethods } from "@/components/sections/contact/ContactMethods";
+import { ContactFormSection } from "@/components/sections/contact/ContactFormSection";
+import { ContactServiceArea } from "@/components/sections/contact/ContactServiceArea";
+import { ContactTrust } from "@/components/sections/contact/ContactTrust";
+import { ContactFaq } from "@/components/sections/contact/ContactFaq";
+import { ContactCta } from "@/components/sections/contact/ContactCta";
 
 export const metadata: Metadata = {
-  title: "Contact Us",
+  title: `Contact ${clientConfig.business.publicName} | ${clientConfig.region.name} Plumber`,
   description:
-    "Contact Las Vegas Pro Plumbing at (888) 308-3262. Serving Las Vegas, Henderson, North Las Vegas, and surrounding areas.",
+    "Contact Las Vegas Pro Plumbing for plumbing service in Clark County. Call (888) 308-3262 or submit a service request online. Licensed, insured, fast response.",
   alternates: { canonical: "/contact/" },
 };
 
-const DAYS: { key: keyof typeof clientConfig.operations.businessHours; label: string }[] = [
-  { key: "monday", label: "Monday" },
-  { key: "tuesday", label: "Tuesday" },
-  { key: "wednesday", label: "Wednesday" },
-  { key: "thursday", label: "Thursday" },
-  { key: "friday", label: "Friday" },
-  { key: "saturday", label: "Saturday" },
-  { key: "sunday", label: "Sunday" },
-];
-
+/** Contact page (docs/04 §7). Conversion-focused. */
 export default function ContactPage() {
-  const { business, location, operations } = clientConfig;
-  const addressLine = [
-    location.streetAddress,
-    `${location.city}, ${location.state} ${location.postalCode ?? ""}`.trim(),
-  ]
-    .filter(Boolean)
-    .join(", ");
+  const { business } = clientConfig;
+  const canonical = `${business.websiteUrl}/contact/`;
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: `${business.websiteUrl}/` },
+      { "@type": "ListItem", position: 2, name: "Contact", item: canonical },
+    ],
+  };
+  // ContactPage only. LocalBusiness (Plumber) JSON-LD already ships on the
+  // homepage and location pages — not duplicated here (docs/07 §29).
+  const contactPageJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    name: `Contact ${business.publicName}`,
+    url: canonical,
+    description: `Contact ${business.publicName} for plumbing service in ${clientConfig.region.name}.`,
+  };
 
   return (
     <>
-      <Hero contentClassName="container hero-compact">
-        <div className="hero-copy">
-          <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Contact" }]} />
-          <h1>Contact {business.publicName}</h1>
-          <p style={{ fontSize: "18px" }}>
-            Reach us by phone, email, or the form below. 24/7 emergency service is available across
-            the Las Vegas valley.
-          </p>
-          <div style={{ display: "flex", gap: "var(--space-3)", flexWrap: "wrap" }}>
-            <a className="btn btn--primary" href={telHref(business.phone)}>
-              Call {formatPhoneDisplay(business.phone)}
-            </a>
-          </div>
-        </div>
-      </Hero>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(contactPageJsonLd) }} />
 
-      <section className="container section">
-      <div
-        style={{
-          display: "grid",
-          gap: "var(--space-8)",
-          gridTemplateColumns: "repeat(auto-fit, minmax(18rem, 1fr))",
-          alignItems: "start",
-        }}
-      >
-        {/* Contact details */}
-        <div>
-          <p style={{ fontSize: "var(--font-size-2xl)", fontWeight: 700, margin: 0 }}>
-            <a href={telHref(business.phone)}>{formatPhoneDisplay(business.phone)}</a>
-          </p>
-          <p>
-            Email: <a href={`mailto:${business.email}`}>{business.email}</a>
-          </p>
-          <address style={{ fontStyle: "normal", color: "var(--color-text-muted)" }}>
-            {addressLine}
-          </address>
-
-          {operations.emergencyServiceAvailable && (
-            <p style={{ color: "var(--color-text-muted)" }}>
-              <strong>24/7 emergency service</strong>, call{" "}
-              <a href={telHref(business.phone)}>{formatPhoneDisplay(business.phone)}</a>.
-            </p>
-          )}
-
-          <h2 style={{ fontSize: "var(--font-size-lg)" }}>Business hours</h2>
-          <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
-            {DAYS.map(({ key, label }) => (
-              <li
-                key={key}
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  gap: "var(--space-4)",
-                  maxWidth: "20rem",
-                  color: "var(--color-text-muted)",
-                }}
-              >
-                <span>{label}</span>
-                <span>{operations.businessHours[key].label}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        {/* Contact form */}
-        <div>
-          <h2 style={{ fontSize: "var(--font-size-2xl)", marginTop: 0 }}>Send us a message</h2>
-          <ContactForm />
-          <p style={{ fontSize: "0.875rem", color: "var(--color-text-muted)" }}>
-            For service requests with details, use our{" "}
-            <Link href="/request-service/">Request Service</Link> form.
-          </p>
-        </div>
-      </div>
-      </section>
+      <ContactHero />
+      <ContactMethods />
+      <ContactFormSection />
+      <ContactServiceArea />
+      <ContactTrust />
+      <ContactFaq />
+      <ContactCta />
     </>
   );
 }

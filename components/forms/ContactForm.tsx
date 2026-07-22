@@ -57,18 +57,22 @@ export function ContactForm() {
       <ErrorSummary summaryRef={summaryRef} message={message} fieldErrors={fieldErrors} />
       <Honeypot />
 
-      <Field id="firstName" label="First name" required error={fieldErrors.firstName}>
-        <input id="field-firstName" name="firstName" required autoComplete="given-name" />
-      </Field>
-      <Field id="lastName" label="Last name" required error={fieldErrors.lastName}>
-        <input id="field-lastName" name="lastName" required autoComplete="family-name" />
-      </Field>
-      <Field id="email" label="Email" required error={fieldErrors.email}>
-        <input id="field-email" name="email" type="email" inputMode="email" required autoComplete="email" />
-      </Field>
-      <Field id="phone" label="Phone (optional)" error={fieldErrors.phone}>
-        <input id="field-phone" name="phone" type="tel" inputMode="tel" autoComplete="tel" />
-      </Field>
+      <div className="form-row-2col">
+        <Field id="firstName" label="First name" required error={fieldErrors.firstName}>
+          <input id="field-firstName" name="firstName" required autoComplete="given-name" />
+        </Field>
+        <Field id="lastName" label="Last name" required error={fieldErrors.lastName}>
+          <input id="field-lastName" name="lastName" required autoComplete="family-name" />
+        </Field>
+      </div>
+      <div className="form-row-2col">
+        <Field id="phone" label="Phone (optional)" error={fieldErrors.phone}>
+          <input id="field-phone" name="phone" type="tel" inputMode="tel" autoComplete="tel" />
+        </Field>
+        <Field id="email" label="Email" required error={fieldErrors.email}>
+          <input id="field-email" name="email" type="email" inputMode="email" required autoComplete="email" />
+        </Field>
+      </div>
 
       <Field id="subject" label="Subject" required error={fieldErrors.subject}>
         <select id="field-subject" name="subject" required defaultValue="">
@@ -104,8 +108,8 @@ export function ContactForm() {
         By submitting you agree to our <a href="/privacy-policy/">Privacy Policy</a>.
       </p>
 
-      <button className="btn btn--primary" type="submit" disabled={status === "submitting"}>
-        {status === "submitting" ? "Sending…" : "Send Message"}
+      <button className="btn btn--primary btn--block" type="submit" disabled={status === "submitting"}>
+        {status === "submitting" ? "Sending…" : "Submit Request"}
       </button>
     </form>
   );
