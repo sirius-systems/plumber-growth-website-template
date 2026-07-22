@@ -4,7 +4,7 @@ import { clientConfig } from "@/config/client";
 import type { ServiceAreaReference } from "@/config/client";
 import type { LocationContent } from "@/config/location-content";
 import { LucideIcon } from "@/components/ui/LucideIcon";
-import { GeneralQuoteForm } from "@/components/forms/GeneralQuoteForm";
+import { HeroFormCard } from "@/components/forms/HeroFormCard";
 
 /** Location hero (docs/06 §26). Shared hero bg + overlay pattern. */
 export function LocationHero({ area, content }: { area: ServiceAreaReference; content?: LocationContent }) {
@@ -57,12 +57,7 @@ export function LocationHero({ area, content }: { area: ServiceAreaReference; co
             )}
           </div>
 
-          <div className="hero-form-card">
-            <h2 style={{ marginTop: 0, fontSize: "16px", fontWeight: 600, color: "var(--color-primary-900)" }}>
-              Get Help in {area.name}
-            </h2>
-            <GeneralQuoteForm paired />
-          </div>
+          <HeroFormCard heading={`Get Help in ${area.name}`} />
         </div>
       </div>
     </section>

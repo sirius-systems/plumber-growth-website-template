@@ -2,7 +2,7 @@ import Image from "next/image";
 import { clientConfig } from "@/config/client";
 import { subheading, introParagraph } from "@/content/services-hub";
 import { LucideIcon } from "@/components/ui/LucideIcon";
-import { GeneralQuoteForm } from "@/components/forms/GeneralQuoteForm";
+import { HeroFormCard } from "@/components/forms/HeroFormCard";
 
 /** Services hub hero (docs/06 §26). Shared hero bg + overlay; general-quote form. */
 export function ServicesHubHero() {
@@ -33,12 +33,7 @@ export function ServicesHubHero() {
             </p>
           </div>
 
-          <div className="hero-form-card">
-            <h2 style={{ marginTop: 0, fontSize: "16px", fontWeight: 600, color: "var(--color-primary-900)" }}>
-              Request Plumbing Service
-            </h2>
-            <GeneralQuoteForm paired />
-          </div>
+          <HeroFormCard heading="Request Plumbing Service" />
         </div>
       </div>
     </section>
