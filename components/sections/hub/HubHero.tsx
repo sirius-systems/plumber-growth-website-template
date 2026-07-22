@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { clientConfig } from "@/config/client";
 import { LucideIcon } from "@/components/ui/LucideIcon";
-import { HeroQuoteForm } from "@/components/forms/HeroQuoteForm";
+import { GeneralQuoteForm } from "@/components/forms/GeneralQuoteForm";
 
 /** Service-areas hub hero (docs/06 §26). Shared hero bg + overlay pattern. */
 export function HubHero() {
@@ -43,7 +43,7 @@ export function HubHero() {
 
           <div className="hero-form-card">
             <h2 style={{ marginTop: 0, fontSize: "16px", fontWeight: 600, color: "var(--color-primary-900)" }}>Request Service</h2>
-            <HeroQuoteForm />
+            <GeneralQuoteForm paired />
           </div>
         </div>
       </div>

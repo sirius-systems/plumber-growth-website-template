@@ -2,11 +2,11 @@ import Image from "next/image";
 import { clientConfig } from "@/config/client";
 import { reviewsSummary } from "@/config/reviews";
 import { telHref, formatPhoneDisplay } from "@/lib/utilities/format";
-import { HeroQuoteForm } from "@/components/forms/HeroQuoteForm";
+import { GeneralQuoteForm } from "@/components/forms/GeneralQuoteForm";
 
 /**
  * Closing conversion band (docs/04 §6). Background image + dark overlay, white
- * copy left, request form card right. Reuses HeroQuoteForm.
+ * copy left, request form card right. Embeds the general-quote form.
  */
 export function FinalCta({
   heading = "Ready to get your plumbing problem solved?",
@@ -67,7 +67,7 @@ export function FinalCta({
             <h2 style={{ marginTop: 0, fontSize: "16px", fontWeight: 600, color: "var(--color-primary-900)" }}>
               Request Service
             </h2>
-            <HeroQuoteForm currentService={currentService} />
+            <GeneralQuoteForm paired defaultService={currentService} />
           </div>
         </div>
       </div>

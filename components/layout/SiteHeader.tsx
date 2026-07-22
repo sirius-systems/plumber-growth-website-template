@@ -77,8 +77,8 @@ export function SiteHeader() {
           <a className="btn btn--secondary btn--sm" href={telHref(business.phone)}>
             Call {formatPhoneDisplay(business.phone)}
           </a>
-          <Link className="btn btn--primary btn--sm" href="/request-service/">
-            Request Service
+          <Link className="btn btn--primary btn--sm" href="/contact/">
+            Get a Quote
           </Link>
         </div>
       </div>

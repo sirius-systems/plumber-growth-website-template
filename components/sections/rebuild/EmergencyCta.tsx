@@ -32,10 +32,10 @@ export function EmergencyCta() {
           </a>
           <Link
             className="btn btn--secondary"
-            href="/emergency-plumbing-request/"
+            href="/contact/"
             style={{ borderColor: "#fff", color: "#fff", background: "transparent" }}
           >
-            Submit Emergency Request
+            Contact Us
           </Link>
         </div>
         <p style={{ marginTop: "var(--space-6)", fontSize: "13px", color: "rgba(255,255,255,0.65)" }}>

@@ -5,7 +5,7 @@ import { telHref, formatPhoneDisplay } from "@/lib/utilities/format";
 interface CallToActionProps {
   heading?: string;
   body?: string;
-  /** Primary button target; defaults to the request-service page. */
+  /** Primary button target; defaults to the contact page. */
   primaryHref?: string;
   primaryLabel?: string;
 }
@@ -17,7 +17,7 @@ interface CallToActionProps {
 export function CallToAction({
   heading = "Ready to get started?",
   body,
-  primaryHref = "/request-service/",
+  primaryHref = "/contact/",
   primaryLabel = "Request Service",
 }: CallToActionProps) {
   const { business } = clientConfig;

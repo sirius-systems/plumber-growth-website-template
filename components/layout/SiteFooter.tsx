@@ -169,11 +169,11 @@ export function SiteFooter() {
           <p style={headingStyle}>Get Started</p>
           <ul style={listStyle}>
             <li>
-              <Link href="/request-service/">Request Service</Link>
+              <Link href="/contact/">Get a Quote</Link>
             </li>
             {operations.emergencyServiceAvailable && (
               <li>
-                <Link href="/emergency-plumbing-request/">Emergency Request</Link>
+                <a href={telHref(business.phone)}>Emergency: Call {formatPhoneDisplay(business.phone)}</a>
               </li>
             )}
             <li>

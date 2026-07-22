@@ -2,7 +2,7 @@ import Image from "next/image";
 import { clientConfig } from "@/config/client";
 import { reviewsSummary } from "@/config/reviews";
 import { telHref, formatPhoneDisplay } from "@/lib/utilities/format";
-import { HeroQuoteForm } from "@/components/forms/HeroQuoteForm";
+import { GeneralQuoteForm } from "@/components/forms/GeneralQuoteForm";
 
 /**
  * Homepage hero (docs/06 §26). Full-bleed background image + dark overlay; white
@@ -91,7 +91,7 @@ export function HomeHero() {
             >
               Request Service
             </h2>
-            <HeroQuoteForm />
+            <GeneralQuoteForm paired />
           </div>
         </div>
       </div>

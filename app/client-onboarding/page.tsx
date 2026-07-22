@@ -22,7 +22,7 @@ export default function ClientOnboardingPage() {
       <p style={{ fontSize: "var(--font-size-lg)" }}>
         This form is for new Plumber Growth System clients setting up their website. If you are a
         homeowner or business looking for plumbing service, please use the{" "}
-        <a href="/request-service/">Request Service</a> form instead.
+        <a href="/contact/">contact us</a> instead.
       </p>
 
       <h2 style={{ fontSize: "var(--font-size-2xl)" }}>Before you start</h2>

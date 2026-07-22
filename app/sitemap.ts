@@ -22,7 +22,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/reviews/",
     "/faqs/",
     "/contact/",
-    "/request-service/",
     "/privacy-policy/",
     "/terms/",
   ];
@@ -30,10 +29,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
   if (clientConfig.operations.residentialPlumbing) staticPaths.push("/residential-plumbing/");
   if (clientConfig.operations.commercialPlumbing) staticPaths.push("/commercial-plumbing/");
   if (clientConfig.operations.financingOffered) staticPaths.push("/financing/");
-  // NOTE: /emergency-plumbing-request/ is the noindex,follow request FORM page
-  // (docs/07 §37, docs/08 §20) — intentionally excluded from the sitemap. The
-  // indexable emergency SERVICE page /services/emergency-plumbing/ is included
-  // via enabledServices() below.
+  // NOTE: the /request-service/ and /emergency-plumbing-request/ routes were
+  // removed — leads are captured by the general-quote form embedded in every
+  // page hero, and emergencies are directed to the business phone number.
 
   const servicePaths = enabledServices()
     .filter((s) => s.indexable)

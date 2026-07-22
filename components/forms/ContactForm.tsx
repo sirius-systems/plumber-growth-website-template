@@ -1,7 +1,5 @@
 "use client";
 
-import { clientConfig } from "@/config/client";
-import { formatPhoneDisplay, telHref } from "@/lib/utilities/format";
 import { useFormSubmit } from "@/lib/forms/useFormSubmit";
 import { Field, ErrorSummary, Honeypot } from "@/components/forms/Field";
 
@@ -23,7 +21,10 @@ const SUBJECTS: { value: string; label: string }[] = [
 ];
 
 export function ContactForm() {
-  const { status, message, fieldErrors, summaryRef, submit } = useFormSubmit("contact");
+  // On server acceptance, redirect to the contact confirmation (docs/04 §23).
+  const { status, message, fieldErrors, summaryRef, submit } = useFormSubmit("contact", {
+    redirectTo: "/thank-you/?type=contact",
+  });
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -33,23 +34,6 @@ export function ContactForm() {
       serviceConsent: data.serviceConsent === "on",
       marketingConsent: data.marketingConsent === "on",
     });
-  }
-
-  if (status === "success") {
-    return (
-      <div role="status" aria-live="polite">
-        <h2>Message received</h2>
-        <p>
-          Thank you for contacting {clientConfig.business.publicName}. Your message was
-          received and will be routed to the appropriate team member. If you need plumbing
-          service, you may get a faster response by using the Request Service form or calling{" "}
-          <a href={telHref(clientConfig.business.phone)}>
-            {formatPhoneDisplay(clientConfig.business.phone)}
-          </a>
-          .
-        </p>
-      </div>
-    );
   }
 
   return (

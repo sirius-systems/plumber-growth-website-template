@@ -15,8 +15,8 @@ export function MobileActionBar() {
       <a className="btn btn--secondary" href={telHref(business.phone)}>
         Call {formatPhoneDisplay(business.phone)}
       </a>
-      <Link className="btn btn--primary" href="/request-service/">
-        Request Service
+      <Link className="btn btn--primary" href="/contact/">
+        Get a Quote
       </Link>
     </div>
   );

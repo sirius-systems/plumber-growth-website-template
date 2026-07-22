@@ -1,26 +1,19 @@
 "use client";
 
-import { useEffect, useMemo } from "react";
-import { useSearchParams } from "next/navigation";
-import { HERO_QUOTE_KEY } from "@/components/forms/HeroQuoteForm";
+import { useMemo } from "react";
 import { enabledServices } from "@/config/services";
-import { clientConfig } from "@/config/client";
-import { formatPhoneDisplay, telHref } from "@/lib/utilities/format";
 import { useFormSubmit } from "@/lib/forms/useFormSubmit";
 import { Field, ErrorSummary, Honeypot } from "@/components/forms/Field";
 
 /**
- * General Plumbing Quote Request form (docs/08 §9). Reference implementation for
- * the other four forms: native controls, shared submit hook, accessible errors,
- * honeypot, duplicate-submit protection, service preselection (docs/08 §9.7).
- */
-/**
+ * General Plumbing Quote Request form (docs/08 §9). The site's primary lead form:
+ * embedded directly in every page hero (there is no separate /request-service/
+ * route). Submits general-quote and, on server acceptance, redirects to the
+ * thank-you confirmation (docs/04 §23).
+ *
  * @param paired         When true, First/Last name and City/State/ZIP render as
- *                       multi-column rows (used in page heroes and on
- *                       /request-service/). Default false keeps the single-column
- *                       layout used inside the homepage hero and CTAWithForm.
- * @param defaultService Optional service slug to preselect (e.g. on a service
- *                       page hero). A `?service=` query param takes precedence.
+ *                       multi-column rows (used in the hero form cards).
+ * @param defaultService Optional service slug to preselect (e.g. on a service hero).
  */
 export function GeneralQuoteForm({
   paired = false,
@@ -29,35 +22,15 @@ export function GeneralQuoteForm({
   paired?: boolean;
   defaultService?: string;
 } = {}) {
-  const searchParams = useSearchParams();
   const services = useMemo(() => enabledServices(), []);
-  const preselected = searchParams.get("service") ?? "";
-  const urlPreselect = services.some((s) => s.slug === preselected) ? preselected : "";
-  const propPreselect =
+  const validPreselect =
     defaultService && services.some((s) => s.slug === defaultService) ? defaultService : "";
-  const validPreselect = urlPreselect || propPreselect;
+
+  const { status, message, fieldErrors, summaryRef, submit } = useFormSubmit("general-quote", {
+    redirectTo: "/thank-you/?type=general-quote",
+  });
   const describe = (field: string) =>
     paired && fieldErrors[field] ? `error-${field}` : undefined;
-
-  const { status, message, fieldErrors, summaryRef, submit } = useFormSubmit("general-quote");
-
-  // Prefill from a hero/CTA short form handoff (client-only; no PII in the URL).
-  useEffect(() => {
-    try {
-      const raw = sessionStorage.getItem(HERO_QUOTE_KEY);
-      if (!raw) return;
-      const d = JSON.parse(raw) as Record<string, string>;
-      for (const name of ["firstName", "lastName", "phone", "email", "problemDescription", "customerType"]) {
-        const el = document.querySelector<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>(
-          `[name="${name}"]`,
-        );
-        if (el && d[name]) el.value = d[name];
-      }
-      sessionStorage.removeItem(HERO_QUOTE_KEY);
-    } catch {
-      /* ignore */
-    }
-  }, []);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -67,26 +40,6 @@ export function GeneralQuoteForm({
       serviceConsent: data.serviceConsent === "on",
       marketingConsent: data.marketingConsent === "on",
     });
-  }
-
-  if (status === "success") {
-    return (
-      <div role="status" aria-live="polite">
-        <h2>Request received</h2>
-        <p>
-          Thank you. {clientConfig.business.publicName} received your plumbing service
-          request and a team member will review it. Your requested date is not confirmed
-          until the company contacts you.
-        </p>
-        <p>
-          Need help sooner?{" "}
-          <a href={telHref(clientConfig.business.phone)}>
-            Call {formatPhoneDisplay(clientConfig.business.phone)}
-          </a>
-          .
-        </p>
-      </div>
-    );
   }
 
   return (

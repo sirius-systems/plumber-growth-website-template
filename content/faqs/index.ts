@@ -43,7 +43,7 @@ export const faqCategories: FaqCategory[] = [
         question: "Do you offer 24/7 emergency plumbing service in Clark County?",
         answer:
           "Yes. Las Vegas Pro Plumbing responds to plumbing emergencies around the clock in Clark County. Call (888) 308-3262 directly for the fastest response. Submitting an online form is not the fastest way to reach us during an active emergency. For gas odors, fire, electrical danger, or immediate threats to life or property, call 911 or your utility provider first.",
-        internalLinks: [{ text: "Submit an emergency request", href: "/emergency-plumbing-request/" }],
+        internalLinks: [{ text: "Emergency plumbing service", href: "/services/emergency-plumbing/" }],
       },
       {
         question: "How do I shut off water to a single fixture?",

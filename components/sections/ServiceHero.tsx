@@ -4,7 +4,7 @@ import { clientConfig } from "@/config/client";
 import type { PlumbingService } from "@/config/services";
 import type { ServiceContent } from "@/config/service-content";
 import { LucideIcon } from "@/components/ui/LucideIcon";
-import { HeroQuoteForm } from "@/components/forms/HeroQuoteForm";
+import { GeneralQuoteForm } from "@/components/forms/GeneralQuoteForm";
 
 /** Service page hero (docs/06 §26). Reuses the shared hero bg + overlay pattern. */
 export function ServiceHero({ svc, content }: { svc: PlumbingService; content?: ServiceContent }) {
@@ -68,7 +68,7 @@ export function ServiceHero({ svc, content }: { svc: PlumbingService; content?: 
             <h2 style={{ marginTop: 0, fontSize: "16px", fontWeight: 600, color: "var(--color-primary-900)" }}>
               Request {svc.name}
             </h2>
-            <HeroQuoteForm currentService={svc.slug} />
+            <GeneralQuoteForm paired defaultService={svc.slug} />
           </div>
         </div>
       </div>

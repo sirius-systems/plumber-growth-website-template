@@ -15,7 +15,7 @@ export function FaqCta() {
           If your question isn&rsquo;t answered here or you need immediate help, our team is ready.
         </p>
         <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "1rem", alignItems: "center" }}>
-          <Link className="btn btn--accent" href="/request-service/">
+          <Link className="btn btn--accent" href="/contact/">
             Request Service
           </Link>
           <a href={telHref(business.phone)} style={{ color: "#fff", fontSize: "15px" }}>

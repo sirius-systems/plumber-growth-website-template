@@ -33,8 +33,8 @@ export function EmergencyCallout() {
           <a className="btn btn--primary" href={telHref(business.phone)}>
             Call {formatPhoneDisplay(business.phone)}
           </a>
-          <Link className="btn btn--secondary" href="/emergency-plumbing-request/">
-            Submit Emergency Request
+          <Link className="btn btn--secondary" href="/contact/">
+            Contact Us
           </Link>
         </div>
         <EmergencySafetyNotice />
