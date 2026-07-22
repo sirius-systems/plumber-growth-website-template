@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { clientConfig } from "@/config/client";
+import { Button } from "@/components/ui/Button";
 
 interface ServiceAreaListProps {
   heading?: string;
@@ -44,13 +45,13 @@ export function ServiceAreaList({
           {serviceAreas.map((area) => (
             <li key={area.name}>
               {area.hasDetailPage && area.slug ? (
-                <Link
+                <Button
+                  variant="secondary"
                   href={`/service-areas/${area.slug}/`}
-                  className="btn btn--secondary"
                   style={{ minHeight: "auto", padding: "var(--space-2) var(--space-4)" }}
                 >
                   {area.name}
-                </Link>
+                </Button>
               ) : (
                 <span
                   style={{

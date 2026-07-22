@@ -3,6 +3,7 @@
 import { clientConfig } from "@/config/client";
 import { useFormSubmit } from "@/lib/forms/useFormSubmit";
 import { Field, ErrorSummary, Honeypot } from "@/components/forms/Field";
+import { Button } from "@/components/ui/Button";
 
 /**
  * Website Onboarding Form (docs/08 §13, docs/04 §22). Collects business identity
@@ -110,9 +111,9 @@ export function WebsiteOnboardingForm() {
         See our <a href="/privacy-policy/">Privacy Policy</a>.
       </p>
 
-      <button className="btn btn--primary" type="submit" disabled={status === "submitting"}>
-        {status === "submitting" ? "Submitting…" : "Submit Onboarding"}
-      </button>
+      <Button type="submit" variant="accent" loading={status === "submitting"} loadingText="Submitting…">
+        Submit Onboarding
+      </Button>
     </form>
   );
 }

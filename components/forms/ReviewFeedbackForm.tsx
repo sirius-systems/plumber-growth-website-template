@@ -4,6 +4,7 @@ import { useState } from "react";
 import { clientConfig } from "@/config/client";
 import { useFormSubmit } from "@/lib/forms/useFormSubmit";
 import { Field, ErrorSummary, Honeypot } from "@/components/forms/Field";
+import { Button } from "@/components/ui/Button";
 
 /**
  * Review Feedback Form (docs/08 §12, docs/14 §32, SEO-003).
@@ -18,9 +19,9 @@ export function PublicReviewLink() {
   if (!url) return null;
   return (
     <p>
-      <a className="btn btn--secondary" href={url} target="_blank" rel="noopener noreferrer">
+      <Button variant="secondary" href={url} target="_blank" rel="noopener noreferrer">
         Share an honest public review
-      </a>
+      </Button>
     </p>
   );
 }
@@ -129,9 +130,9 @@ export function ReviewFeedbackForm() {
         </Field>
       )}
 
-      <button className="btn btn--primary" type="submit" disabled={status === "submitting"}>
-        {status === "submitting" ? "Submitting…" : "Submit Feedback"}
-      </button>
+      <Button type="submit" variant="accent" loading={status === "submitting"} loadingText="Submitting…">
+        Submit Feedback
+      </Button>
     </form>
   );
 }

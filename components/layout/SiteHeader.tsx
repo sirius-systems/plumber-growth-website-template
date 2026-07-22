@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { clientConfig } from "@/config/client";
 import { telHref, formatPhoneDisplay } from "@/lib/utilities/format";
+import { Button } from "@/components/ui/Button";
 
 /**
  * Primary site header (docs/04 §5.1). Single desktop row: logo, primary nav, and
@@ -74,12 +75,12 @@ export function SiteHeader() {
         </nav>
 
         <div style={{ display: "flex", gap: "var(--space-3)", flexShrink: 0 }}>
-          <a className="btn btn--secondary btn--sm" href={telHref(business.phone)}>
+          <Button variant="secondary" size="sm" href={telHref(business.phone)}>
             Call {formatPhoneDisplay(business.phone)}
-          </a>
-          <Link className="btn btn--primary btn--sm" href="/contact/">
-            Get a Quote
-          </Link>
+          </Button>
+          <Button variant="primary" size="sm" href="/contact/">
+            Request Service
+          </Button>
         </div>
       </div>
     </header>

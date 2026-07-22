@@ -2,6 +2,7 @@ import { clientConfig } from "@/config/client";
 import { telHref, formatPhoneDisplay } from "@/lib/utilities/format";
 import { emergencyItems } from "@/content/services-hub";
 import { LucideIcon } from "@/components/ui/LucideIcon";
+import { Button } from "@/components/ui/Button";
 
 /**
  * Compact emergency strip (docs/04 §6, UX-003). Lighter than the full EmergencyCta

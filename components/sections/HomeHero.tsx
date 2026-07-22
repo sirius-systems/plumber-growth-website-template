@@ -2,7 +2,7 @@ import Image from "next/image";
 import { clientConfig } from "@/config/client";
 import { reviewsSummary } from "@/config/reviews";
 import { telHref, formatPhoneDisplay } from "@/lib/utilities/format";
-import { GeneralQuoteForm } from "@/components/forms/GeneralQuoteForm";
+import { HeroFormCard } from "@/components/forms/HeroFormCard";
 
 /**
  * Homepage hero (docs/06 §26). Full-bleed background image + dark overlay; white
@@ -85,14 +85,7 @@ export function HomeHero() {
             </ul>
           </div>
 
-          <div className="hero-form-card">
-            <h2
-              style={{ marginTop: 0, fontSize: "16px", fontWeight: 600, color: "var(--color-primary-900)" }}
-            >
-              Request Service
-            </h2>
-            <GeneralQuoteForm paired />
-          </div>
+          <HeroFormCard heading="Request Service" />
         </div>
       </div>
     </section>

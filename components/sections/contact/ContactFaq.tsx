@@ -33,5 +33,10 @@ export function ContactFaq() {
     },
   ];
 
-  return <FaqSection items={items} heading="Common Questions" />;
+  return (
+    <FaqSection
+      items={items}
+      subheading="Common questions about contacting us and scheduling service."
+    />
+  );
 }

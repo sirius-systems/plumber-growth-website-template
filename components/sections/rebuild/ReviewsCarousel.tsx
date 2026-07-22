@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { clientConfig } from "@/config/client";
 import { reviews as allReviews, reviewsSummary, type CustomerReview } from "@/config/reviews";
 import { ReviewCard } from "@/components/ui/ReviewCard";
+import { Button } from "@/components/ui/Button";
 
 function AggregateStars() {
   const full = Math.round(reviewsSummary.rating);
@@ -93,9 +94,9 @@ export function ReviewsCarousel({
         </div>
 
         <p style={{ textAlign: "center", marginTop: "var(--space-8)" }}>
-          <a className="btn btn--secondary" href={reviewUrl} target="_blank" rel="noopener noreferrer">
+          <Button variant="secondary" href={reviewUrl} target="_blank" rel="noopener noreferrer">
             {leaveLabel}
-          </a>
+          </Button>
         </p>
       </div>
     </section>

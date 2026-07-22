@@ -59,7 +59,7 @@ export function ContactMethods() {
 
   return (
     <section className="section section-default" style={{ paddingBlock: "2rem" }}>
-      <ul style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(210px, 1fr))", gap: "1.25rem", maxWidth: "960px", margin: "0 auto", listStyle: "none", padding: 0 }}>
+      <ul style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "1.25rem", maxWidth: "1120px", margin: "0 auto", listStyle: "none", padding: 0 }}>
         {/* Phone — emphasized dark card */}
         <li style={{ ...card, background: "var(--color-primary-900)", borderColor: "var(--color-primary-900)", color: "#fff" }}>
           <LucideIcon name="Phone" size={28} color="var(--color-accent-500)" />
@@ -80,7 +80,7 @@ export function ContactMethods() {
           <li style={card}>
             <LucideIcon name="Mail" size={28} color="var(--color-primary-600)" />
             <span style={{ fontWeight: 600, fontSize: "14px", color: "var(--color-primary-900)" }}>Send an Email</span>
-            <a href={`mailto:${email}`} style={{ fontSize: "14px", fontWeight: 500, color: "var(--color-primary-600)", wordBreak: "break-all" }}>
+            <a href={`mailto:${email}`} style={{ fontSize: "14px", fontWeight: 500, color: "var(--color-primary-600)", whiteSpace: "nowrap" }}>
               {email}
             </a>
             <span style={{ fontSize: "12px", color: "var(--color-text-muted)" }}>We respond during business hours</span>

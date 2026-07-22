@@ -89,6 +89,7 @@ export const generalQuoteSchema = envelopeSchema.extend({
   preferredContactMethod: contactMethod,
   existingCustomer: triState.optional(),
   serviceConsent: z.boolean().optional(),
+  smsConsent: z.boolean().optional(),
   marketingConsent: z.boolean().optional(),
 });
 

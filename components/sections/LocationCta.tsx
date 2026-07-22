@@ -4,7 +4,7 @@ import type { ServiceAreaReference } from "@/config/client";
 import type { LocationContent } from "@/config/location-content";
 import { telHref, formatPhoneDisplay } from "@/lib/utilities/format";
 import { LucideIcon } from "@/components/ui/LucideIcon";
-import { GeneralQuoteForm } from "@/components/forms/GeneralQuoteForm";
+import { HeroFormCard } from "@/components/forms/HeroFormCard";
 
 /** Location final CTA with a static-map placeholder (docs/04 §12). */
 export function LocationCta({ area, content }: { area: ServiceAreaReference; content?: LocationContent }) {
@@ -57,12 +57,7 @@ export function LocationCta({ area, content }: { area: ServiceAreaReference; con
             )}
           </div>
 
-          <div className="hero-form-card">
-            <h2 style={{ marginTop: 0, fontSize: "16px", fontWeight: 600, color: "var(--color-primary-900)" }}>
-              Request Service in {area.name}
-            </h2>
-            <GeneralQuoteForm paired />
-          </div>
+          <HeroFormCard heading={`Request Service in ${area.name}`} />
         </div>
       </div>
     </section>

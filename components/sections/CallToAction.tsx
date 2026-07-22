@@ -1,6 +1,6 @@
-import Link from "next/link";
 import { clientConfig } from "@/config/client";
 import { telHref, formatPhoneDisplay } from "@/lib/utilities/format";
+import { Button } from "@/components/ui/Button";
 
 interface CallToActionProps {
   heading?: string;
@@ -46,16 +46,12 @@ export function CallToAction({
             justifyContent: "center",
           }}
         >
-          <Link className="btn btn--accent" href={primaryHref}>
+          <Button variant="accent" href={primaryHref}>
             {primaryLabel}
-          </Link>
-          <a
-            className="btn btn--secondary"
-            href={telHref(business.phone)}
-            style={{ borderColor: "var(--color-text-inverse)", color: "var(--color-text-inverse)" }}
-          >
+          </Button>
+          <Button variant="inverse" href={telHref(business.phone)}>
             Call {formatPhoneDisplay(business.phone)}
-          </a>
+          </Button>
         </div>
       </div>
     </section>

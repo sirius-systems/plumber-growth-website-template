@@ -1,15 +1,16 @@
 import type { Metadata } from "next";
-import { Suspense } from "react";
 import { clientConfig } from "@/config/client";
 import { telHref, formatPhoneDisplay } from "@/lib/utilities/format";
 import { Breadcrumb } from "@/components/sections/Breadcrumb";
 import { Hero } from "@/components/sections/Hero";
 import { TrustBar } from "@/components/sections/TrustBar";
-import { GeneralQuoteForm } from "@/components/forms/GeneralQuoteForm";
+import { HeroFormCard } from "@/components/forms/HeroFormCard";
 import { ServiceGrid } from "@/components/sections/ServiceGrid";
 import { ServiceAreaList } from "@/components/sections/ServiceAreaList";
-import { FAQAccordion, type FAQItem } from "@/components/sections/FAQAccordion";
+import { type FAQItem } from "@/components/sections/FAQAccordion";
+import { FaqSection } from "@/components/sections/rebuild/FaqSection";
 import { CallToAction } from "@/components/sections/CallToAction";
+import { Button } from "@/components/ui/Button";
 
 export const metadata: Metadata = {
   title: "Residential Plumbing in Las Vegas, NV",
@@ -42,7 +43,7 @@ export default function ResidentialPage() {
   return (
     <>
       <Hero contentClassName="container container--wide">
-        <div className="hero-grid">
+        <div className="hero-2col">
           <div className="hero-copy">
             <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Residential Plumbing" }]} />
             <h1 className="heading-accent">
@@ -54,21 +55,13 @@ export default function ResidentialPage() {
               explanations before we start.
             </p>
             <div style={{ display: "flex", gap: "var(--space-3)", flexWrap: "wrap" }}>
-              <a className="btn btn--primary" href={telHref(business.phone)}>
+              <Button variant="primary" href={telHref(business.phone)}>
                 Call {formatPhoneDisplay(business.phone)}
-              </a>
+              </Button>
             </div>
           </div>
 
-          <div className="hero-form-card">
-            <h2 style={{ marginTop: 0, fontSize: "var(--font-size-lg)" }}>Request service</h2>
-            <p style={{ color: "var(--color-text-muted)", marginTop: 0 }}>
-              Submitting is a request, not a confirmed appointment until we contact you.
-            </p>
-            <Suspense fallback={<p>Loading form…</p>}>
-              <GeneralQuoteForm paired />
-            </Suspense>
-          </div>
+          <HeroFormCard heading="Request service" />
         </div>
       </Hero>
 
@@ -98,10 +91,9 @@ export default function ResidentialPage() {
         altBackground
       />
       <ServiceAreaList intro="We serve homeowners across Las Vegas and the surrounding communities." />
-      <FAQAccordion
+      <FaqSection
         items={RESIDENTIAL_FAQS}
-        heading="Residential Plumbing, Frequently Asked Questions"
-        altBackground
+        subheading="Common questions about our residential plumbing services."
       />
       <CallToAction heading="Need a plumber for your home?" />
     </>

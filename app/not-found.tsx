@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Button } from "@/components/ui/Button";
 
 /** 404 handler (docs/04 §4.6). noindex via metadata. */
 export const metadata = { robots: { index: false, follow: false } };
@@ -9,9 +9,9 @@ export default function NotFound() {
       <h1>Page not found</h1>
       <p>The page you’re looking for isn’t here.</p>
       <p>
-        <Link className="btn btn--primary" href="/">
+        <Button variant="primary" href="/">
           Return home
-        </Link>
+        </Button>
       </p>
     </section>
   );

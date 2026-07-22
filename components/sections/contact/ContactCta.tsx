@@ -1,6 +1,6 @@
-import Link from "next/link";
 import { clientConfig } from "@/config/client";
 import { telHref, formatPhoneDisplay } from "@/lib/utilities/format";
+import { Button } from "@/components/ui/Button";
 
 /** Contact final CTA (docs/04 §6). Simplified centered dark band. */
 export function ContactCta() {
@@ -16,9 +16,9 @@ export function ContactCta() {
           Call now or submit a request.
         </p>
         <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "1rem", alignItems: "center" }}>
-          <Link className="btn btn--accent" href="/contact/">
+          <Button variant="accent" href="/contact/">
             Request Service
-          </Link>
+          </Button>
           <a href={telHref(business.phone)} style={{ color: "#fff", fontSize: "15px" }}>
             Or call {formatPhoneDisplay(business.phone)}
           </a>

@@ -1,6 +1,6 @@
-import Link from "next/link";
 import { clientConfig } from "@/config/client";
 import { telHref, formatPhoneDisplay } from "@/lib/utilities/format";
+import { Button } from "@/components/ui/Button";
 
 /**
  * Emergency CTA band (docs/04 §6, UX-003). Dark emphasis section; rendered only
@@ -27,16 +27,12 @@ export function EmergencyCta() {
             justifyContent: "center",
           }}
         >
-          <a className="btn btn--accent" href={telHref(business.phone)}>
+          <Button variant="accent" href={telHref(business.phone)}>
             Call Now: {formatPhoneDisplay(business.phone)}
-          </a>
-          <Link
-            className="btn btn--secondary"
-            href="/contact/"
-            style={{ borderColor: "#fff", color: "#fff", background: "transparent" }}
-          >
+          </Button>
+          <Button variant="inverse" href="/contact/">
             Contact Us
-          </Link>
+          </Button>
         </div>
         <p style={{ marginTop: "var(--space-6)", fontSize: "13px", color: "rgba(255,255,255,0.65)" }}>
           If you smell gas, see fire, face electrical danger, or have an immediate threat to life

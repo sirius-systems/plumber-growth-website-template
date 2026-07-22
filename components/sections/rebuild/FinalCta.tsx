@@ -2,7 +2,7 @@ import Image from "next/image";
 import { clientConfig } from "@/config/client";
 import { reviewsSummary } from "@/config/reviews";
 import { telHref, formatPhoneDisplay } from "@/lib/utilities/format";
-import { GeneralQuoteForm } from "@/components/forms/GeneralQuoteForm";
+import { HeroFormCard } from "@/components/forms/HeroFormCard";
 
 /**
  * Closing conversion band (docs/04 §6). Background image + dark overlay, white
@@ -65,12 +65,7 @@ export function FinalCta({
             </ul>
           </div>
 
-          <div className="hero-form-card">
-            <h2 style={{ marginTop: 0, fontSize: "16px", fontWeight: 600, color: "var(--color-primary-900)" }}>
-              Request Service
-            </h2>
-            <GeneralQuoteForm paired defaultService={currentService} />
-          </div>
+          <HeroFormCard heading="Request Service" defaultService={currentService} />
         </div>
       </div>
     </section>

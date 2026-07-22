@@ -2,6 +2,7 @@
 
 import { useFormSubmit } from "@/lib/forms/useFormSubmit";
 import { Field, ErrorSummary, Honeypot } from "@/components/forms/Field";
+import { Button } from "@/components/ui/Button";
 
 const ISSUE_TYPES = [
   "Emergency repair",
@@ -137,9 +138,9 @@ export function CommercialQuoteForm() {
         By submitting you agree to our <a href="/privacy-policy/">Privacy Policy</a>.
       </p>
 
-      <button className="btn btn--accent btn--block" type="submit" disabled={status === "submitting"}>
-        {status === "submitting" ? "Submitting…" : "Request Commercial Service"}
-      </button>
+      <Button type="submit" variant="accent" block loading={status === "submitting"} loadingText="Submitting…">
+        Request Commercial Service
+      </Button>
     </form>
   );
 }

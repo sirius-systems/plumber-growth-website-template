@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { clientConfig } from "@/config/client";
 import { Breadcrumb } from "@/components/sections/Breadcrumb";
 import { ReviewsSection } from "@/components/sections/ReviewsSection";
 import { CallToAction } from "@/components/sections/CallToAction";
+import { Button } from "@/components/ui/Button";
 
 export const metadata: Metadata = {
   title: "Customer Reviews",
@@ -34,9 +34,9 @@ export default function ReviewsPage() {
           Enjoyed our service? A public review helps other Las Vegas homeowners find us.
         </p>
         <p>
-          <a className="btn btn--primary" href={reviewUrl}>
+          <Button variant="primary" href={reviewUrl}>
             Leave a Google Review
-          </a>
+          </Button>
         </p>
 
         <h2 style={{ fontSize: "var(--font-size-2xl)" }}>Have private feedback?</h2>
@@ -45,9 +45,9 @@ export default function ReviewsPage() {
           improve.
         </p>
         <p>
-          <Link className="btn btn--secondary" href="/review-feedback/">
+          <Button variant="secondary" href="/review-feedback/">
             Share Your Feedback
-          </Link>
+          </Button>
         </p>
       </section>
 

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ReviewFeedbackForm } from "@/components/forms/ReviewFeedbackForm";
 import { clientConfig } from "@/config/client";
+import { Button } from "@/components/ui/Button";
 
 /**
  * Review Feedback page (docs/04 §21). noindex,follow; excluded from nav + sitemap.
@@ -26,9 +27,9 @@ export default function ReviewFeedbackPage() {
       </p>
 
       <p>
-        <a className="btn btn--secondary" href={reviewUrl}>
+        <Button variant="secondary" href={reviewUrl}>
           Leave a Google Review
-        </a>
+        </Button>
       </p>
 
       <h2 style={{ fontSize: "var(--font-size-2xl)" }}>Send private feedback</h2>
