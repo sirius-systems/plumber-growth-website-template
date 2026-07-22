@@ -93,7 +93,7 @@ export function ContactForm() {
         By submitting you agree to our <a href="/privacy-policy/">Privacy Policy</a>.
       </p>
 
-      <Button type="submit" variant="primary" block loading={status === "submitting"} loadingText="Sending…">
+      <Button type="submit" variant="accent" block loading={status === "submitting"} loadingText="Sending…">
         Send Message
       </Button>
     </form>

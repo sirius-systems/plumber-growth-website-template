@@ -28,6 +28,7 @@ export interface GhlFieldMap {
   electricalDanger: string;
   safetyAcknowledgment: string;
   submissionId: string;
+  smsConsent: string;
   leadFormType: string;
   privateFeedbackRating: string;
   privateFeedback: string;

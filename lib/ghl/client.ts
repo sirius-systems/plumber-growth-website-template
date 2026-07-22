@@ -67,6 +67,7 @@ function buildCustomFields(
     [map.serviceState, str(data, "state")],
     [map.servicePostalCode, str(data, "postalCode")],
     [map.preferredContactMethod, str(data, "preferredContactMethod")],
+    [map.smsConsent, data["smsConsent"] === true ? "yes" : undefined],
     [map.emergencyType, str(data, "emergencyType")],
     [map.activeFlooding, str(data, "activeFlooding")],
     [map.waterShutOff, str(data, "waterShutOff")],

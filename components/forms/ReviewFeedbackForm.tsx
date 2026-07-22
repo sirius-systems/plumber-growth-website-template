@@ -130,7 +130,7 @@ export function ReviewFeedbackForm() {
         </Field>
       )}
 
-      <Button type="submit" variant="primary" loading={status === "submitting"} loadingText="Submitting…">
+      <Button type="submit" variant="accent" loading={status === "submitting"} loadingText="Submitting…">
         Submit Feedback
       </Button>
     </form>

@@ -111,7 +111,7 @@ export function WebsiteOnboardingForm() {
         See our <a href="/privacy-policy/">Privacy Policy</a>.
       </p>
 
-      <Button type="submit" variant="primary" loading={status === "submitting"} loadingText="Submitting…">
+      <Button type="submit" variant="accent" loading={status === "submitting"} loadingText="Submitting…">
         Submit Onboarding
       </Button>
     </form>

@@ -446,15 +446,19 @@ img {
   background: var(--color-neutral-0);
   color: var(--brand-primary-dark);
 }
-/* Amber conversion-emphasis (client brand extension; dark label passes AA ~8:1). */
+/* Amber conversion-emphasis (client brand extension; dark label on amber ~8:1, AA). */
 .btn--accent {
-  background: var(--brand-accent);
+  background: var(--color-accent-500);
   color: var(--color-neutral-900);
   border-color: transparent;
 }
 .btn--accent:hover {
-  filter: brightness(0.93);
+  background: var(--color-accent-600);
   color: var(--color-neutral-900);
+}
+.btn--accent:active {
+  background: var(--color-accent-600);
+  filter: brightness(0.95);
 }
 
 /* States */

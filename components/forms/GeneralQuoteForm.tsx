@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
+import { clientConfig } from "@/config/client";
 import { enabledServices } from "@/config/services";
 import { useFormSubmit } from "@/lib/forms/useFormSubmit";
 import { Field, ErrorSummary, Honeypot } from "@/components/forms/Field";
@@ -24,6 +25,7 @@ export function GeneralQuoteForm({
   defaultService?: string;
 } = {}) {
   const services = useMemo(() => enabledServices(), []);
+  const businessName = clientConfig.business.publicName;
   const validPreselect =
     defaultService && services.some((s) => s.slug === defaultService) ? defaultService : "";
 
@@ -39,6 +41,7 @@ export function GeneralQuoteForm({
     await submit({
       ...data,
       serviceConsent: data.serviceConsent === "on",
+      smsConsent: data.smsConsent === "on",
       marketingConsent: data.marketingConsent === "on",
     });
   }
@@ -150,18 +153,34 @@ export function GeneralQuoteForm({
 
       <p>
         <label>
-          <input type="checkbox" name="serviceConsent" /> I agree to be contacted about this
-          service request.
+          <input type="checkbox" name="serviceConsent" required /> I agree to be contacted by{" "}
+          {businessName} about my service request by phone or email.
+        </label>
+      </p>
+      <p>
+        <label>
+          <input type="checkbox" name="smsConsent" /> I agree to receive recurring automated
+          promotional and personalized text messages from {businessName} at the mobile number
+          provided. Consent is not a condition of purchase. Msg &amp; data rates may apply. Msg
+          frequency varies. Reply STOP to opt-out or HELP for help.
         </label>
       </p>
 
-      <p style={{ fontSize: "0.875rem", color: "var(--color-text-muted)" }}>
-        See our <a href="/privacy-policy/">Privacy Policy</a>.
+      <p style={{ fontSize: "0.875rem", color: "var(--color-text-muted)", textAlign: "center" }}>
+        <a href="/privacy-policy/">Privacy Policy</a> and <a href="/terms/">Terms of Service</a>.
       </p>
 
-      <Button type="submit" variant="primary" block loading={status === "submitting"} loadingText="Submitting…">
-        Request Service
-      </Button>
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <Button
+          type="submit"
+          variant="accent"
+          loading={status === "submitting"}
+          loadingText="Submitting…"
+          style={{ minWidth: "200px" }}
+        >
+          Request Service
+        </Button>
+      </div>
     </form>
   );
 }
