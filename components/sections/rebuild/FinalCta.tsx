@@ -10,9 +10,11 @@ import { GeneralQuoteForm } from "@/components/forms/GeneralQuoteForm";
  */
 export function FinalCta({
   heading = "Ready to get your plumbing problem solved?",
+  subtext = "Tell us what's going on and we'll follow up to confirm timing.",
   currentService,
 }: {
   heading?: string;
+  subtext?: string;
   currentService?: string;
 }) {
   const { business, marketing, credentials } = clientConfig;
@@ -35,7 +37,7 @@ export function FinalCta({
               {heading}
             </h2>
             <p style={{ fontSize: "16px", color: "rgba(255,255,255,0.80)", maxWidth: "480px" }}>
-              Tell us what&rsquo;s going on and we&rsquo;ll follow up to confirm timing.
+              {subtext}
             </p>
             <p style={{ margin: "var(--space-4) 0" }}>
               <a href={telHref(business.phone)} style={{ fontSize: "20px", fontWeight: 700 }}>
