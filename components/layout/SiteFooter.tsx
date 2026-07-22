@@ -37,6 +37,7 @@ export function SiteFooter() {
 
   return (
     <footer
+      className="site-footer"
       style={{
         background: "var(--color-background-alt)",
         borderTop: "1px solid var(--color-border)",

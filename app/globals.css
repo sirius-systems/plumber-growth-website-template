@@ -457,6 +457,22 @@ body {
   }
 }
 
+/* Footer-only reduced horizontal padding (overrides the shared .container gutter).
+   Mobile 1rem → tablet 1.25rem → desktop 1.5rem. Vertical padding unchanged. */
+.site-footer .container {
+  padding-inline: 1rem;
+}
+@media (min-width: 48rem) {
+  .site-footer .container {
+    padding-inline: 1.25rem;
+  }
+}
+@media (min-width: 64rem) {
+  .site-footer .container {
+    padding-inline: 1.5rem;
+  }
+}
+
 /* Footer main grid: 6 columns desktop, 3 tablet, 1 mobile (docs/04 §5.4). */
 .footer-grid {
   display: grid;
