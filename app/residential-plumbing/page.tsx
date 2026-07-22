@@ -7,7 +7,8 @@ import { TrustBar } from "@/components/sections/TrustBar";
 import { HeroFormCard } from "@/components/forms/HeroFormCard";
 import { ServiceGrid } from "@/components/sections/ServiceGrid";
 import { ServiceAreaList } from "@/components/sections/ServiceAreaList";
-import { FAQAccordion, type FAQItem } from "@/components/sections/FAQAccordion";
+import { type FAQItem } from "@/components/sections/FAQAccordion";
+import { FaqSection } from "@/components/sections/rebuild/FaqSection";
 import { CallToAction } from "@/components/sections/CallToAction";
 import { Button } from "@/components/ui/Button";
 
@@ -90,10 +91,9 @@ export default function ResidentialPage() {
         altBackground
       />
       <ServiceAreaList intro="We serve homeowners across Las Vegas and the surrounding communities." />
-      <FAQAccordion
+      <FaqSection
         items={RESIDENTIAL_FAQS}
-        heading="Residential Plumbing, Frequently Asked Questions"
-        altBackground
+        subheading="Common questions about our residential plumbing services."
       />
       <CallToAction heading="Need a plumber for your home?" />
     </>

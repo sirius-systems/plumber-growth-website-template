@@ -63,7 +63,10 @@ export default function HomePage() {
       <EmergencyCta />
       <ServiceAreas />
       <ReviewsCarousel />
-      <FaqSection items={homeFaqs} />
+      <FaqSection
+        items={homeFaqs}
+        subheading="Common questions about our plumbing services."
+      />
       <FinalCta />
     </>
   );
