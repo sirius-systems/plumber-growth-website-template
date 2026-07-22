@@ -39,7 +39,11 @@ export function FaqResources() {
           {resources.map((r) => (
             <li key={r.href}>
               <Link href={r.href} style={{ display: "flex", alignItems: "center", gap: "0.75rem", padding: "1rem 1.25rem", background: "var(--color-surface)", border: "1px solid var(--color-border)", borderRadius: "var(--radius-md)", textDecoration: "none" }}>
-                <LucideIcon name={r.icon} size={20} color="var(--color-primary-600)" />
+                <LucideIcon
+                  name={r.icon}
+                  size={20}
+                  color={r.icon === "AlertTriangle" ? "var(--color-danger)" : "var(--color-primary-600)"}
+                />
                 <span style={{ fontSize: "14px", fontWeight: 600, color: "var(--color-primary-900)" }}>{r.label}</span>
                 <LucideIcon name="ChevronRight" size={14} color="var(--color-text-muted)" style={{ marginLeft: "auto" }} />
               </Link>

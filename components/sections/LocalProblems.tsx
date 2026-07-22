@@ -34,7 +34,11 @@ export function LocalProblems({ area, content }: { area: ServiceAreaReference; c
         >
           {problems.map((p) => (
             <li key={p.title} style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)" }}>
-              <LucideIcon name={p.icon} size={26} color="var(--color-primary-600)" />
+              <LucideIcon
+                name={p.icon}
+                size={26}
+                color={p.icon === "AlertTriangle" ? "var(--color-danger)" : "var(--color-primary-600)"}
+              />
               <h3 style={{ margin: 0, fontSize: "15px", color: "var(--color-primary-900)" }}>{p.title}</h3>
               <p style={{ margin: 0, fontSize: "14px", color: "var(--color-text-muted)" }}>{p.description}</p>
             </li>

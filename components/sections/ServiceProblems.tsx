@@ -29,7 +29,7 @@ export function ServiceProblems({ svc, content }: { svc: PlumbingService; conten
         >
           {problems.map((p) => (
             <li key={p} style={{ display: "flex", gap: "0.75rem", alignItems: "flex-start" }}>
-              <LucideIcon name="AlertTriangle" size={22} color="var(--color-primary-600)" style={{ flex: "none", marginTop: "2px" }} />
+              <LucideIcon name="AlertTriangle" size={22} color="var(--color-danger)" style={{ flex: "none", marginTop: "2px" }} />
               <span style={{ fontSize: "15px", color: "var(--color-text)" }}>{p}</span>
             </li>
           ))}

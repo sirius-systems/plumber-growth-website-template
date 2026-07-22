@@ -23,9 +23,12 @@ export function ServiceLinks({ svc }: { svc: PlumbingService }) {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(18rem, 1fr))",
+            gridTemplateColumns: "1fr 1fr",
             gap: "3rem",
             marginTop: "var(--space-8)",
+            maxWidth: "var(--container-md)",
+            marginInline: "auto",
+            alignItems: "start",
           }}
         >
           <div>

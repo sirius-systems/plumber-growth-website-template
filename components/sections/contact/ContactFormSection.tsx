@@ -1,6 +1,6 @@
 import { clientConfig } from "@/config/client";
 import { telHref, formatPhoneDisplay } from "@/lib/utilities/format";
-import { ContactForm } from "@/components/forms/ContactForm";
+import { GeneralQuoteForm } from "@/components/forms/GeneralQuoteForm";
 import { LucideIcon } from "@/components/ui/LucideIcon";
 
 /** Contact form section (docs/08 §11). Supporting copy + form in an elevated card. */
@@ -52,7 +52,7 @@ export function ContactFormSection() {
           <h2 style={{ marginTop: 0, fontSize: "18px", fontWeight: 600, color: "var(--color-primary-900)" }}>
             Request a Quote or Ask a Question
           </h2>
-          <ContactForm />
+          <GeneralQuoteForm paired />
         </div>
       </div>
     </section>
