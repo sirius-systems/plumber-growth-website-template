@@ -1,48 +1,74 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { clientConfig } from "@/config/client";
 import { enabledServices } from "@/config/services";
+import {
+  quickAnswer,
+  residentialBullets,
+  commercialBullets,
+  ctaHeading,
+  ctaSubtext,
+} from "@/content/services-hub";
+import { ServicesHubHero } from "@/components/sections/services-hub/ServicesHubHero";
+import { QuickAnswer } from "@/components/sections/QuickAnswer";
+import { AudiencePathways } from "@/components/sections/rebuild/AudiencePathways";
+import { ServicesGrid } from "@/components/sections/rebuild/ServicesGrid";
+import { ServicesEmergencyStrip } from "@/components/sections/services-hub/ServicesEmergencyStrip";
+import { HowItWorks } from "@/components/sections/rebuild/HowItWorks";
+import { ServiceAreas } from "@/components/sections/rebuild/ServiceAreas";
+import { ServicesHubFaq } from "@/components/sections/services-hub/ServicesHubFaq";
+import { FinalCta } from "@/components/sections/rebuild/FinalCta";
+
+const DESCRIPTION =
+  "Licensed residential and commercial plumbing services in Clark County. Drain cleaning, water heater repair, leak detection, pipe repair, sewer line repair, and more. Call (888) 308-3262.";
 
 export const metadata: Metadata = {
-  title: `Plumbing Services in ${clientConfig.seo.primaryMarket}`,
-  description: `Explore the plumbing services ${clientConfig.business.publicName} provides in ${clientConfig.seo.primaryMarket}.`,
+  title: `Plumbing Services in ${clientConfig.region.name} | ${clientConfig.business.publicName}`,
+  description: DESCRIPTION,
   alternates: { canonical: "/services/" },
 };
 
-/** Services hub (docs/04 §7, T2). Hub-and-spoke to enabled service pages. */
+/** Services hub (docs/04 §7). Rebuilt section stack. */
 export default function ServicesHubPage() {
-  const services = enabledServices();
+  const { business, region } = clientConfig;
+  const canonical = `${business.websiteUrl}/services/`;
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: `${business.websiteUrl}/` },
+      { "@type": "ListItem", position: 2, name: "Services", item: canonical },
+    ],
+  };
+  const collectionJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: `Plumbing Services in ${region.name}`,
+    url: canonical,
+    description: DESCRIPTION,
+    provider: { "@type": "Plumber", name: business.publicName },
+    hasPart: enabledServices().map((s) => ({
+      "@type": "WebPage",
+      url: `${business.websiteUrl}/services/${s.slug}/`,
+      name: s.name,
+    })),
+  };
 
   return (
-    <section className="container section">
-      <h1 style={{ fontSize: "var(--font-size-3xl)" }}>Plumbing Services</h1>
-      <p style={{ maxWidth: "var(--measure-reading)" }}>
-        {clientConfig.business.publicName} provides the plumbing services below across{" "}
-        {clientConfig.seo.primaryMarket}. Choose a service to learn more or request help.
-      </p>
-      <ul
-        style={{
-          display: "grid",
-          gap: "var(--space-6)",
-          gridTemplateColumns: "repeat(auto-fit, minmax(15rem, 1fr))",
-          listStyle: "none",
-          padding: 0,
-        }}
-      >
-        {services.map((s) => (
-          <li key={s.slug}>
-            <h2 style={{ fontSize: "var(--font-size-lg)" }}>
-              <Link href={`/services/${s.slug}/`}>{s.name}</Link>
-            </h2>
-            <p style={{ color: "var(--color-text-muted)" }}>{s.shortDescription}</p>
-          </li>
-        ))}
-      </ul>
-      <p>
-        <Link className="btn btn--primary" href="/request-service/">
-          Request Service
-        </Link>
-      </p>
-    </section>
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionJsonLd) }} />
+
+      <ServicesHubHero />
+      <QuickAnswer answer={quickAnswer} />
+      <AudiencePathways residentialBullets={residentialBullets} commercialBullets={commercialBullets} />
+      <ServicesGrid />
+      <ServicesEmergencyStrip />
+      {/* Generic process (ServiceProcess is coupled to a single service). */}
+      <HowItWorks />
+      <ServiceAreas />
+      <ServicesHubFaq />
+      <FinalCta heading={ctaHeading} subtext={ctaSubtext} />
+    </>
   );
 }

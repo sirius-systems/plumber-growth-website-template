@@ -36,6 +36,10 @@ export interface PlumbingService {
   indexable: boolean;
   /** Related service slugs for internal linking (docs/04 §8.2). */
   relatedServices: ServiceSlug[];
+  /** Card image path; null/undefined falls back to the shared placeholder. */
+  image?: string | null;
+  /** Whether this service is offered for commercial properties (docs/04 §7). */
+  commercialAvailable?: boolean;
 }
 
 /**
@@ -49,6 +53,7 @@ export const SERVICES: PlumbingService[] = [
     shortDescription: "Fast help for urgent plumbing problems.",
     scope: "launch-set",
     enabled: true,
+    commercialAvailable: true,
     indexable: true,
     relatedServices: ["drain-cleaning", "leak-detection", "pipe-repair"],
   },
@@ -58,6 +63,7 @@ export const SERVICES: PlumbingService[] = [
     shortDescription: "Clear slow and clogged drains.",
     scope: "launch-set",
     enabled: true,
+    commercialAvailable: true,
     indexable: true,
     relatedServices: ["sewer-line-repair", "toilet-repair", "emergency-plumbing"],
   },
@@ -67,6 +73,7 @@ export const SERVICES: PlumbingService[] = [
     shortDescription: "Restore hot water quickly.",
     scope: "launch-set",
     enabled: true,
+    commercialAvailable: true,
     indexable: true,
     relatedServices: ["water-heater-installation", "leak-detection"],
   },
@@ -76,6 +83,7 @@ export const SERVICES: PlumbingService[] = [
     shortDescription: "Repair or replace water heaters.",
     scope: "launch-set",
     enabled: true,
+    commercialAvailable: true,
     indexable: true,
     relatedServices: ["water-heater-repair", "leak-detection"],
   },
@@ -85,6 +93,7 @@ export const SERVICES: PlumbingService[] = [
     shortDescription: "Find and stop hidden water leaks.",
     scope: "launch-set",
     enabled: true,
+    commercialAvailable: true,
     indexable: true,
     relatedServices: ["pipe-repair", "emergency-plumbing"],
   },
@@ -93,7 +102,8 @@ export const SERVICES: PlumbingService[] = [
     name: "Pipe Repair",
     shortDescription: "Repair damaged or leaking pipes.",
     scope: "upgrade",
-    enabled: false,
+    enabled: true,
+    commercialAvailable: true,
     indexable: true,
     relatedServices: ["leak-detection", "sewer-line-repair"],
   },
@@ -102,7 +112,8 @@ export const SERVICES: PlumbingService[] = [
     name: "Sewer Line Repair",
     shortDescription: "Repair and clear sewer lines.",
     scope: "upgrade",
-    enabled: false,
+    enabled: true,
+    commercialAvailable: true,
     indexable: true,
     relatedServices: ["drain-cleaning", "pipe-repair"],
   },
@@ -111,7 +122,8 @@ export const SERVICES: PlumbingService[] = [
     name: "Toilet Repair",
     shortDescription: "Fix running, clogged, or leaking toilets.",
     scope: "upgrade",
-    enabled: false,
+    enabled: true,
+    commercialAvailable: true,
     indexable: true,
     relatedServices: ["drain-cleaning", "faucet-repair"],
   },
@@ -120,7 +132,8 @@ export const SERVICES: PlumbingService[] = [
     name: "Faucet Repair",
     shortDescription: "Repair dripping and broken faucets.",
     scope: "upgrade",
-    enabled: false,
+    enabled: true,
+    commercialAvailable: true,
     indexable: true,
     relatedServices: ["leak-detection", "garbage-disposal-repair"],
   },
@@ -129,7 +142,8 @@ export const SERVICES: PlumbingService[] = [
     name: "Garbage Disposal Repair",
     shortDescription: "Repair and replace garbage disposals.",
     scope: "upgrade",
-    enabled: false,
+    enabled: true,
+    commercialAvailable: true,
     indexable: true,
     relatedServices: ["drain-cleaning", "faucet-repair"],
   },
@@ -152,6 +166,10 @@ export const enabledServices = (): PlumbingService[] =>
 
 export const findEnabledService = (slug: string): PlumbingService | undefined =>
   SERVICES.find((s) => s.slug === slug && s.enabled);
+
+/** Enabled services offered for commercial properties (docs/04 §7). */
+export const commercialServices = (): PlumbingService[] =>
+  SERVICES.filter((s) => s.enabled && s.commercialAvailable);
 
 /** Set of valid service values a form submission may carry (enabled + "other"). */
 export const enabledServiceValues = (): QuoteServiceOption[] => [

@@ -10,7 +10,19 @@ name = "plumber-growth-website-template"
 compatibility_date = "2025-01-01"
 pages_build_output_dir = "out"
 
+# Production environment (top-level = production for Cloudflare Pages).
 [vars]
 # Non-secret defaults only. Real values are set per environment in the dashboard.
 IDEMPOTENCY_NAMESPACE = "pgs-idempotency"
 RATE_LIMIT_NAMESPACE = "pgs-rate-limit"
+# DEMO deployment flag. Read at runtime by functions/_middleware.ts, which injects
+# the demonstration banner into HTML responses when this is "true". Toggling it
+# does not require a rebuild — it is a Pages Functions runtime var, not a build var.
+DEMO_MODE = "true"
+
+# Preview environment. Wrangler environments do NOT inherit top-level vars, so the
+# non-secret defaults are re-declared here to keep preview complete.
+[env.preview.vars]
+IDEMPOTENCY_NAMESPACE = "pgs-idempotency"
+RATE_LIMIT_NAMESPACE = "pgs-rate-limit"
+DEMO_MODE = "true"

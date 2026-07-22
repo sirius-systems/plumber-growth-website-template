@@ -1,70 +1,70 @@
-import Link from "next/link";
+import type { Metadata } from "next";
 import { clientConfig } from "@/config/client";
-import { enabledServices } from "@/config/services";
-import { telHref } from "@/lib/utilities/format";
+import { homeFaqs } from "@/content/homepage/faqs";
+import { HomeHero } from "@/components/sections/HomeHero";
+import { ServicesGrid } from "@/components/sections/rebuild/ServicesGrid";
+import { CommonProblems } from "@/components/sections/CommonProblems";
+import { WhyChooseUs } from "@/components/sections/rebuild/WhyChooseUs";
+import { HowItWorks } from "@/components/sections/rebuild/HowItWorks";
+import { AudiencePathways } from "@/components/sections/rebuild/AudiencePathways";
+import { EmergencyCta } from "@/components/sections/rebuild/EmergencyCta";
+import { ServiceAreas } from "@/components/sections/rebuild/ServiceAreas";
+import { ReviewsCarousel } from "@/components/sections/rebuild/ReviewsCarousel";
+import { FaqSection } from "@/components/sections/rebuild/FaqSection";
+import { FinalCta } from "@/components/sections/rebuild/FinalCta";
 
-/** Home (docs/04 §6, T1). Hero + primary services + conversion band. */
+export const metadata: Metadata = {
+  title: "Plumber in Las Vegas, NV | Las Vegas Pro Plumbing",
+  description: clientConfig.seo.defaultDescription,
+  alternates: { canonical: "/" },
+};
+
+/**
+ * Home page (docs/04 §6). Rebuilt section stack.
+ *
+ * Structured data: Plumber (LocalBusiness). AggregateRating intentionally
+ * omitted — demo reviews are fictional and review schema requires verified,
+ * eligible data (docs/04 §15, docs/07 §30).
+ */
 export default function HomePage() {
-  const { business, seo } = clientConfig;
-  const services = enabledServices();
+  const { business, location, serviceAreas } = clientConfig;
+
+  const plumberJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Plumber",
+    name: business.publicName,
+    telephone: business.phone,
+    email: business.email,
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: location.streetAddress,
+      addressLocality: location.city,
+      addressRegion: location.state,
+      postalCode: location.postalCode,
+      addressCountry: location.country,
+    },
+    areaServed: serviceAreas.map((a) => `${a.name}, ${a.state}`),
+    url: business.websiteUrl,
+    priceRange: "$$",
+  };
 
   return (
     <>
-      <section className="container section">
-        <p style={{ color: "var(--color-text-muted)", margin: 0 }}>
-          Plumbing services in {seo.primaryMarket}
-        </p>
-        <h1 style={{ fontSize: "var(--font-size-4xl)", maxWidth: "20ch" }}>
-          Turn more plumbing calls and website visitors into booked jobs.
-        </h1>
-        <p style={{ maxWidth: "var(--measure-reading)", fontSize: "var(--font-size-lg)" }}>
-          {business.description}
-        </p>
-        <div style={{ display: "flex", gap: "var(--space-3)", flexWrap: "wrap" }}>
-          <Link className="btn btn--primary" href="/request-service/">
-            Request Service
-          </Link>
-          <a className="btn btn--secondary" href={telHref(business.phone)}>
-            Call now
-          </a>
-        </div>
-      </section>
-
-      <section
-        className="section"
-        style={{ background: "var(--color-background-alt)" }}
-      >
-        <div className="container">
-          <h2 style={{ fontSize: "var(--font-size-2xl)" }}>Our plumbing services</h2>
-          <ul
-            style={{
-              display: "grid",
-              gap: "var(--space-6)",
-              gridTemplateColumns: "repeat(auto-fit, minmax(15rem, 1fr))",
-              listStyle: "none",
-              padding: 0,
-            }}
-          >
-            {services.map((s) => (
-              <li
-                key={s.slug}
-                style={{
-                  background: "var(--color-surface)",
-                  border: "1px solid var(--color-border)",
-                  borderRadius: "var(--radius-md)",
-                  boxShadow: "var(--shadow-sm)",
-                  padding: "var(--space-6)",
-                }}
-              >
-                <h3 style={{ marginTop: 0 }}>
-                  <Link href={`/services/${s.slug}/`}>{s.name}</Link>
-                </h3>
-                <p style={{ color: "var(--color-text-muted)" }}>{s.shortDescription}</p>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(plumberJsonLd) }}
+      />
+      <HomeHero />
+      <ServicesGrid />
+      <CommonProblems />
+      <WhyChooseUs />
+      <HowItWorks />
+      <AudiencePathways />
+      <EmergencyCta />
+      <ServiceAreas />
+      <ReviewsCarousel />
+      <FaqSection items={homeFaqs} />
+      <FinalCta />
     </>
   );
 }

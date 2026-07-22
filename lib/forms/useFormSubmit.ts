@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import type { FormId } from "@/lib/forms/schemas";
 import { clientConfig } from "@/config/client";
 import { formatPhoneDisplay } from "@/lib/utilities/format";
@@ -25,7 +26,15 @@ function successEventName(formId: FormId): string {
   return `${formId.replace(/-/g, "_")}_submit`;
 }
 
-export function useFormSubmit(formId: FormId) {
+/**
+ * @param options.redirectTo When set, a server-accepted submission (ok: true)
+ *   navigates here instead of showing the inline success state. The loading
+ *   state stays active until navigation; the conversion event fires first.
+ *   Redirect never fires on validation, rate-limit, delivery, or network errors
+ *   (those resolve to ok: false / the catch branch).
+ */
+export function useFormSubmit(formId: FormId, options?: { redirectTo?: string }) {
+  const router = useRouter();
   const [status, setStatus] = useState<SubmitStatus>("idle");
   const [message, setMessage] = useState("");
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
@@ -61,11 +70,18 @@ export function useFormSubmit(formId: FormId) {
       const result = (await res.json()) as ApiResult;
 
       if (result.ok) {
-        setStatus("success");
-        // Conversion event ONLY after server acceptance (docs/13 §12).
+        // Conversion event ONLY after server acceptance (docs/13 §12), fired
+        // before any redirect.
         window.dispatchEvent(
           new CustomEvent("pgs:track", { detail: { event: successEventName(formId) } }),
         );
+        if (options?.redirectTo) {
+          // Keep status "submitting" so the loading state persists until the
+          // client-side navigation completes and the form unmounts.
+          router.push(options.redirectTo);
+          return;
+        }
+        setStatus("success");
         return;
       }
 

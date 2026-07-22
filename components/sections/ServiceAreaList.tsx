@@ -1,0 +1,74 @@
+import Link from "next/link";
+import { clientConfig } from "@/config/client";
+
+interface ServiceAreaListProps {
+  heading?: string;
+  intro?: string;
+  altBackground?: boolean;
+}
+
+/**
+ * Service-area summary (docs/06 §42 ServiceAreaList, docs/04 §27). Lists verified
+ * service areas from config and links to detail pages where they exist. Avoids
+ * long unstructured city lists (docs/07 §11).
+ */
+export function ServiceAreaList({
+  heading = "Areas We Serve",
+  intro,
+  altBackground = false,
+}: ServiceAreaListProps) {
+  const { serviceAreas } = clientConfig;
+
+  return (
+    <section
+      className="section"
+      style={altBackground ? { background: "var(--color-background-alt)" } : undefined}
+    >
+      <div className="container">
+        <h2 style={{ fontSize: "var(--font-size-2xl)", marginTop: 0 }}>{heading}</h2>
+        {intro && (
+          <p style={{ maxWidth: "var(--measure-reading)", color: "var(--color-text-muted)" }}>
+            {intro}
+          </p>
+        )}
+        <ul
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "var(--space-3)",
+            listStyle: "none",
+            padding: 0,
+            margin: "0 0 var(--space-6)",
+          }}
+        >
+          {serviceAreas.map((area) => (
+            <li key={area.name}>
+              {area.hasDetailPage && area.slug ? (
+                <Link
+                  href={`/service-areas/${area.slug}/`}
+                  className="btn btn--secondary"
+                  style={{ minHeight: "auto", padding: "var(--space-2) var(--space-4)" }}
+                >
+                  {area.name}
+                </Link>
+              ) : (
+                <span
+                  style={{
+                    display: "inline-block",
+                    padding: "var(--space-2) var(--space-4)",
+                    border: "1px solid var(--color-border)",
+                    borderRadius: "var(--radius-md)",
+                    color: "var(--color-text-muted)",
+                  }}
+                >
+                  {area.name}
+                </span>
+              )}
+            </li>
+          ))}
+        </ul>
+        <Link href="/service-areas/">View all service areas →</Link>
+      </div>
+    </section>
+  );
+}

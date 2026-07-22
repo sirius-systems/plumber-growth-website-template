@@ -1,9 +1,20 @@
 import type { Metadata, Viewport } from "next";
 import type { CSSProperties } from "react";
+import { DM_Serif_Display } from "next/font/google";
 import "./globals.css";
 import { clientConfig } from "@/config/client";
+
+/** Display face for H1s only (docs/06 typography). Inter remains the body font. */
+const dmSerifDisplay = DM_Serif_Display({
+  weight: "400",
+  subsets: ["latin"],
+  display: "swap",
+  preload: true,
+  variable: "--font-dm-serif",
+});
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { SiteFooter } from "@/components/layout/SiteFooter";
+import { MobileActionBar } from "@/components/layout/MobileActionBar";
 
 export const metadata: Metadata = {
   metadataBase: new URL(clientConfig.business.websiteUrl),
@@ -13,6 +24,10 @@ export const metadata: Metadata = {
   },
   description: clientConfig.seo.defaultDescription,
   alternates: { canonical: "/" },
+  // DEMO deployment: keep the entire fictional site out of search indexes
+  // (docs/07 §38 — preview/staging must not be indexable). Remove this global
+  // override for a live client and rely on per-page indexation rules instead.
+  robots: { index: false, follow: true },
 };
 
 export const viewport: Viewport = {
@@ -31,14 +46,17 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" style={brandStyle}>
+    <html lang="en" className={dmSerifDisplay.variable} style={brandStyle}>
       <body>
         <a className="skip-link" href="#main">
           Skip to content
         </a>
+        {/* The demonstration banner is injected at the edge by
+            functions/_middleware.ts when DEMO_MODE=true (runtime, no rebuild). */}
         <SiteHeader />
         <main id="main">{children}</main>
         <SiteFooter />
+        <MobileActionBar />
       </body>
     </html>
   );

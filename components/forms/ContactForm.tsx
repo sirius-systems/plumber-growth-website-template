@@ -1,7 +1,5 @@
 "use client";
 
-import { clientConfig } from "@/config/client";
-import { formatPhoneDisplay, telHref } from "@/lib/utilities/format";
 import { useFormSubmit } from "@/lib/forms/useFormSubmit";
 import { Field, ErrorSummary, Honeypot } from "@/components/forms/Field";
 
@@ -23,7 +21,10 @@ const SUBJECTS: { value: string; label: string }[] = [
 ];
 
 export function ContactForm() {
-  const { status, message, fieldErrors, summaryRef, submit } = useFormSubmit("contact");
+  // On server acceptance, redirect to the contact confirmation (docs/04 §23).
+  const { status, message, fieldErrors, summaryRef, submit } = useFormSubmit("contact", {
+    redirectTo: "/thank-you/?type=contact",
+  });
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -35,40 +36,27 @@ export function ContactForm() {
     });
   }
 
-  if (status === "success") {
-    return (
-      <div role="status" aria-live="polite">
-        <h2>Message received</h2>
-        <p>
-          Thank you for contacting {clientConfig.business.publicName}. Your message was
-          received and will be routed to the appropriate team member. If you need plumbing
-          service, you may get a faster response by using the Request Service form or calling{" "}
-          <a href={telHref(clientConfig.business.phone)}>
-            {formatPhoneDisplay(clientConfig.business.phone)}
-          </a>
-          .
-        </p>
-      </div>
-    );
-  }
-
   return (
     <form onSubmit={handleSubmit} noValidate>
       <ErrorSummary summaryRef={summaryRef} message={message} fieldErrors={fieldErrors} />
       <Honeypot />
 
-      <Field id="firstName" label="First name" required error={fieldErrors.firstName}>
-        <input id="field-firstName" name="firstName" required autoComplete="given-name" />
-      </Field>
-      <Field id="lastName" label="Last name" required error={fieldErrors.lastName}>
-        <input id="field-lastName" name="lastName" required autoComplete="family-name" />
-      </Field>
-      <Field id="email" label="Email" required error={fieldErrors.email}>
-        <input id="field-email" name="email" type="email" inputMode="email" required autoComplete="email" />
-      </Field>
-      <Field id="phone" label="Phone (optional)" error={fieldErrors.phone}>
-        <input id="field-phone" name="phone" type="tel" inputMode="tel" autoComplete="tel" />
-      </Field>
+      <div className="form-row-2col">
+        <Field id="firstName" label="First name" required error={fieldErrors.firstName}>
+          <input id="field-firstName" name="firstName" required autoComplete="given-name" />
+        </Field>
+        <Field id="lastName" label="Last name" required error={fieldErrors.lastName}>
+          <input id="field-lastName" name="lastName" required autoComplete="family-name" />
+        </Field>
+      </div>
+      <div className="form-row-2col">
+        <Field id="phone" label="Phone (optional)" error={fieldErrors.phone}>
+          <input id="field-phone" name="phone" type="tel" inputMode="tel" autoComplete="tel" />
+        </Field>
+        <Field id="email" label="Email" required error={fieldErrors.email}>
+          <input id="field-email" name="email" type="email" inputMode="email" required autoComplete="email" />
+        </Field>
+      </div>
 
       <Field id="subject" label="Subject" required error={fieldErrors.subject}>
         <select id="field-subject" name="subject" required defaultValue="">
@@ -101,11 +89,11 @@ export function ContactForm() {
       </fieldset>
 
       <p style={{ fontSize: "0.875rem", color: "var(--color-text-muted)" }}>
-        See our <a href="/privacy-policy/">Privacy Policy</a>.
+        By submitting you agree to our <a href="/privacy-policy/">Privacy Policy</a>.
       </p>
 
-      <button className="btn btn--primary" type="submit" disabled={status === "submitting"}>
-        {status === "submitting" ? "Sending…" : "Send Message"}
+      <button className="btn btn--primary btn--block" type="submit" disabled={status === "submitting"}>
+        {status === "submitting" ? "Sending…" : "Submit Request"}
       </button>
     </form>
   );

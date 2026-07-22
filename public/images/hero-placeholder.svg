@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Plumbing service placeholder">
+  <defs>
+    <linearGradient id="hb" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1B4F8A"/>
+      <stop offset="0.55" stop-color="#123A66"/>
+      <stop offset="1" stop-color="#0d2b4c"/>
+    </linearGradient>
+    <linearGradient id="hp" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2f6bb0"/>
+      <stop offset="1" stop-color="#1B4F8A"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#hb)"/>
+  <!-- soft diagonal light band -->
+  <polygon points="0,620 1600,300 1600,520 0,840" fill="#ffffff" opacity="0.04"/>
+  <polygon points="0,760 1600,470 1600,560 0,850" fill="#ffffff" opacity="0.03"/>
+  <!-- abstract pipe run -->
+  <g stroke="url(#hp)" stroke-width="46" fill="none" opacity="0.5" stroke-linecap="round">
+    <path d="M-40 250 H520 a70 70 0 0 1 70 70 V620 a70 70 0 0 0 70 70 H1120"/>
+    <path d="M1180 690 a70 70 0 0 0 70 -70 V360 a70 70 0 0 1 70 -70 H1660"/>
+  </g>
+  <!-- joints -->
+  <g fill="#2f6bb0" opacity="0.55">
+    <circle cx="1120" cy="690" r="34"/>
+    <circle cx="590" cy="320" r="30"/>
+  </g>
+  <!-- faint droplets -->
+  <g fill="#7fb0e0" opacity="0.14">
+    <path d="M300 470 c0 26 -20 42 -20 62 a20 20 0 0 0 40 0 c0 -20 -20 -36 -20 -62z"/>
+    <path d="M980 200 c0 20 -16 32 -16 48 a16 16 0 0 0 32 0 c0 -16 -16 -28 -16 -48z"/>
+  </g>
+</svg>

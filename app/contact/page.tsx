@@ -1,37 +1,55 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { SimplePage } from "@/components/layout/SimplePage";
-import { ContactForm } from "@/components/forms/ContactForm";
 import { clientConfig } from "@/config/client";
-import { telHref, formatPhoneDisplay } from "@/lib/utilities/format";
+import { ContactHero } from "@/components/sections/contact/ContactHero";
+import { ContactMethods } from "@/components/sections/contact/ContactMethods";
+import { ContactFormSection } from "@/components/sections/contact/ContactFormSection";
+import { ContactServiceArea } from "@/components/sections/contact/ContactServiceArea";
+import { ContactTrust } from "@/components/sections/contact/ContactTrust";
+import { ContactFaq } from "@/components/sections/contact/ContactFaq";
+import { ContactCta } from "@/components/sections/contact/ContactCta";
 
 export const metadata: Metadata = {
-  title: "Contact Us",
-  description: `Contact ${clientConfig.business.publicName} for plumbing help in ${clientConfig.seo.primaryMarket}.`,
+  title: `Contact ${clientConfig.business.publicName} | ${clientConfig.region.name} Plumber`,
+  description:
+    "Contact Las Vegas Pro Plumbing for plumbing service in Clark County. Call (888) 308-3262 or submit a service request online. Licensed, insured, fast response.",
   alternates: { canonical: "/contact/" },
 };
 
+/** Contact page (docs/04 §7). Conversion-focused. */
 export default function ContactPage() {
   const { business } = clientConfig;
+  const canonical = `${business.websiteUrl}/contact/`;
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: `${business.websiteUrl}/` },
+      { "@type": "ListItem", position: 2, name: "Contact", item: canonical },
+    ],
+  };
+  // ContactPage only. LocalBusiness (Plumber) JSON-LD already ships on the
+  // homepage and location pages — not duplicated here (docs/07 §29).
+  const contactPageJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    name: `Contact ${business.publicName}`,
+    url: canonical,
+    description: `Contact ${business.publicName} for plumbing service in ${clientConfig.region.name}.`,
+  };
+
   return (
-    <SimplePage title={`Contact ${business.publicName}`} intro="Reach us by phone or request service online.">
-      <p>
-        <a className="btn btn--secondary" href={telHref(business.phone)}>
-          Call {formatPhoneDisplay(business.phone)}
-        </a>{" "}
-        <Link className="btn btn--primary" href="/request-service/">
-          Request Service
-        </Link>
-      </p>
-      <p>
-        Email: <a href={`mailto:${business.email}`}>{business.email}</a>
-      </p>
-      <h2 style={{ fontSize: "var(--font-size-2xl)" }}>Send us a message</h2>
-      <p>
-        For a detailed plumbing service request, the{" "}
-        <Link href="/request-service/">Request Service</Link> form is the fastest path.
-      </p>
-      <ContactForm />
-    </SimplePage>
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(contactPageJsonLd) }} />
+
+      <ContactHero />
+      <ContactMethods />
+      <ContactFormSection />
+      <ContactServiceArea />
+      <ContactTrust />
+      <ContactFaq />
+      <ContactCta />
+    </>
   );
 }
