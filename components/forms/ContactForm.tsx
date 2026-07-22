@@ -2,6 +2,7 @@
 
 import { useFormSubmit } from "@/lib/forms/useFormSubmit";
 import { Field, ErrorSummary, Honeypot } from "@/components/forms/Field";
+import { Button } from "@/components/ui/Button";
 
 /**
  * Contact Form (docs/08 §11, docs/11 §11). Subject selection drives server-side
@@ -92,9 +93,9 @@ export function ContactForm() {
         By submitting you agree to our <a href="/privacy-policy/">Privacy Policy</a>.
       </p>
 
-      <button className="btn btn--primary btn--block" type="submit" disabled={status === "submitting"}>
-        {status === "submitting" ? "Sending…" : "Submit Request"}
-      </button>
+      <Button type="submit" variant="primary" block loading={status === "submitting"} loadingText="Sending…">
+        Send Message
+      </Button>
     </form>
   );
 }

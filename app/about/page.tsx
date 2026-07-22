@@ -5,6 +5,7 @@ import { Breadcrumb } from "@/components/sections/Breadcrumb";
 import { Hero } from "@/components/sections/Hero";
 import { ReviewsSection } from "@/components/sections/ReviewsSection";
 import { CallToAction } from "@/components/sections/CallToAction";
+import { Button } from "@/components/ui/Button";
 
 export const metadata: Metadata = {
   title: "About Las Vegas Pro Plumbing | Licensed Plumber in Las Vegas, NV",
@@ -36,9 +37,9 @@ export default function AboutPage() {
             serving the Las Vegas valley the same way.
           </p>
           <div style={{ display: "flex", gap: "var(--space-3)", flexWrap: "wrap" }}>
-            <a className="btn btn--primary" href={telHref(business.phone)}>
+            <Button variant="primary" href={telHref(business.phone)}>
               Call {formatPhoneDisplay(business.phone)}
-            </a>
+            </Button>
           </div>
         </div>
       </Hero>

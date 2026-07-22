@@ -1,6 +1,6 @@
-import Link from "next/link";
 import { clientConfig } from "@/config/client";
 import { telHref, formatPhoneDisplay } from "@/lib/utilities/format";
+import { Button } from "@/components/ui/Button";
 
 /** FAQ final CTA (docs/04 §6). Simplified centered dark band. */
 export function FaqCta() {
@@ -15,9 +15,9 @@ export function FaqCta() {
           If your question isn&rsquo;t answered here or you need immediate help, our team is ready.
         </p>
         <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "1rem", alignItems: "center" }}>
-          <Link className="btn btn--accent" href="/contact/">
+          <Button variant="accent" href="/contact/">
             Request Service
-          </Link>
+          </Button>
           <a href={telHref(business.phone)} style={{ color: "#fff", fontSize: "15px" }}>
             Or call {formatPhoneDisplay(business.phone)}
           </a>

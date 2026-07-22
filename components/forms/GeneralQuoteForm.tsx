@@ -4,6 +4,7 @@ import { useMemo } from "react";
 import { enabledServices } from "@/config/services";
 import { useFormSubmit } from "@/lib/forms/useFormSubmit";
 import { Field, ErrorSummary, Honeypot } from "@/components/forms/Field";
+import { Button } from "@/components/ui/Button";
 
 /**
  * General Plumbing Quote Request form (docs/08 §9). The site's primary lead form:
@@ -158,9 +159,9 @@ export function GeneralQuoteForm({
         See our <a href="/privacy-policy/">Privacy Policy</a>.
       </p>
 
-      <button className="btn btn--primary" type="submit" disabled={status === "submitting"}>
-        {status === "submitting" ? "Submitting…" : "Request Service"}
-      </button>
+      <Button type="submit" variant="primary" block loading={status === "submitting"} loadingText="Submitting…">
+        Request Service
+      </Button>
     </form>
   );
 }

@@ -354,19 +354,45 @@ img {
   background: var(--color-primary-50);
 }
 
-/* Buttons (docs/06 §23) — min 44px touch target */
+/* Button system (docs/06 §23). Rendered via components/ui/Button. All color
+   references are design tokens — no hardcoded values. Min 44px touch target. */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: var(--space-2);
   min-height: 44px;
   padding: var(--space-3) var(--space-6);
   border-radius: var(--radius-md);
+  font-family: inherit;
   font-weight: 600;
+  font-size: var(--font-size-base);
+  line-height: 1.2;
+  text-align: center;
   text-decoration: none;
   cursor: pointer;
   border: 2px solid transparent;
+  transition: background 150ms ease, border-color 150ms ease, color 150ms ease, filter 150ms ease;
 }
+.btn:active {
+  transform: translateY(1px);
+}
+.btn:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+/* Sizes */
+.btn--sm {
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--font-size-sm);
+}
+.btn--lg {
+  padding: var(--space-4) var(--space-8);
+  font-size: var(--font-size-lg);
+}
+
+/* Variants */
 .btn--primary {
   background: var(--color-action);
   color: var(--color-action-text);
@@ -380,9 +406,47 @@ img {
   border-color: var(--color-action);
   color: var(--color-action);
 }
-/* Amber conversion-emphasis button (docs/06 §5 accent). Dark label on amber
-   passes WCAG AA (~8:1). Used for the closing CTA band, not the primary
-   nav/hero actions, which stay blue. */
+.btn--secondary:hover {
+  background: var(--color-primary-50);
+}
+.btn--outline {
+  background: transparent;
+  border-color: var(--color-border);
+  color: var(--color-text);
+}
+.btn--outline:hover {
+  background: var(--color-primary-50);
+  border-color: var(--color-primary-600);
+}
+.btn--text {
+  background: transparent;
+  border-color: transparent;
+  color: var(--color-link);
+  min-height: auto;
+  padding: var(--space-2) var(--space-3);
+}
+.btn--text:hover {
+  color: var(--color-link-hover);
+  text-decoration: underline;
+}
+.btn--danger {
+  background: var(--color-danger);
+  color: var(--color-neutral-0);
+}
+.btn--danger:hover {
+  filter: brightness(0.93);
+}
+/* Inverse — for dark backgrounds (replaces ad-hoc inline white overrides). */
+.btn--inverse {
+  background: transparent;
+  border-color: var(--color-neutral-0);
+  color: var(--color-neutral-0);
+}
+.btn--inverse:hover {
+  background: var(--color-neutral-0);
+  color: var(--brand-primary-dark);
+}
+/* Amber conversion-emphasis (client brand extension; dark label passes AA ~8:1). */
 .btn--accent {
   background: var(--brand-accent);
   color: var(--color-neutral-900);
@@ -392,13 +456,37 @@ img {
   filter: brightness(0.93);
   color: var(--color-neutral-900);
 }
-.btn[disabled] {
+
+/* States */
+.btn[disabled],
+.btn[aria-disabled="true"] {
   opacity: 0.6;
   cursor: not-allowed;
+  pointer-events: none;
 }
-
 .btn--block {
   width: 100%;
+}
+.btn--loading {
+  cursor: progress;
+}
+.btn__spinner {
+  width: 1em;
+  height: 1em;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: btn-spin 0.6s linear infinite;
+}
+@keyframes btn-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .btn__spinner {
+    animation-duration: 1.2s;
+  }
 }
 
 /* Visually hidden but available to assistive tech. */

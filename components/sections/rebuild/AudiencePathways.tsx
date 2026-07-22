@@ -1,6 +1,6 @@
-import Link from "next/link";
 import { clientConfig } from "@/config/client";
 import { LucideIcon } from "@/components/ui/LucideIcon";
+import { Button } from "@/components/ui/Button";
 
 /**
  * Residential / commercial pathway cards (docs/04 §6). No images. Optional
@@ -71,9 +71,9 @@ export function AudiencePathways({
                   ))}
                 </ul>
               )}
-              <Link className="btn btn--secondary" href={c.href}>
+              <Button variant="secondary" href={c.href}>
                 {c.title}
-              </Link>
+              </Button>
             </li>
           ))}
         </ul>

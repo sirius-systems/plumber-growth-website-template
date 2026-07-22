@@ -10,6 +10,7 @@ import { ServiceGrid } from "@/components/sections/ServiceGrid";
 import { ServiceAreaList } from "@/components/sections/ServiceAreaList";
 import { FAQAccordion, type FAQItem } from "@/components/sections/FAQAccordion";
 import { CallToAction } from "@/components/sections/CallToAction";
+import { Button } from "@/components/ui/Button";
 
 export const metadata: Metadata = {
   title: "Residential Plumbing in Las Vegas, NV",
@@ -54,9 +55,9 @@ export default function ResidentialPage() {
               explanations before we start.
             </p>
             <div style={{ display: "flex", gap: "var(--space-3)", flexWrap: "wrap" }}>
-              <a className="btn btn--primary" href={telHref(business.phone)}>
+              <Button variant="primary" href={telHref(business.phone)}>
                 Call {formatPhoneDisplay(business.phone)}
-              </a>
+              </Button>
             </div>
           </div>
 
