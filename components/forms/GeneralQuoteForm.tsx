@@ -144,15 +144,20 @@ export function GeneralQuoteForm({
 
         <fieldset className="col-full">
           <legend>Preferred contact method</legend>
-          <label>
-            <input type="radio" name="preferredContactMethod" value="phone" defaultChecked /> Phone
-          </label>{" "}
-          <label>
-            <input type="radio" name="preferredContactMethod" value="text" /> Text
-          </label>{" "}
-          <label>
-            <input type="radio" name="preferredContactMethod" value="email" /> Email
-          </label>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-6)" }}>
+            <label style={{ display: "inline-flex", alignItems: "center", gap: "var(--space-2)" }}>
+              <input type="radio" name="preferredContactMethod" value="phone" defaultChecked />
+              Phone
+            </label>
+            <label style={{ display: "inline-flex", alignItems: "center", gap: "var(--space-2)" }}>
+              <input type="radio" name="preferredContactMethod" value="text" />
+              Text
+            </label>
+            <label style={{ display: "inline-flex", alignItems: "center", gap: "var(--space-2)" }}>
+              <input type="radio" name="preferredContactMethod" value="email" />
+              Email
+            </label>
+          </div>
         </fieldset>
 
         <p className="col-full">
