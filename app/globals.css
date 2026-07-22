@@ -715,12 +715,44 @@ body {
   }
 }
 
-/* Elevated white card that holds the request form inside a hero (docs/06 §26). */
+/* Elevated white card that holds the request form inside a hero (docs/06 §26).
+   Reduced horizontal padding gives the two-column field grid more room. */
 .hero-form-card {
   background: #fff;
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-md);
-  padding: 1.5rem;
+  padding: 1.5rem var(--space-4);
+}
+
+/* GeneralQuoteForm two-column field grid (docs/08). Paired fields sit side by
+   side; full-width rows span both tracks. Collapses to a single column below
+   48rem so every field stacks full width on mobile. */
+.quote-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+}
+.quote-form-grid > *,
+.quote-form-grid p {
+  min-width: 0;
+  margin-block: 0;
+}
+.quote-form-grid :where(input, select, textarea) {
+  width: 100%;
+}
+.quote-form-grid .col-full {
+  grid-column: 1 / -1;
+}
+.quote-form-grid .state-zip {
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  gap: var(--space-4);
+}
+@media (max-width: 48rem) {
+  .quote-form-grid,
+  .quote-form-grid .state-zip {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* Multi-column form field rows. Collapse to a single column below 48rem. The
