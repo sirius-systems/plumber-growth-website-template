@@ -19,16 +19,7 @@ export function CommonProblems() {
         >
           If you&rsquo;re dealing with any of these, our licensed team can help.
         </p>
-        <ul
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))",
-            gap: "var(--space-6)",
-            listStyle: "none",
-            padding: 0,
-            margin: 0,
-          }}
-        >
+        <ul className="problems-grid">
           {homeProblems.map((p) => (
             <li key={p.title} style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)" }}>
               <LucideIcon name={p.icon} size={28} color="var(--color-primary-600)" />

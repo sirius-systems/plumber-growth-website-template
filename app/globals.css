@@ -251,6 +251,26 @@ img {
   text-align: center;
 }
 
+/* "Common problems we solve" grid: 1 col mobile, 2 tablet, 3 desktop (docs/04 §6). */
+.problems-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+@media (min-width: 48rem) {
+  .problems-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 64rem) {
+  .problems-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
 /* Legal pages: two-column (sticky TOC + content), single column on mobile. */
 .legal-layout {
   display: grid;
