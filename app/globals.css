@@ -668,6 +668,17 @@ body {
     grid-template-columns: 1fr;
   }
 }
+/* Homepage hero: even 50/50 split so the capture form gets equal width.
+   Scoped modifier — leaves the shared 60/40 heroes untouched. Keeps the same
+   single-column stack below 48rem. */
+.hero-2col--balanced {
+  grid-template-columns: 50fr 50fr;
+}
+@media (max-width: 48rem) {
+  .hero-2col--balanced {
+    grid-template-columns: 1fr;
+  }
+}
 /* Hero eyebrow — hidden on mobile per spec. */
 @media (max-width: 48rem) {
   .hero-eyebrow {
