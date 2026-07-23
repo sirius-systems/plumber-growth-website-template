@@ -656,26 +656,16 @@ body {
 .hero-compact {
   max-width: 720px;
 }
-/* 60/40 hero split used by the rebuilt heroes; stacks below 48rem. */
+/* 45/55 hero split used by the rebuilt heroes — the capture form gets the wider
+   column. Stacks to a single column below 48rem. */
 .hero-2col {
   display: grid;
-  grid-template-columns: 60fr 40fr;
+  grid-template-columns: 45fr 55fr;
   gap: 3rem;
   align-items: center;
 }
 @media (max-width: 48rem) {
   .hero-2col {
-    grid-template-columns: 1fr;
-  }
-}
-/* Homepage hero: 45/55 split giving the capture form the wider column.
-   Scoped modifier — leaves the shared 60/40 heroes untouched. Keeps the same
-   single-column stack below 48rem. */
-.hero-2col--balanced {
-  grid-template-columns: 45fr 55fr;
-}
-@media (max-width: 48rem) {
-  .hero-2col--balanced {
     grid-template-columns: 1fr;
   }
 }

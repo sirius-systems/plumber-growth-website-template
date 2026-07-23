@@ -38,7 +38,7 @@ export function HomeHero() {
       <div className="hero-overlay" aria-hidden="true" />
 
       <div className="hero-content section__inner" style={{ paddingBlock: "80px" }}>
-        <div className="hero-2col hero-2col--balanced">
+        <div className="hero-2col">
           <div className="hero-copy">
             <p
               className="hero-eyebrow"
