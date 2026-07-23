@@ -166,11 +166,24 @@ h1 {
   line-height: 1.15;
 }
 
+/* ─── Link decoration ─────────────────────────────────────
+   UI links (nav, buttons, cards, footer, breadcrumbs, etc.)
+   carry no underline. Inline body-copy links inside prose
+   content retain underlines for WCAG 1.4.1 compliance. This
+   codebase has no <p>/<li>/<td> prose links today, so the
+   restore is scoped to a semantic .prose hook rather than
+   broad element selectors, which here would hit nav/footer. */
 a {
   color: var(--color-link);
+  text-decoration: none;
 }
 a:hover {
   color: var(--color-link-hover);
+}
+
+/* Restore underlines for inline links inside prose content */
+.prose a {
+  text-decoration: underline;
 }
 
 /* Visible focus everywhere (docs/06 §40, A11Y-003) */
