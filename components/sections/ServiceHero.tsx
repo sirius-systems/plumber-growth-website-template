@@ -27,7 +27,7 @@ export function ServiceHero({ svc, content }: { svc: PlumbingService; content?: 
       <div className="hero-content section__inner" style={{ paddingBlock: "64px" }}>
         <div className="hero-2col">
           <div className="hero-copy">
-            <nav aria-label="Breadcrumb" style={{ fontSize: "var(--font-size-xs)", color: "rgba(255,255,255,0.90)" }}>
+            <nav aria-label="Breadcrumb" style={{ fontSize: "var(--font-size-sm)", color: "rgba(255,255,255,0.90)" }}>
               <Link href="/">Home</Link> {" › "}
               <Link href="/services/">Services</Link> {" › "}
               <span aria-current="page">{svc.name}</span>

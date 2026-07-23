@@ -51,7 +51,7 @@ interface VariantConfig {
 
 const VARIANTS: Record<TrustBarVariant, VariantConfig> = {
   // Over a dark photographic overlay (HomeHero, ServiceHero, FinalCta).
-  // White icons + white text; text at 0.90 opacity to clear WCAG 1.4.3 (audit H2).
+  // Amber icons + white text; text at 0.90 opacity to clear WCAG 1.4.3 (audit H2).
   "over-media": {
     iconSize: 14,
     ul: {
@@ -62,12 +62,12 @@ const VARIANTS: Record<TrustBarVariant, VariantConfig> = {
       listStyle: "none",
       margin: 0,
       padding: 0,
-      fontSize: "var(--font-size-xs)",
+      fontSize: "var(--font-size-sm)",
       fontWeight: 500,
       color: "rgba(255,255,255,0.90)",
     },
     item: { display: "inline-flex", alignItems: "center", gap: "4px" },
-    iconColor: () => "#fff",
+    iconColor: () => "var(--color-accent-500)",
   },
   // Solid dark navy section (LocationTrustBar). Amber icons, white text.
   "dark-bar": {

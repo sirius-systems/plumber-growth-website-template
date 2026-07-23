@@ -18,12 +18,15 @@ export function FinalCta({
   subtext?: string;
   currentService?: string;
 }) {
-  const { business, marketing, credentials } = clientConfig;
+  const { business, marketing, credentials, operations } = clientConfig;
 
   const trust: TrustItem[] = [];
   if (credentials.licenseNumber) trust.push({ icon: "badge-check", label: "Licensed" });
   if (credentials.insured) trust.push({ icon: "shield", label: "Insured" });
+  if (credentials.yearsInBusiness) trust.push({ icon: "award", label: `${credentials.yearsInBusiness}+ years` });
   trust.push({ icon: "star", label: `${reviewsSummary.rating.toFixed(1)}★ (${reviewsSummary.count} reviews)` });
+  if (operations.emergencyServiceAvailable && operations.twentyFourSevenService)
+    trust.push({ icon: "zap", label: "24/7 emergency" });
 
   return (
     <section className="hero">
