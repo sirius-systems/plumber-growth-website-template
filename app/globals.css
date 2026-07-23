@@ -57,9 +57,11 @@
   --font-sans: "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   /* Display face for H1s only; --font-dm-serif is injected by next/font on <html>. */
   --font-display: var(--font-dm-serif), Georgia, serif;
+  --font-size-xs: 0.75rem;
   --font-size-sm: 0.875rem;
   --font-size-base: 1rem;
   --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
   --font-size-2xl: clamp(1.5rem, 2vw, 1.875rem);
   --font-size-3xl: clamp(1.875rem, 3vw, 2.5rem);
   --font-size-4xl: clamp(2.25rem, 5vw, 3.75rem);

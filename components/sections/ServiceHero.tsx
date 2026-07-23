@@ -5,13 +5,17 @@ import type { PlumbingService } from "@/config/services";
 import type { ServiceContent } from "@/config/service-content";
 import { LucideIcon } from "@/components/ui/LucideIcon";
 import { HeroFormCard } from "@/components/forms/HeroFormCard";
+import { TrustBar, type TrustItem } from "@/components/ui/TrustBar";
 
 /** Service page hero (docs/06 §26). Reuses the shared hero bg + overlay pattern. */
 export function ServiceHero({ svc, content }: { svc: PlumbingService; content?: ServiceContent }) {
   const { marketing, seo, credentials, operations } = clientConfig;
   const subheading = content?.subheading ?? content?.intro ?? svc.shortDescription;
-  const trust = ["Licensed", "Insured"];
-  if (operations.emergencyServiceAvailable) trust.push("Same-day service available");
+  const trust: TrustItem[] = [
+    { icon: "badge-check", label: "Licensed" },
+    { icon: "shield", label: "Insured" },
+  ];
+  if (operations.emergencyServiceAvailable) trust.push({ icon: "clock", label: "Same-day service available" });
   const bullets = (content?.covers ?? []).slice(0, 4);
 
   return (
@@ -23,7 +27,7 @@ export function ServiceHero({ svc, content }: { svc: PlumbingService; content?: 
       <div className="hero-content section__inner" style={{ paddingBlock: "64px" }}>
         <div className="hero-2col">
           <div className="hero-copy">
-            <nav aria-label="Breadcrumb" style={{ fontSize: "13px", color: "rgba(255,255,255,0.60)" }}>
+            <nav aria-label="Breadcrumb" style={{ fontSize: "var(--font-size-xs)", color: "rgba(255,255,255,0.90)" }}>
               <Link href="/">Home</Link> {" › "}
               <Link href="/services/">Services</Link> {" › "}
               <span aria-current="page">{svc.name}</span>
@@ -31,29 +35,12 @@ export function ServiceHero({ svc, content }: { svc: PlumbingService; content?: 
             <h1 className="heading-accent">
               {svc.name} in {seo.primaryMarket}
             </h1>
-            <p style={{ maxWidth: "480px", fontSize: "18px", color: "rgba(255,255,255,0.85)" }}>
+            <p style={{ maxWidth: "480px", fontSize: "var(--font-size-lg)", color: "rgba(255,255,255,0.85)" }}>
               {subheading}
             </p>
-            <p
-              style={{
-                display: "flex",
-                flexWrap: "wrap",
-                alignItems: "center",
-                gap: "var(--space-3)",
-                fontSize: "13px",
-                fontWeight: 500,
-                color: "rgba(255,255,255,0.75)",
-              }}
-            >
-              {trust.map((t) => (
-                <span key={t} style={{ display: "inline-flex", alignItems: "center", gap: "4px" }}>
-                  <LucideIcon name="CheckCircle" size={14} color="var(--color-accent-500)" />
-                  {t}
-                </span>
-              ))}
-            </p>
+            <TrustBar variant="over-media" items={trust} />
             {bullets.length > 0 && (
-              <ul style={{ listStyle: "none", padding: 0, margin: "var(--space-4) 0 0", fontSize: "14px" }}>
+              <ul style={{ listStyle: "none", padding: 0, margin: "var(--space-4) 0 0", fontSize: "var(--font-size-sm)" }}>
                 {bullets.map((b) => (
                   <li key={b} style={{ display: "flex", alignItems: "flex-start", gap: "6px", color: "rgba(255,255,255,0.85)" }}>
                     <LucideIcon name="Check" size={14} color="var(--color-accent-500)" style={{ marginTop: "4px", flex: "none" }} />

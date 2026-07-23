@@ -6,7 +6,7 @@ import { SERVICE_CONTENT } from "@/config/service-content";
 import { mergeServiceFaqs } from "@/content/services/faqs.default";
 import { formatPhoneDisplay } from "@/lib/utilities/format";
 import { ServiceHero } from "@/components/sections/ServiceHero";
-import { TrustBar } from "@/components/sections/TrustBar";
+import { SiteTrustBand } from "@/components/sections/SiteTrustBand";
 import { QuickAnswer } from "@/components/sections/QuickAnswer";
 import { ServiceOverview } from "@/components/sections/ServiceOverview";
 import { ServiceProblems } from "@/components/sections/ServiceProblems";
@@ -85,7 +85,7 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }} />
 
       <ServiceHero svc={svc} content={content} />
-      <TrustBar />
+      <SiteTrustBand />
       <QuickAnswer answer={quickAnswerFor(svc)} />
       <ServiceOverview svc={svc} content={content} />
       <ServiceProblems svc={svc} content={content} />

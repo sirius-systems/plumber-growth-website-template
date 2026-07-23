@@ -3,7 +3,7 @@ import { clientConfig } from "@/config/client";
 import { reviewsSummary } from "@/config/reviews";
 import { telHref, formatPhoneDisplay } from "@/lib/utilities/format";
 import { HeroFormCard } from "@/components/forms/HeroFormCard";
-import { LucideIcon } from "@/components/ui/LucideIcon";
+import { TrustBar, type TrustItem } from "@/components/ui/TrustBar";
 
 /**
  * Closing conversion band (docs/04 §6). Background image + dark overlay, white
@@ -20,10 +20,10 @@ export function FinalCta({
 }) {
   const { business, marketing, credentials } = clientConfig;
 
-  const trust: string[] = [];
-  if (credentials.licenseNumber) trust.push("Licensed");
-  if (credentials.insured) trust.push("Insured");
-  trust.push(`${reviewsSummary.rating.toFixed(1)}★ (${reviewsSummary.count})`);
+  const trust: TrustItem[] = [];
+  if (credentials.licenseNumber) trust.push({ icon: "badge-check", label: "Licensed" });
+  if (credentials.insured) trust.push({ icon: "shield", label: "Insured" });
+  trust.push({ icon: "star", label: `${reviewsSummary.rating.toFixed(1)}★ (${reviewsSummary.count} reviews)` });
 
   return (
     <section className="hero">
@@ -45,26 +45,7 @@ export function FinalCta({
                 {formatPhoneDisplay(business.phone)}
               </a>
             </p>
-            <ul
-              style={{
-                display: "flex",
-                flexWrap: "wrap",
-                alignItems: "center",
-                gap: "var(--space-2)",
-                listStyle: "none",
-                padding: 0,
-                margin: 0,
-                fontSize: "13px",
-                color: "rgba(255,255,255,0.70)",
-              }}
-            >
-              {trust.map((t) => (
-                <li key={t} style={{ display: "inline-flex", alignItems: "center", gap: "4px" }}>
-                  <LucideIcon name="CheckCircle" size={14} color="var(--color-accent-500)" />
-                  {t}
-                </li>
-              ))}
-            </ul>
+            <TrustBar variant="over-media" items={trust} />
           </div>
 
           <HeroFormCard heading="Request Service" defaultService={currentService} />

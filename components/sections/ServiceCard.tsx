@@ -42,7 +42,7 @@ export function ServiceCard({ service }: { service: PlumbingService }) {
           padding: "1.25rem",
         }}
       >
-        <h3 style={{ margin: 0, fontSize: "var(--font-size-lg)" }}>
+        <h3 style={{ margin: 0, fontSize: "var(--font-size-xl)" }}>
           <Link href={`/services/${service.slug}/`}>{service.name}</Link>
         </h3>
         <p style={{ color: "var(--color-text-muted)", margin: 0 }}>{service.shortDescription}</p>

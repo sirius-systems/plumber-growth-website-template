@@ -3,7 +3,7 @@ import { clientConfig } from "@/config/client";
 import { telHref, formatPhoneDisplay } from "@/lib/utilities/format";
 import { Breadcrumb } from "@/components/sections/Breadcrumb";
 import { Hero } from "@/components/sections/Hero";
-import { TrustBar } from "@/components/sections/TrustBar";
+import { SiteTrustBand } from "@/components/sections/SiteTrustBand";
 import { HeroFormCard } from "@/components/forms/HeroFormCard";
 import { ServiceGrid } from "@/components/sections/ServiceGrid";
 import { ServiceAreaList } from "@/components/sections/ServiceAreaList";
@@ -65,7 +65,7 @@ export default function ResidentialPage() {
         </div>
       </Hero>
 
-      <TrustBar />
+      <SiteTrustBand />
 
       <section className="container section">
         <h2 style={{ fontSize: "var(--font-size-2xl)", marginTop: 0 }}>

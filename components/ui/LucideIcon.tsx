@@ -39,6 +39,7 @@ import {
   ExternalLink,
   Mail,
   AlertCircle,
+  Zap,
   HelpCircle,
   type LucideProps,
 } from "lucide-react";
@@ -89,6 +90,7 @@ const ICONS: Record<string, React.ComponentType<LucideProps>> = {
   ExternalLink,
   Mail,
   AlertCircle,
+  Zap,
 };
 
 export function LucideIcon({ name, ...props }: { name: string } & LucideProps) {
