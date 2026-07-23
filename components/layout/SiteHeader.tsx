@@ -21,8 +21,8 @@ export function SiteHeader() {
             <Image
               src={branding.logoSrc}
               alt={branding.logoAlt}
-              width={160}
-              height={40}
+              width={1200}
+              height={360}
               priority
               style={{ height: 40, width: "auto" }}
             />

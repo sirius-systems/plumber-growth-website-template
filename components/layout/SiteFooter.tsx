@@ -51,8 +51,8 @@ export function SiteFooter() {
             <Image
               src={branding.logoSrc}
               alt={branding.logoAlt}
-              width={140}
-              height={36}
+              width={1200}
+              height={360}
               style={{ height: 36, width: "auto" }}
             />
           ) : (

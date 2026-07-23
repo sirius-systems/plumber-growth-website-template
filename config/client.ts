@@ -235,6 +235,7 @@ export const clientConfig: ClientConfig = {
     yearsInBusiness: 11,
   },
   branding: {
+    logoSrc: "/images/logos/las-vegas-pro-plumbing-primary-logo-web-1200x360.png",
     logoAlt: "Las Vegas Pro Plumbing",
     wordmark: "Las Vegas Pro Plumbing",
     primaryColor: "#1B4F8A",
