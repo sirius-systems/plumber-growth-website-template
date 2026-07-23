@@ -51,7 +51,7 @@ export function FinalCta({
             <TrustBar variant="over-media" items={trust} />
           </div>
 
-          <HeroFormCard heading="Request Service" defaultService={currentService} />
+          <HeroFormCard heading="Request Service" defaultService={currentService} showLogo />
         </div>
       </div>
     </section>

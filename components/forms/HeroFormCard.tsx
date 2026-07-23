@@ -16,16 +16,19 @@ export function HeroFormCard({
   heading,
   subtitle = DEFAULT_SUBTITLE,
   defaultService,
+  showLogo = false,
 }: {
   heading: string;
   subtitle?: string;
   defaultService?: string;
+  /** Opt-in brand logo above the heading. Off by default; enabled for the FinalCta. */
+  showLogo?: boolean;
 }) {
   const { branding } = clientConfig;
 
   return (
     <div className="hero-form-card">
-      {branding.logoSrc && (
+      {showLogo && branding.logoSrc && (
         <Image
           src={branding.logoSrc}
           alt={branding.logoAlt}
