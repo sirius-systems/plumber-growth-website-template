@@ -14,7 +14,7 @@ export function SiteHeader() {
   const { business, operations, branding } = clientConfig;
 
   return (
-    <header className="container" style={{ paddingBlock: "var(--space-4)" }}>
+    <header className="container" style={{ paddingBlock: "var(--space-3)" }}>
       <div className="site-header-inner">
         <Link href="/" style={{ display: "inline-flex", flexShrink: 0 }}>
           {branding.logoSrc ? (
