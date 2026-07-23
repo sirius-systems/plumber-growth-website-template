@@ -78,7 +78,7 @@ export function SiteHeader() {
           <Button variant="secondary" size="sm" href={telHref(business.phone)}>
             Call {formatPhoneDisplay(business.phone)}
           </Button>
-          <Button variant="primary" size="sm" href="/contact/">
+          <Button variant="accent" size="sm" href="/contact/">
             Request Service
           </Button>
         </div>

@@ -496,6 +496,11 @@ img {
   background: var(--color-accent-600);
   filter: brightness(0.95);
 }
+/* Navy focus ring on the amber accent button — the default amber ring
+   (--color-focus) would be near-invisible against the amber background (L2). */
+.btn--accent:focus-visible {
+  outline-color: var(--color-primary-800);
+}
 
 /* States */
 .btn[disabled],

@@ -15,7 +15,7 @@ export function MobileActionBar() {
       <Button variant="secondary" href={telHref(business.phone)}>
         Call {formatPhoneDisplay(business.phone)}
       </Button>
-      <Button variant="primary" href="/contact/">
+      <Button variant="accent" href="/contact/">
         Request Service
       </Button>
     </div>
