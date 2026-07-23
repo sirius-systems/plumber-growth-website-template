@@ -702,7 +702,6 @@ body {
 }
 .hero-copy a:not(.btn) {
   color: #fff;
-  text-decoration: underline;
 }
 /* Outline button on the dark hero becomes white so it stays visible. */
 .hero-copy .btn--secondary {
