@@ -1,3 +1,5 @@
+import Image from "next/image";
+import { clientConfig } from "@/config/client";
 import { GeneralQuoteForm } from "@/components/forms/GeneralQuoteForm";
 
 const DEFAULT_SUBTITLE =
@@ -19,8 +21,25 @@ export function HeroFormCard({
   subtitle?: string;
   defaultService?: string;
 }) {
+  const { branding } = clientConfig;
+
   return (
     <div className="hero-form-card">
+      {branding.logoSrc && (
+        <Image
+          src={branding.logoSrc}
+          alt={branding.logoAlt}
+          width={1200}
+          height={360}
+          style={{
+            display: "block",
+            width: "auto",
+            height: "auto",
+            maxWidth: "120px",
+            margin: "0 auto var(--space-3)",
+          }}
+        />
+      )}
       <h2
         style={{
           marginTop: 0,
