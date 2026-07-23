@@ -599,7 +599,9 @@ body {
   }
 }
 
-/* Footer main grid: 6 columns desktop, 3 tablet, 1 mobile (docs/04 §5.4). */
+/* Footer main grid: wider logo column + 5 equal link columns desktop, 3 tablet,
+   1 mobile (docs/04 §5.4). The 2fr logo allocation keeps the five link columns
+   (Hours, Services, Service Areas, Company, Get Started) evenly spaced. */
 .footer-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -612,7 +614,7 @@ body {
 }
 @media (min-width: 64rem) {
   .footer-grid {
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: 2fr repeat(5, 1fr);
   }
 }
 
