@@ -28,6 +28,16 @@ export const metadata: Metadata = {
   // (docs/07 §38 — preview/staging must not be indexable). Remove this global
   // override for a live client and rely on per-page indexation rules instead.
   robots: { index: false, follow: true },
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/images/logos/icons-favicons/las-vegas-pro-plumbing-icon-16x16.png", type: "image/png", sizes: "16x16" },
+      { url: "/images/logos/icons-favicons/las-vegas-pro-plumbing-icon-32x32.png", type: "image/png", sizes: "32x32" },
+      { url: "/images/logos/icons-favicons/las-vegas-pro-plumbing-icon-192x192.png", type: "image/png", sizes: "192x192" },
+      { url: "/images/logos/icons-favicons/las-vegas-pro-plumbing-icon-512x512.png", type: "image/png", sizes: "512x512" },
+    ],
+    apple: "/images/logos/icons-favicons/las-vegas-pro-plumbing-icon-180x180.png",
+  },
 };
 
 export const viewport: Viewport = {
