@@ -37,10 +37,10 @@ export function FinalCta({
       <div className="hero-content section section__inner">
         <div className="hero-2col">
           <div className="hero-copy">
-            <h2 className="display-heading" style={{ marginTop: 0, fontSize: "var(--font-size-3xl)", color: "#fff" }}>
+            <h2 className="display-heading" style={{ marginTop: 0, fontSize: "var(--font-size-3xl)", color: "var(--color-text-on-media)" }}>
               {heading}
             </h2>
-            <p style={{ fontSize: "16px", color: "rgba(255,255,255,0.80)", maxWidth: "480px" }}>
+            <p style={{ fontSize: "16px", color: "var(--color-text-on-media)", maxWidth: "480px" }}>
               {subtext}
             </p>
             <p style={{ margin: "var(--space-4) 0" }}>

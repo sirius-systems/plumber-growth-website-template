@@ -61,7 +61,7 @@ export default function ResidentialPage() {
             </div>
           </div>
 
-          <HeroFormCard heading="Request service" />
+          <HeroFormCard heading="Request service" showLogo />
         </div>
       </Hero>
 

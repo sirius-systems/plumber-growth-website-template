@@ -24,7 +24,7 @@ export function SiteHeader() {
               width={1200}
               height={360}
               priority
-              style={{ height: 80, width: "auto" }}
+              className="site-logo"
             />
           ) : (
             <span

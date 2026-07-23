@@ -38,7 +38,7 @@ export function HeroFormCard({
             display: "block",
             width: "auto",
             height: "auto",
-            maxWidth: "120px",
+            maxWidth: "240px",
             margin: "0 auto var(--space-3)",
           }}
         />

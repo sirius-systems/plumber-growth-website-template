@@ -53,7 +53,7 @@ export function SiteFooter() {
               alt={branding.logoAlt}
               width={1200}
               height={360}
-              style={{ height: 72, width: "auto" }}
+              className="footer-logo"
             />
           ) : (
             <span

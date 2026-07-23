@@ -48,7 +48,7 @@ export function HomeHero() {
                 fontWeight: 500,
                 textTransform: "uppercase",
                 letterSpacing: "0.08em",
-                color: "rgba(255,255,255,0.90)",
+                color: "var(--color-text-on-media)",
               }}
             >
               Plumbing services in {seo.primaryMarket}
@@ -56,7 +56,7 @@ export function HomeHero() {
             <h1 className="heading-accent" style={{ maxWidth: "18ch" }}>
               {marketing.heroHeadline}
             </h1>
-            <p style={{ maxWidth: "480px", fontSize: "var(--font-size-lg)", color: "rgba(255,255,255,0.85)" }}>
+            <p style={{ maxWidth: "480px", fontSize: "var(--font-size-lg)", color: "var(--color-text-on-media)" }}>
               {marketing.heroSubheadline}
             </p>
             <p style={{ margin: "var(--space-4) 0" }}>
@@ -67,7 +67,7 @@ export function HomeHero() {
             <TrustBar variant="over-media" items={trust} />
           </div>
 
-          <HeroFormCard heading="Request Service" />
+          <HeroFormCard heading="Request Service" showLogo />
         </div>
       </div>
     </section>

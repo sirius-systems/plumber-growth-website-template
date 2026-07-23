@@ -64,7 +64,7 @@ const VARIANTS: Record<TrustBarVariant, VariantConfig> = {
       padding: 0,
       fontSize: "var(--font-size-sm)",
       fontWeight: 500,
-      color: "rgba(255,255,255,0.90)",
+      color: "var(--color-text-on-media)",
     },
     item: { display: "inline-flex", alignItems: "center", gap: "4px" },
     iconColor: () => "var(--color-accent-500)",

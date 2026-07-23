@@ -20,10 +20,10 @@ export function LocationCta({ area, content }: { area: ServiceAreaReference; con
       <div className="hero-content section section__inner">
         <div className="hero-2col">
           <div className="hero-copy">
-            <h2 className="display-heading" style={{ marginTop: 0, fontSize: "var(--font-size-3xl)", color: "#fff" }}>
+            <h2 className="display-heading" style={{ marginTop: 0, fontSize: "var(--font-size-3xl)", color: "var(--color-text-on-media)" }}>
               Ready for Plumbing Help in {area.name}?
             </h2>
-            <p style={{ fontSize: "16px", color: "rgba(255,255,255,0.80)" }}>
+            <p style={{ fontSize: "16px", color: "var(--color-text-on-media)" }}>
               Call us or submit a request and we&rsquo;ll confirm timing for your {area.name} service.
             </p>
             <p style={{ margin: "var(--space-4) 0" }}>
@@ -45,19 +45,19 @@ export function LocationCta({ area, content }: { area: ServiceAreaReference; con
               }}
             >
               <LucideIcon name="MapPin" size={32} color="rgba(255,255,255,0.5)" />
-              <p style={{ margin: "var(--space-2) 0 0", fontSize: "13px", color: "rgba(255,255,255,0.50)" }}>
+              <p style={{ margin: "var(--space-2) 0 0", fontSize: "13px", color: "var(--color-text-on-media)" }}>
                 Service area map, {area.name}
               </p>
             </div>
             {neighborhoods.length > 0 && (
-              <p style={{ marginTop: "var(--space-3)", fontSize: "13px", color: "rgba(255,255,255,0.65)" }}>
+              <p style={{ marginTop: "var(--space-3)", fontSize: "13px", color: "var(--color-text-on-media)" }}>
                 {neighborhoods.join(", ")}
                 {(content?.neighborhoods.length ?? 0) > 6 ? " + more" : ""}
               </p>
             )}
           </div>
 
-          <HeroFormCard heading={`Request Service in ${area.name}`} />
+          <HeroFormCard heading={`Request Service in ${area.name}`} showLogo />
         </div>
       </div>
     </section>

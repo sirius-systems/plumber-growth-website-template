@@ -31,6 +31,11 @@
   --color-text: var(--color-neutral-900);
   --color-text-muted: var(--color-neutral-700);
   --color-text-inverse: var(--color-neutral-0);
+  /* Text over photographic hero overlays (docs/06 §6). Main token clears WCAG
+     1.4.3 for small/body copy on the dark overlay; the muted token is reserved
+     for non-small secondary text only (never at or below --font-size-sm). */
+  --color-text-on-media: rgba(255, 255, 255, 0.9);
+  --color-text-on-media-muted: rgba(255, 255, 255, 0.75);
   --color-border: var(--color-neutral-200);
   --color-link: var(--brand-primary);
   --color-link-hover: var(--brand-primary-dark);
@@ -700,12 +705,12 @@ body {
 /* White copy for text on the overlay. Uses inheritance (not broad descendant
    selectors) so nested cards/notices with their own colors are unaffected. */
 .hero-copy {
-  color: #fff;
+  color: var(--color-text-on-media);
 }
 .hero-copy h1,
 .hero-copy h2,
 .hero-copy h3 {
-  color: #fff;
+  color: var(--color-text-on-media);
 }
 .hero-copy a:not(.btn) {
   color: #fff;
@@ -754,6 +759,26 @@ body {
 @media (min-width: 64rem) {
   .site-header-inner {
     flex-wrap: nowrap;
+  }
+}
+
+/* Header/footer logo sizing with a mobile step-down (docs/06 §20, §14). Desktop
+   heights are unchanged; at ≤48rem the logo shrinks so it does not dominate the
+   mobile viewport. width:auto preserves the logo aspect ratio. */
+.site-logo {
+  height: 80px;
+  width: auto;
+}
+.footer-logo {
+  height: 72px;
+  width: auto;
+}
+@media (max-width: 48rem) {
+  .site-logo {
+    height: 48px;
+  }
+  .footer-logo {
+    height: 44px;
   }
 }
 
