@@ -25,7 +25,7 @@ export function HeroFormCard({
         style={{
           marginTop: 0,
           fontSize: "var(--font-size-2xl)",
-          fontWeight: 700,
+          fontWeight: 800,
           textAlign: "center",
           color: "var(--color-primary-900)",
         }}

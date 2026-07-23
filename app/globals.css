@@ -785,6 +785,11 @@ body {
 .quote-form-grid .col-full {
   grid-column: 1 / -1;
 }
+/* Assertive field labels. Scoped to labels that carry `for` (the Field-component
+   labels) so the wrapping consent/radio <label>s keep their default weight. */
+.quote-form-grid label[for] {
+  font-weight: 600;
+}
 .quote-form-grid .state-zip {
   display: grid;
   grid-template-columns: 2fr 3fr;
