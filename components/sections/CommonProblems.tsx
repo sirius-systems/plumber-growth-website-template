@@ -22,7 +22,12 @@ export function CommonProblems() {
         <ul className="problems-grid">
           {homeProblems.map((p) => (
             <li key={p.title} style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)" }}>
-              <LucideIcon name={p.icon} size={28} color="var(--color-primary-600)" />
+              <LucideIcon
+                name={p.icon}
+                size={28}
+                color="var(--color-primary-600)"
+                className="problem-item__icon"
+              />
               <h3 style={{ margin: 0, fontSize: "16px", color: "var(--color-primary-900)" }}>
                 {p.title}
               </h3>

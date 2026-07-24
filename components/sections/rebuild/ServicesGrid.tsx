@@ -20,16 +20,7 @@ export function ServicesGrid() {
         >
           From emergencies to everyday repairs and installations, our licensed team handles it.
         </p>
-        <ul
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
-            gap: "var(--space-6)",
-            listStyle: "none",
-            padding: 0,
-            margin: 0,
-          }}
-        >
+        <ul className="service-grid">
           {services.map((s) => (
             <li key={s.slug} style={{ display: "flex" }}>
               <ServiceCard service={s} />

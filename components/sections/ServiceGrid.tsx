@@ -37,16 +37,7 @@ export function ServiceGrid({
             {intro}
           </p>
         )}
-        <ul
-          style={{
-            display: "grid",
-            gap: "var(--space-6)",
-            gridTemplateColumns: "repeat(auto-fit, minmax(15rem, 1fr))",
-            listStyle: "none",
-            padding: 0,
-            margin: 0,
-          }}
-        >
+        <ul className="service-grid service-grid--dense">
           {services.map((s) => (
             <li key={s.slug} style={{ display: "flex" }}>
               <ServiceCard service={s} />

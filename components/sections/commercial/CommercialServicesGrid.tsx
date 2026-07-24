@@ -15,16 +15,7 @@ export function CommercialServicesGrid() {
         <p style={{ textAlign: "center", color: "var(--color-text-muted)", marginBottom: "var(--space-8)" }}>
           Available for businesses and commercial properties across {clientConfig.region.name}.
         </p>
-        <ul
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
-            gap: "var(--space-6)",
-            listStyle: "none",
-            padding: 0,
-            margin: 0,
-          }}
-        >
+        <ul className="service-grid">
           {services.map((s) => (
             <li key={s.slug} style={{ display: "flex" }}>
               <ServiceCard service={s} />

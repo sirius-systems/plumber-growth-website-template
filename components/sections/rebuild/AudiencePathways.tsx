@@ -51,6 +51,7 @@ export function AudiencePathways({
           {cards.map((c) => (
             <li
               key={c.href}
+              className="pathway-card"
               style={{
                 background: "var(--color-surface)",
                 border: "1px solid var(--color-border)",

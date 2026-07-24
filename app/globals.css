@@ -290,6 +290,47 @@ img {
     grid-template-columns: repeat(3, 1fr);
   }
 }
+/* On mobile the problem items stack full width; center just the icon within
+   each flex-column item (auto inline margins on the flex child) while the
+   heading and description below it stay left-aligned. Desktop is unchanged. */
+@media (max-width: 48rem) {
+  .problem-item__icon {
+    margin-inline: auto;
+  }
+}
+
+/* Service-card grid (docs/06 §25). Mobile-first: one full-width column below
+   48rem so every <ServiceCard> is equal width on mobile, then auto-fitting
+   columns from 48rem up. Shared by every surface that renders service cards
+   (home, /services hub, residential, commercial) so the mobile behavior is
+   consistent site-wide. The default track min is 280px; --dense keeps the
+   residential grid's tighter 15rem min. Desktop layout is unchanged. */
+.service-grid {
+  display: grid;
+  gap: var(--space-6);
+  grid-template-columns: 1fr;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+@media (min-width: 48rem) {
+  .service-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+  .service-grid--dense {
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  }
+}
+
+/* Residential/commercial pathway cards (docs/04 §6). The card CTA is a
+   natural-width secondary button on desktop; below 48rem it stretches to the
+   full card width so it reads as the primary tap target on mobile. Desktop
+   layout is unchanged. */
+@media (max-width: 48rem) {
+  .pathway-card .btn {
+    width: 100%;
+  }
+}
 
 /* Legal pages: two-column (sticky TOC + content), single column on mobile. */
 .legal-layout {
