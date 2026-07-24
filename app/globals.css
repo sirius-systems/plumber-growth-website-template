@@ -290,11 +290,49 @@ img {
     grid-template-columns: repeat(3, 1fr);
   }
 }
-/* On mobile the problem items stack full width; center just the icon within
-   each flex-column item (auto inline margins on the flex child) while the
-   heading and description below it stay left-aligned. Desktop is unchanged. */
+/* Site-wide mobile content centering (docs/06 §12). On mobile every section
+   stacks to a single column, so section headings/eyebrows and card content are
+   centered for a consistent mobile look. Long section-level body copy (prose,
+   FAQ answers) is deliberately NOT centered — readability needs left alignment —
+   so this centers headings + explicitly-classed card containers rather than the
+   whole section wrapper. Heroes (`.hero-content`) keep their own left-aligned
+   copy + embedded form. `text-align` only affects inline/text flow, so flex and
+   grid layouts are not repositioned. Header, footer, nav, mobile action bar,
+   form sections, and the emergency safety notice use different wrappers and are
+   untouched. Desktop (>=48rem) is unchanged. */
 @media (max-width: 48rem) {
-  .problem-item__icon {
+  /* Broad: section headings + eyebrows on every inner-page template. Body
+     paragraphs are intentionally excluded here. (`.eyebrow`/`.section-eyebrow`
+     are not used in the codebase today; kept for forward-compat.) */
+  .section__inner:not(.hero-content) :is(h2, h3),
+  .section__inner:not(.hero-content) .eyebrow,
+  .section__inner:not(.hero-content) .section-eyebrow {
+    text-align: center;
+  }
+
+  /* Card content: center icon + heading + description inside each card. Each
+     container carries a class hook so centering reaches the card's text
+     (including its description) without touching section-level prose.
+       .stacked-card   → vertical icon cards (CommonProblems, WhyChooseUs,
+                         LocalProblems, CommercialProblems, CommercialIndustries)
+       .service-grid li → ServiceCard on every grid (image area is a block, so
+                         only the text below it is affected)
+       .pathway-card    → residential/commercial pathway cards
+       .process-step    → How It Works steps */
+  .stacked-card,
+  .service-grid li,
+  .pathway-card,
+  .process-step {
+    text-align: center;
+  }
+  .stacked-card {
+    align-items: center; /* flex-column cards: center the icon on the cross axis */
+  }
+
+  /* Icons / step numbers that are flex-column children can't be centered by
+     text-align; auto inline margins do it. */
+  .stacked-card-icon,
+  .process-step__number {
     margin-inline: auto;
   }
 }
@@ -668,6 +706,78 @@ body {
 @media (min-width: 64rem) {
   .footer-grid {
     grid-template-columns: 2fr repeat(5, 1fr);
+  }
+}
+
+/* Footer link groups (docs/04 §5.4). Each group is a native <details>/<summary>
+   disclosure, hardcoded `open` in markup so its content is always rendered —
+   this gives the desktop columns their content with no JavaScript and no
+   fragile "force-open-when-closed" CSS. Below 48rem the disclosure is an
+   interactive accordion (docs/06 §17); at 48rem and up the summary is styled
+   back into a static, non-collapsible heading so the five-column desktop layout
+   is unchanged. Base rules apply everywhere. */
+.footer-group__heading {
+  font-weight: 700;
+  list-style: none; /* remove the default triangle marker (Firefox/standards) */
+}
+.footer-group__heading::-webkit-details-marker {
+  display: none; /* remove the default triangle marker (WebKit) */
+}
+.footer-group__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Desktop: render like the previous static heading + list. The summary keeps
+   its bold weight, gains back the heading's bottom gap, and is made
+   non-interactive so the always-open column cannot be collapsed. */
+@media (min-width: 48rem) {
+  .footer-group__heading {
+    margin-bottom: var(--space-4);
+    cursor: default;
+    pointer-events: none;
+  }
+}
+
+/* Mobile: collapsible accordion with a rotating chevron. */
+@media (max-width: 48rem) {
+  .footer-group {
+    border-bottom: 1px solid var(--color-border);
+  }
+  .footer-group__heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-block: var(--space-4);
+    cursor: pointer;
+  }
+  /* Chevron built from a rotated square's two borders. --color-text-muted
+     (#384657) on the footer's --color-background-alt (#f7f9fc) is ~10:1,
+     well above the 3:1 non-text contrast minimum (docs/06 §40). */
+  .footer-group__heading::after {
+    content: "";
+    display: block;
+    width: 10px;
+    height: 10px;
+    border-right: 2px solid var(--color-text-muted);
+    border-bottom: 2px solid var(--color-text-muted);
+    transform: rotate(45deg);
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+  }
+  .footer-group[open] .footer-group__heading::after {
+    transform: rotate(-135deg);
+  }
+  .footer-group__list {
+    padding-bottom: var(--space-4);
+  }
+}
+
+/* Reduced motion (docs/06 §17): drop the chevron rotation transition. */
+@media (prefers-reduced-motion: reduce) {
+  .footer-group__heading::after {
+    transition: none;
   }
 }
 

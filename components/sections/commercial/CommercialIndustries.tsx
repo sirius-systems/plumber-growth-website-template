@@ -24,8 +24,8 @@ export function CommercialIndustries() {
           }}
         >
           {commercialIndustries.map((it) => (
-            <li key={it.label} style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)" }}>
-              <LucideIcon name={it.icon} size={28} color="var(--color-primary-600)" />
+            <li key={it.label} className="stacked-card" style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)" }}>
+              <LucideIcon name={it.icon} size={28} color="var(--color-primary-600)" className="stacked-card-icon" />
               <h3 style={{ margin: 0, fontSize: "16px", color: "var(--color-primary-900)" }}>{it.label}</h3>
               <p style={{ margin: 0, fontSize: "14px", color: "var(--color-text-muted)" }}>{it.description}</p>
             </li>

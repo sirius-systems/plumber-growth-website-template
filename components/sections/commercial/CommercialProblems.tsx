@@ -20,8 +20,8 @@ export function CommercialProblems() {
           }}
         >
           {commercialProblems.map((p) => (
-            <li key={p.title} style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)" }}>
-              <LucideIcon name={p.icon} size={28} color="var(--color-primary-600)" />
+            <li key={p.title} className="stacked-card" style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)" }}>
+              <LucideIcon name={p.icon} size={28} color="var(--color-primary-600)" className="stacked-card-icon" />
               <h3 style={{ margin: 0, fontSize: "15px", color: "var(--color-primary-900)" }}>{p.title}</h3>
               <p style={{ margin: 0, fontSize: "14px", color: "var(--color-text-muted)" }}>{p.description}</p>
             </li>

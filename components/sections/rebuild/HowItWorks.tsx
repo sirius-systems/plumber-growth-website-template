@@ -27,10 +27,10 @@ export function HowItWorks() {
           }}
         >
           {STEPS.map((step, i) => (
-            <li key={step.title}>
+            <li key={step.title} className="process-step">
               <div
                 aria-hidden="true"
-                className="display-heading"
+                className="display-heading process-step__number"
                 style={{ fontSize: "56px", lineHeight: 1, color: "var(--color-primary-100)" }}
               >
                 {i + 1}

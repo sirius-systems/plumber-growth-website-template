@@ -27,9 +27,6 @@ export function SiteFooter() {
     .filter(Boolean)
     .join(" · ");
 
-  const headingStyle = { fontWeight: 700, marginTop: 0 } as const;
-  const listStyle = { listStyle: "none", padding: 0, margin: 0 } as const;
-
   // Copyright line: only verified facts (docs/07 §32).
   const copyrightParts = [`© ${year} ${business.legalName}. All rights reserved.`];
   if (credentials.licenseNumber && credentials.insured) copyrightParts.push("Licensed & Insured");
@@ -87,103 +84,113 @@ export function SiteFooter() {
 
         {/* Col 2, Hours */}
         <div>
-          <p style={headingStyle}>Hours</p>
-          <ul style={listStyle}>
-            {DAY_LABELS.map(({ key, label }) => (
-              <li
-                key={key}
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  gap: "var(--space-3)",
-                  color: "var(--color-text-muted)",
-                  fontSize: "0.875rem",
-                }}
-              >
-                <span>{label}</span>
-                <span>{operations.businessHours[key].label}</span>
-              </li>
-            ))}
-          </ul>
+          <details className="footer-group" open>
+            <summary className="footer-group__heading">Hours</summary>
+            <ul className="footer-group__list">
+              {DAY_LABELS.map(({ key, label }) => (
+                <li
+                  key={key}
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    gap: "var(--space-3)",
+                    color: "var(--color-text-muted)",
+                    fontSize: "0.875rem",
+                  }}
+                >
+                  <span>{label}</span>
+                  <span>{operations.businessHours[key].label}</span>
+                </li>
+              ))}
+            </ul>
+          </details>
         </div>
 
         {/* Col 3, Services */}
         <nav aria-label="Services">
-          <p style={headingStyle}>Services</p>
-          <ul style={listStyle}>
-            {services.map((s) => (
-              <li key={s.slug}>
-                <Link href={`/services/${s.slug}/`}>{s.name}</Link>
+          <details className="footer-group" open>
+            <summary className="footer-group__heading">Services</summary>
+            <ul className="footer-group__list">
+              {services.map((s) => (
+                <li key={s.slug}>
+                  <Link href={`/services/${s.slug}/`}>{s.name}</Link>
+                </li>
+              ))}
+              <li style={{ marginTop: "var(--space-2)" }}>
+                <Link href="/services/">View all</Link>
               </li>
-            ))}
-            <li style={{ marginTop: "var(--space-2)" }}>
-              <Link href="/services/">View all</Link>
-            </li>
-          </ul>
+            </ul>
+          </details>
         </nav>
 
         {/* Col 4, Service areas */}
         <nav aria-label="Service areas">
-          <p style={headingStyle}>Service Areas</p>
-          <ul style={listStyle}>
-            {serviceAreas.map((area) => (
-              <li key={area.name}>
-                {area.hasDetailPage && area.slug ? (
-                  <Link href={`/service-areas/${area.slug}/`}>{area.name}</Link>
-                ) : (
-                  <span>{area.name}</span>
-                )}
+          <details className="footer-group" open>
+            <summary className="footer-group__heading">Service Areas</summary>
+            <ul className="footer-group__list">
+              {serviceAreas.map((area) => (
+                <li key={area.name}>
+                  {area.hasDetailPage && area.slug ? (
+                    <Link href={`/service-areas/${area.slug}/`}>{area.name}</Link>
+                  ) : (
+                    <span>{area.name}</span>
+                  )}
+                </li>
+              ))}
+              <li style={{ marginTop: "var(--space-2)" }}>
+                <Link href="/service-areas/">All areas</Link>
               </li>
-            ))}
-            <li style={{ marginTop: "var(--space-2)" }}>
-              <Link href="/service-areas/">All areas</Link>
-            </li>
-          </ul>
+            </ul>
+          </details>
         </nav>
 
         {/* Col 5, Company */}
         <nav aria-label="Company">
-          <p style={headingStyle}>Company</p>
-          <ul style={listStyle}>
-            <li>
-              <Link href="/about/">About</Link>
-            </li>
-            <li>
-              <Link href="/reviews/">Reviews</Link>
-            </li>
-            <li>
-              <Link href="/faqs/">FAQs</Link>
-            </li>
-            <li>
-              <Link href="/contact/">Contact</Link>
-            </li>
-            {operations.financingOffered && (
+          <details className="footer-group" open>
+            <summary className="footer-group__heading">Company</summary>
+            <ul className="footer-group__list">
               <li>
-                <Link href="/financing/">Financing</Link>
+                <Link href="/about/">About</Link>
               </li>
-            )}
-          </ul>
+              <li>
+                <Link href="/reviews/">Reviews</Link>
+              </li>
+              <li>
+                <Link href="/faqs/">FAQs</Link>
+              </li>
+              <li>
+                <Link href="/contact/">Contact</Link>
+              </li>
+              {operations.financingOffered && (
+                <li>
+                  <Link href="/financing/">Financing</Link>
+                </li>
+              )}
+            </ul>
+          </details>
         </nav>
 
         {/* Col 6, Get started */}
         <nav aria-label="Customer actions">
-          <p style={headingStyle}>Get Started</p>
-          <ul style={listStyle}>
-            <li>
-              <Link href="/contact/">Get a Quote</Link>
-            </li>
-            {operations.emergencyServiceAvailable && (
+          <details className="footer-group" open>
+            <summary className="footer-group__heading">Get Started</summary>
+            <ul className="footer-group__list">
               <li>
-                <a href={telHref(business.phone)}>Emergency: Call {formatPhoneDisplay(business.phone)}</a>
+                <Link href="/contact/">Get a Quote</Link>
               </li>
-            )}
-            <li>
-              <Link href="/review-feedback/">Leave Feedback</Link>
-            </li>
-            <li>
-              <a href={telHref(business.phone)}>Call {formatPhoneDisplay(business.phone)}</a>
-            </li>
-          </ul>
+              {operations.emergencyServiceAvailable && (
+                <li>
+                  <a href={telHref(business.phone)}>Emergency: Call {formatPhoneDisplay(business.phone)}</a>
+                </li>
+              )}
+              <li>
+                <Link href="/review-feedback/">Leave Feedback</Link>
+              </li>
+              <li>
+                <a href={telHref(business.phone)}>Call {formatPhoneDisplay(business.phone)}</a>
+              </li>
+            </ul>
+          </details>
         </nav>
       </div>
 

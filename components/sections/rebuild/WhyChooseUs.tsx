@@ -51,8 +51,8 @@ export function WhyChooseUs() {
           }}
         >
           {items.map((it) => (
-            <li key={it.title} style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)" }}>
-              <LucideIcon name={it.icon} size={24} color="var(--color-accent-500)" />
+            <li key={it.title} className="stacked-card" style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)" }}>
+              <LucideIcon name={it.icon} size={24} color="var(--color-accent-500)" className="stacked-card-icon" />
               <h3 style={{ margin: 0, fontSize: "16px" }}>{it.title}</h3>
               <p style={{ margin: 0, fontSize: "14px", color: "var(--color-text-muted)" }}>{it.desc}</p>
             </li>
