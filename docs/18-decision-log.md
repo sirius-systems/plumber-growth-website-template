@@ -99,6 +99,7 @@ Implementation requires repository, GHL or operational evidence.
 | FORM-003 | Cloudflare Pages Functions process forms | Accepted |
 | FORM-004 | Public file uploads are disabled in version one | Accepted |
 | FORM-005 | Client Onboarding requires controlled access | Accepted |
+| FORM-006 | General Quote drops email and property address; phone-only contact | Accepted |
 | GHL-001 | GHL provides CRM and automation | Accepted |
 | GHL-002 | GHL Websites and Funnels are excluded | Accepted |
 | GHL-003 | GHL Form Builder and Survey Builder are excluded | Accepted |
@@ -554,6 +555,57 @@ It requires signed or authenticated client access.
 ### Implementation detail
 
 The specific token or authentication method remains open.
+
+---
+
+## FORM-006 — General Quote Field Reduction
+
+**Status:** Accepted
+**Date:** July 27, 2026
+
+**Decision:** The General Plumbing Quote Request form (`GeneralQuoteForm`, the
+site's primary lead form embedded in every page hero) no longer collects Email,
+Street address, Address line 2, City, State, or ZIP code. The Preferred contact
+method is reduced from three options (Phone, Text, Email) to two (Phone, Text).
+Phone is now the only contact channel captured on this form.
+
+### What changed
+
+* Client component: removed the Email and property-address inputs and the Email
+  radio option; the Preferred contact legend now offers Phone and Text only. The
+  service-consent line was adjusted from "by phone or email" to "by phone or
+  text message" to match the remaining channels.
+* Zod schema (`generalQuoteSchema`): dropped `email`, `streetAddress`,
+  `addressLine2`, `city`, `state`, `postalCode`; `preferredContactMethod`
+  narrowed to `["phone", "text"]`. Unknown keys are stripped, so a stray email
+  or address in the payload is discarded server-side.
+* GHL delivery (`deliverSubmission`, `general-quote` case): contact upsert and
+  trigger-tag upsert send phone only; no email or property-address custom fields
+  are written for this form.
+* Docs/08 §9.5 field table updated to match.
+
+### Deviation from QUOTE-001
+
+PRD QUOTE-001 lists Email, Service address, City, State, and ZIP code as required
+information for this form. This decision intentionally deviates from that
+baseline for the General Quote form only.
+
+### Tradeoffs accepted
+
+* **Phone-only deduplication.** With no email, contact matching relies on
+  normalized phone alone. Two people sharing a phone, or a customer who later
+  submits with a different number, will not merge on email.
+* **No email acknowledgment fallback.** Automated email confirmations/nurture
+  cannot target these leads; acknowledgment must go by phone or text.
+* **Blank Email/Address in internal notifications.** Internal new-lead
+  notifications for this form will show empty Email and Property Address; the
+  team collects those details on contact.
+
+### Scope boundary
+
+This decision applies to the General Quote form only. The Emergency Request form
+(`emergency-request`) still collects email (optional) and full property address,
+and its endpoint and GHL mapping are unchanged.
 
 ---
 

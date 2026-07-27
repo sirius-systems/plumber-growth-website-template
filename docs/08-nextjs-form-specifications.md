@@ -311,23 +311,23 @@ Capture standard residential or commercial plumbing inquiries and route them int
 
 ## 9.5 Fields
 
+> **Note (deviation from QUOTE-001 — see docs/18 FORM-006):** Email, Street
+> address, Address line 2, City, State, and ZIP code were removed from this form.
+> It now captures phone as the only contact channel, so Preferred contact is
+> Phone or Text only (Email removed). Property address and email are collected
+> later by the team, not on this form.
+
 | Field               | Type            |    Required | Validation                |
 | ------------------- | --------------- | ----------: | ------------------------- |
 | First name          | Text            |         Yes | 1–80 characters           |
 | Last name           | Text            |         Yes | 1–80 characters           |
 | Mobile phone        | Tel             |         Yes | Valid US phone            |
-| Email               | Email           |         Yes | Valid email, max 254      |
 | Customer type       | Select or radio |         Yes | Residential or Commercial |
 | Plumbing service    | Select          |         Yes | Approved enabled service  |
 | Problem description | Textarea        |         Yes | 10–2,000 characters       |
-| Street address      | Text            |         Yes | 3–150 characters          |
-| Address line 2      | Text            |          No | Maximum 100               |
-| City                | Text            |         Yes | 2–100 characters          |
-| State               | Select          |         Yes | Approved US state         |
-| ZIP code            | Text            |         Yes | Valid US ZIP              |
 | Preferred date      | Date            |          No | Today or future           |
 | Preferred time      | Select          |          No | Approved configured value |
-| Preferred contact   | Radio           |         Yes | Phone, Text or Email      |
+| Preferred contact   | Radio           |         Yes | Phone or Text             |
 | Existing customer   | Radio           |          No | Yes, No or Unsure         |
 | Service consent     | Checkbox        | Conditional | See consent section       |
 | Marketing consent   | Checkbox        |          No | Separate and unchecked    |

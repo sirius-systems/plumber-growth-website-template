@@ -143,10 +143,20 @@ export async function deliverSubmission(
 
     switch (formId) {
       case "general-quote": {
+        // General Quote collects phone only — no email, no property address
+        // (deviation from QUOTE-001, docs/18 FORM-006). Dedup is on normalized
+        // phone; the email branch does not apply for this form. The schema
+        // strips email/address, so customFields carries no address entries here.
+        const quoteContact: ContactPayload = {
+          firstName: str(data, "firstName"),
+          lastName: str(data, "lastName"),
+          phone: str(data, "phone"),
+          customFields,
+        };
         const serviceSlug = str(data, "plumbingService");
         const serviceTag = serviceSlug ? config.tags.serviceTags[serviceSlug] : undefined;
         const contactId = await upsertContact(config, {
-          ...baseContact,
+          ...quoteContact,
           source: "Website — General Quote",
           tags: [config.tags.standardPriority, serviceTag].filter(Boolean) as string[],
         });
@@ -156,10 +166,9 @@ export async function deliverSubmission(
           source: "Website — General Quote",
           priority: "normal",
         });
-        // Trigger tags last (docs/11 §19).
+        // Trigger tags last (docs/11 §19) — matched on phone only.
         await upsertContact(config, {
-          email: baseContact.email,
-          phone: baseContact.phone,
+          phone: quoteContact.phone,
           tags: [config.tags.websiteLead, config.tags.generalQuoteRequest],
         });
         return { ok: true, contactId, opportunityId };

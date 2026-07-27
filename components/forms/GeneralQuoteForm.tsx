@@ -74,9 +74,6 @@ export function GeneralQuoteForm({
         <Field id="phone" label="Mobile phone" required error={fieldErrors.phone}>
           <input id="field-phone" name="phone" type="tel" inputMode="tel" required autoComplete="tel" />
         </Field>
-        <Field id="email" label="Email" required error={fieldErrors.email}>
-          <input id="field-email" name="email" type="email" inputMode="email" required autoComplete="email" />
-        </Field>
 
         <Field id="customerType" label="Property type" required error={fieldErrors.customerType}>
           <select id="field-customerType" name="customerType" required defaultValue="residential">
@@ -104,44 +101,6 @@ export function GeneralQuoteForm({
           </Field>
         </div>
 
-        <div className="col-full">
-          <Field id="streetAddress" label="Service street address" required error={fieldErrors.streetAddress}>
-            <input id="field-streetAddress" name="streetAddress" required autoComplete="address-line1" />
-          </Field>
-        </div>
-
-        <Field id="city" label="City" required error={fieldErrors.city}>
-          <input
-            id="field-city"
-            name="city"
-            required
-            autoComplete="address-level2"
-            aria-describedby={describe("city")}
-          />
-        </Field>
-        <div className="state-zip">
-          <Field id="state" label="State" required error={fieldErrors.state}>
-            <input
-              id="field-state"
-              name="state"
-              required
-              maxLength={2}
-              autoComplete="address-level1"
-              aria-describedby={describe("state")}
-            />
-          </Field>
-          <Field id="postalCode" label="ZIP code" required error={fieldErrors.postalCode}>
-            <input
-              id="field-postalCode"
-              name="postalCode"
-              required
-              inputMode="numeric"
-              autoComplete="postal-code"
-              aria-describedby={describe("postalCode")}
-            />
-          </Field>
-        </div>
-
         <fieldset className="col-full">
           <legend>Preferred contact method</legend>
           <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-6)" }}>
@@ -153,17 +112,13 @@ export function GeneralQuoteForm({
               <input type="radio" name="preferredContactMethod" value="text" />
               Text
             </label>
-            <label style={{ display: "inline-flex", alignItems: "center", gap: "var(--space-2)" }}>
-              <input type="radio" name="preferredContactMethod" value="email" />
-              Email
-            </label>
           </div>
         </fieldset>
 
         <p className="col-full">
           <label>
             <input type="checkbox" name="serviceConsent" required /> I agree to be contacted by{" "}
-            {businessName} about my service request by phone or email.
+            {businessName} about my service request by phone or text message.
           </label>
         </p>
         <p className="col-full">

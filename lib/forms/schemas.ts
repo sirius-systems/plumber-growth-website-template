@@ -71,22 +71,19 @@ export const envelopeSchema = z.object({
 
 // --- 1. General Plumbing Quote Request (docs/08 §9) --------------------------
 
+// Email and property address (street/line2/city/state/ZIP) were removed from this
+// form; it now collects phone as the only contact channel (deviation from
+// QUOTE-001 — see docs/18 FORM-006). Preferred contact is Phone or Text only.
 export const generalQuoteSchema = envelopeSchema.extend({
   firstName: requiredName,
   lastName: requiredName,
   phone: usPhone,
-  email,
   customerType: z.enum(["residential", "commercial"]),
   plumbingService: serviceValue,
   problemDescription: freeText(10, 2000),
-  streetAddress: freeText(3, 150),
-  addressLine2: z.string().trim().max(100).optional(),
-  city: freeText(2, 100),
-  state: usState,
-  postalCode: zip,
   preferredDate: z.string().date().optional(),
   preferredTime: z.string().trim().max(60).optional(),
-  preferredContactMethod: contactMethod,
+  preferredContactMethod: z.enum(["phone", "text"]),
   existingCustomer: triState.optional(),
   serviceConsent: z.boolean().optional(),
   smsConsent: z.boolean().optional(),
