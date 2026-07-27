@@ -13,8 +13,8 @@ import { Button } from "@/components/ui/Button";
  * route). Submits general-quote and, on server acceptance, redirects to the
  * thank-you confirmation (docs/04 §23).
  *
- * @param paired         When true, First/Last name and City/State/ZIP render as
- *                       multi-column rows (used in the hero form cards).
+ * @param paired         When true, paired fields (e.g. First/Last name) expose
+ *                       inline error references (used in the hero form cards).
  * @param defaultService Optional service slug to preselect (e.g. on a service hero).
  */
 export function GeneralQuoteForm({
@@ -71,16 +71,25 @@ export function GeneralQuoteForm({
           />
         </Field>
 
-        <Field id="phone" label="Mobile phone" required error={fieldErrors.phone}>
+        {/* Row 2: Phone paired with the Preferred contact method radios. */}
+        <Field id="phone" label="Phone" required error={fieldErrors.phone}>
           <input id="field-phone" name="phone" type="tel" inputMode="tel" required autoComplete="tel" />
         </Field>
+        <fieldset>
+          <legend>Preferred contact method</legend>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-6)" }}>
+            <label style={{ display: "inline-flex", alignItems: "center", gap: "var(--space-2)" }}>
+              <input type="radio" name="preferredContactMethod" value="phone" defaultChecked />
+              Phone
+            </label>
+            <label style={{ display: "inline-flex", alignItems: "center", gap: "var(--space-2)" }}>
+              <input type="radio" name="preferredContactMethod" value="text" />
+              Text
+            </label>
+          </div>
+        </fieldset>
 
-        <Field id="customerType" label="Property type" required error={fieldErrors.customerType}>
-          <select id="field-customerType" name="customerType" required defaultValue="residential">
-            <option value="residential">Residential</option>
-            <option value="commercial">Commercial</option>
-          </select>
-        </Field>
+        {/* Row 3: Service needed paired with Property type. */}
         <Field id="plumbingService" label="Service needed" required error={fieldErrors.plumbingService}>
           <select id="field-plumbingService" name="plumbingService" required defaultValue={validPreselect}>
             <option value="" disabled>
@@ -94,26 +103,18 @@ export function GeneralQuoteForm({
             <option value="other">Other plumbing service</option>
           </select>
         </Field>
+        <Field id="customerType" label="Property type" required error={fieldErrors.customerType}>
+          <select id="field-customerType" name="customerType" required defaultValue="residential">
+            <option value="residential">Residential</option>
+            <option value="commercial">Commercial</option>
+          </select>
+        </Field>
 
         <div className="col-full">
           <Field id="problemDescription" label="Describe the problem" required error={fieldErrors.problemDescription}>
             <textarea id="field-problemDescription" name="problemDescription" required rows={4} />
           </Field>
         </div>
-
-        <fieldset className="col-full">
-          <legend>Preferred contact method</legend>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-6)" }}>
-            <label style={{ display: "inline-flex", alignItems: "center", gap: "var(--space-2)" }}>
-              <input type="radio" name="preferredContactMethod" value="phone" defaultChecked />
-              Phone
-            </label>
-            <label style={{ display: "inline-flex", alignItems: "center", gap: "var(--space-2)" }}>
-              <input type="radio" name="preferredContactMethod" value="text" />
-              Text
-            </label>
-          </div>
-        </fieldset>
 
         <p className="col-full">
           <label>
