@@ -79,8 +79,9 @@ export function GeneralQuoteForm({
           <legend>Preferred contact method</legend>
           <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-6)" }}>
             <label style={{ display: "inline-flex", alignItems: "center", gap: "var(--space-2)" }}>
+              {/* Visible label "Call"; the validated/stored value stays "phone". */}
               <input type="radio" name="preferredContactMethod" value="phone" defaultChecked />
-              Phone
+              Call
             </label>
             <label style={{ display: "inline-flex", alignItems: "center", gap: "var(--space-2)" }}>
               <input type="radio" name="preferredContactMethod" value="text" />
@@ -89,7 +90,13 @@ export function GeneralQuoteForm({
           </div>
         </fieldset>
 
-        {/* Row 3: Service needed paired with Property type. */}
+        {/* Row 3: Property type paired with Service needed. */}
+        <Field id="customerType" label="Property type" required error={fieldErrors.customerType}>
+          <select id="field-customerType" name="customerType" required defaultValue="residential">
+            <option value="residential">Residential</option>
+            <option value="commercial">Commercial</option>
+          </select>
+        </Field>
         <Field id="plumbingService" label="Service needed" required error={fieldErrors.plumbingService}>
           <select id="field-plumbingService" name="plumbingService" required defaultValue={validPreselect}>
             <option value="" disabled>
@@ -101,12 +108,6 @@ export function GeneralQuoteForm({
               </option>
             ))}
             <option value="other">Other plumbing service</option>
-          </select>
-        </Field>
-        <Field id="customerType" label="Property type" required error={fieldErrors.customerType}>
-          <select id="field-customerType" name="customerType" required defaultValue="residential">
-            <option value="residential">Residential</option>
-            <option value="commercial">Commercial</option>
           </select>
         </Field>
 
