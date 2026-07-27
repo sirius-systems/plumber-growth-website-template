@@ -12,6 +12,9 @@ import { ServiceOverview } from "@/components/sections/ServiceOverview";
 import { ServiceProblems } from "@/components/sections/ServiceProblems";
 import { ServiceProcess } from "@/components/sections/ServiceProcess";
 import { ServiceBenefits } from "@/components/sections/ServiceBenefits";
+// DESIGN TRIAL (faucet-repair only) — isolated visual experiment, not the default.
+import { ServiceProcessTrial } from "@/components/sections/trial/ServiceProcessTrial";
+import { ServiceBenefitsTrial } from "@/components/sections/trial/ServiceBenefitsTrial";
 import { ServiceLinks } from "@/components/sections/ServiceLinks";
 import { FaqSection } from "@/components/sections/rebuild/FaqSection";
 import { FinalCta } from "@/components/sections/rebuild/FinalCta";
@@ -55,6 +58,9 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
   if (!svc) notFound();
 
   const content = SERVICE_CONTENT[svc.slug];
+  // DESIGN TRIAL: swap two sections' visual treatment on faucet-repair only.
+  // Every other service page renders the default components unchanged.
+  const isDesignTrial = svc.slug === "faucet-repair";
   const { business, seo, location, serviceAreas } = clientConfig;
   const canonical = `${business.websiteUrl}/services/${svc.slug}/`;
   const faqs = mergeServiceFaqs(content?.faqs ?? []);
@@ -89,8 +95,8 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
       <QuickAnswer answer={quickAnswerFor(svc)} />
       <ServiceOverview svc={svc} content={content} />
       <ServiceProblems svc={svc} content={content} />
-      <ServiceProcess svc={svc} />
-      <ServiceBenefits svc={svc} />
+      {isDesignTrial ? <ServiceProcessTrial svc={svc} /> : <ServiceProcess svc={svc} />}
+      {isDesignTrial ? <ServiceBenefitsTrial svc={svc} /> : <ServiceBenefits svc={svc} />}
       <FaqSection items={faqs} subheading={`${svc.name}, pricing, timing, and what to expect`} />
       <ServiceLinks svc={svc} />
       <FinalCta heading={`Request ${svc.name} in ${seo.primaryMarket}`} currentService={svc.slug} />
