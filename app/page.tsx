@@ -55,7 +55,15 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(plumberJsonLd) }}
       />
       <HomeHero />
-      <ServicesGrid />
+      <ServicesGrid
+        featuredSlugs={[
+          "water-heater-repair",
+          "water-heater-installation",
+          "leak-detection",
+          "sewer-line-repair",
+        ]}
+        viewAllHref="/services/"
+      />
       <CommonProblems />
       <WhyChooseUs />
       <HowItWorks />

@@ -15,6 +15,7 @@ export function HomeHero() {
   const trust: TrustItem[] = [];
   if (credentials.licenseNumber) trust.push({ icon: "badge-check", label: "Licensed" });
   if (credentials.insured) trust.push({ icon: "shield", label: "Insured" });
+  if (credentials.bonded) trust.push({ icon: "shield-check", label: "Bonded" });
   if (credentials.yearsInBusiness) trust.push({ icon: "award", label: `${credentials.yearsInBusiness}+ years` });
   trust.push({ icon: "star", label: `${reviewsSummary.rating.toFixed(1)}★ (${reviewsSummary.count} reviews)` });
   if (operations.emergencyServiceAvailable && operations.twentyFourSevenService)

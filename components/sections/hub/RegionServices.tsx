@@ -24,23 +24,14 @@ export function RegionServices() {
 
   return (
     <section className="section section-default">
-      <div className="section__inner" style={{ maxWidth: "900px" }}>
+      <div className="section__inner">
         <h2 className="section-heading" style={{ fontSize: "var(--font-size-2xl)", marginTop: 0 }}>
           Plumbing Services Available Across {region.name}
         </h2>
         <p style={{ textAlign: "center", color: "var(--color-text-muted)", marginBottom: "var(--space-8)" }}>
           Every service available in all locations we serve.
         </p>
-        <ul
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))",
-            gap: "var(--space-4)",
-            listStyle: "none",
-            padding: 0,
-            margin: 0,
-          }}
-        >
+        <ul className="region-services-grid">
           {services.map((s) => (
             <li key={s.slug}>
               <Link

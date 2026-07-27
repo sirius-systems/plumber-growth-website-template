@@ -16,6 +16,7 @@ export function SiteTrustBand() {
   const items: TrustItem[] = [];
   if (credentials.licenseNumber) items.push({ icon: "badge-check", label: "Licensed" });
   if (credentials.insured) items.push({ icon: "shield", label: "Fully Insured" });
+  if (credentials.bonded) items.push({ icon: "shield-check", label: "Bonded" });
   if (credentials.yearsInBusiness)
     items.push({ icon: "award", label: `${credentials.yearsInBusiness}+ Years of Experience` });
   if (operations.emergencyServiceAvailable && operations.twentyFourSevenService)

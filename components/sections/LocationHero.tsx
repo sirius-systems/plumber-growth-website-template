@@ -9,7 +9,7 @@ import { TrustBar, type TrustItem } from "@/components/ui/TrustBar";
 
 /** Location hero (docs/06 §26). Shared hero bg + overlay pattern. */
 export function LocationHero({ area, content }: { area: ServiceAreaReference; content?: LocationContent }) {
-  const { marketing } = clientConfig;
+  const { marketing, credentials } = clientConfig;
   const subheading =
     content?.intro ??
     `Fast repairs, same-day service, and emergency plumbing for homes and businesses in ${area.name}.`;
@@ -19,8 +19,9 @@ export function LocationHero({ area, content }: { area: ServiceAreaReference; co
   const trustItems: TrustItem[] = [
     { icon: "badge-check", label: "Licensed" },
     { icon: "shield", label: "Insured" },
-    { icon: "map-pin", label: "Local Technicians" },
   ];
+  if (credentials.bonded) trustItems.push({ icon: "shield-check", label: "Bonded" });
+  trustItems.push({ icon: "map-pin", label: "Local Technicians" });
 
   return (
     <section className="hero" style={{ display: "flex", alignItems: "center" }}>

@@ -15,6 +15,7 @@ export function ServiceHero({ svc, content }: { svc: PlumbingService; content?: 
     { icon: "badge-check", label: "Licensed" },
     { icon: "shield", label: "Insured" },
   ];
+  if (credentials.bonded) trust.push({ icon: "shield-check", label: "Bonded" });
   if (operations.emergencyServiceAvailable) trust.push({ icon: "clock", label: "Same-day service available" });
   const bullets = (content?.covers ?? []).slice(0, 4);
 

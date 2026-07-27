@@ -6,13 +6,14 @@ import { TrustBar, type TrustItem } from "@/components/ui/TrustBar";
 
 /** Services hub hero (docs/06 §26). Shared hero bg + overlay; general-quote form. */
 export function ServicesHubHero() {
-  const { marketing, region } = clientConfig;
+  const { marketing, region, credentials } = clientConfig;
 
   const trustItems: TrustItem[] = [
     { icon: "badge-check", label: "Licensed" },
     { icon: "shield", label: "Insured" },
-    { icon: "map-pin", label: region.name },
   ];
+  if (credentials.bonded) trustItems.push({ icon: "shield-check", label: "Bonded" });
+  trustItems.push({ icon: "map-pin", label: region.name });
 
   return (
     <section className="hero" style={{ display: "flex", alignItems: "center" }}>

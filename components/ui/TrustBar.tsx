@@ -14,6 +14,7 @@ import { LucideIcon } from "@/components/ui/LucideIcon";
 export type TrustIcon =
   | "badge-check"
   | "shield"
+  | "shield-check"
   | "star"
   | "clock"
   | "award"
@@ -33,6 +34,7 @@ export type TrustBarVariant = "over-media" | "dark-bar" | "light-card";
 const ICON_NAME: Record<TrustIcon, string> = {
   "badge-check": "BadgeCheck",
   shield: "Shield",
+  "shield-check": "ShieldCheck",
   star: "Star",
   clock: "Clock",
   award: "Award",
@@ -57,6 +59,7 @@ const VARIANTS: Record<TrustBarVariant, VariantConfig> = {
     ul: {
       display: "flex",
       flexWrap: "wrap",
+      justifyContent: "center",
       alignItems: "center",
       gap: "var(--space-2)",
       listStyle: "none",

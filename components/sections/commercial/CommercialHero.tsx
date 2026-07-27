@@ -7,7 +7,7 @@ import { TrustBar, type TrustItem } from "@/components/ui/TrustBar";
 
 /** Commercial hero (docs/06 §26). Shared hero bg + overlay; commercial form card. */
 export function CommercialHero() {
-  const { marketing, region } = clientConfig;
+  const { marketing, region, credentials } = clientConfig;
   const subheading = clientConfig.commercialSubheading ?? commercialSubheading;
   const bullets = [
     "24/7 emergency support for commercial properties",
@@ -18,8 +18,9 @@ export function CommercialHero() {
   const trustItems: TrustItem[] = [
     { icon: "badge-check", label: "Licensed" },
     { icon: "shield", label: "Insured" },
-    { icon: "check-circle", label: "Code-Compliant" },
   ];
+  if (credentials.bonded) trustItems.push({ icon: "shield-check", label: "Bonded" });
+  trustItems.push({ icon: "check-circle", label: "Code-Compliant" });
 
   return (
     <section className="hero" style={{ display: "flex", alignItems: "center" }}>

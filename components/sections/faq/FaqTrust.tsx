@@ -10,6 +10,7 @@ export function FaqTrust() {
   const items: TrustItem[] = [];
   if (credentials.licenseNumber) items.push({ icon: "badge-check", label: `Licensed in ${location.state}` });
   if (credentials.insured) items.push({ icon: "shield", label: "Fully Insured" });
+  if (credentials.bonded) items.push({ icon: "shield-check", label: "Bonded" });
   if (credentials.yearsInBusiness) items.push({ icon: "award", label: `${credentials.yearsInBusiness}+ Years in Business` });
   if (reviewsSummary.count > 0) items.push({ icon: "star", label: `${reviewsSummary.rating.toFixed(1)}★ (${reviewsSummary.count} reviews)` });
   if (region?.name) items.push({ icon: "map-pin", label: `Serving ${region.name}` });

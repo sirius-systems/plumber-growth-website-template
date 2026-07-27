@@ -5,13 +5,14 @@ import { TrustBar, type TrustItem } from "@/components/ui/TrustBar";
 
 /** Service-areas hub hero (docs/06 §26). Shared hero bg + overlay pattern. */
 export function HubHero() {
-  const { marketing, region, serviceAreas } = clientConfig;
+  const { marketing, region, serviceAreas, credentials } = clientConfig;
 
   const trustItems: TrustItem[] = [
     { icon: "badge-check", label: "Licensed" },
     { icon: "shield", label: "Insured" },
-    { icon: "map-pin", label: `Serving ${region.name}` },
   ];
+  if (credentials.bonded) trustItems.push({ icon: "shield-check", label: "Bonded" });
+  trustItems.push({ icon: "map-pin", label: `Serving ${region.name}` });
 
   return (
     <section className="hero" style={{ display: "flex", alignItems: "center" }}>

@@ -360,6 +360,56 @@ img {
   }
 }
 
+/* Featured service-area cards (docs/06 §25). Centered, count-agnostic layout:
+   flex-wrap + justify-content:center keeps every row — including an incomplete
+   last row (e.g. 3 cards wrapping to 2 + 1) — horizontally centered instead of
+   left-aligned against empty grid tracks. Cards keep a fixed comfortable width
+   (no stretch), then go full-width when they stack below 48rem. */
+.featured-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-6);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.featured-grid > li {
+  display: flex;
+  flex: 0 1 360px;
+}
+@media (max-width: 48rem) {
+  .featured-grid > li {
+    flex-basis: 100%;
+  }
+}
+
+/* Region service-link pills (docs/04 §7). Two even rows of five at desktop,
+   stepping down so pills never get cramped on smaller screens. */
+.region-services-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+@media (min-width: 36rem) {
+  .region-services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 48rem) {
+  .region-services-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (min-width: 75rem) {
+  .region-services-grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
 /* Residential/commercial pathway cards (docs/04 §6). The card CTA is a
    natural-width secondary button on desktop; below 48rem it stretches to the
    full card width so it reads as the primary tap target on mobile. Desktop

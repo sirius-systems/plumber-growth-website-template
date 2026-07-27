@@ -16,18 +16,9 @@ export function FeaturedLocations() {
         <p style={{ textAlign: "center", color: "var(--color-text-muted)", marginBottom: "var(--space-8)" }}>
           Our most-served communities in {region.name}.
         </p>
-        <ul
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
-            gap: "var(--space-6)",
-            listStyle: "none",
-            padding: 0,
-            margin: 0,
-          }}
-        >
+        <ul className="featured-grid">
           {featured.map((area) => (
-            <li key={area.name} style={{ display: "flex" }}>
+            <li key={area.name}>
               <LocationCard area={area} />
             </li>
           ))}
