@@ -30,6 +30,8 @@ export interface TrustItem {
 
 export type TrustBarVariant = "over-media" | "dark-bar" | "light-card";
 
+export type TrustBarLayout = "row" | "column";
+
 /** kebab prop → LucideIcon registry name. */
 const ICON_NAME: Record<TrustIcon, string> = {
   "badge-check": "BadgeCheck",
@@ -113,27 +115,43 @@ const VARIANTS: Record<TrustBarVariant, VariantConfig> = {
   },
 };
 
+/** Direction/alignment overrides applied on top of the variant's `ul` style. */
+const LAYOUTS: Record<TrustBarLayout, CSSProperties> = {
+  row: {},
+  column: {
+    flexDirection: "column",
+    alignItems: "flex-start",
+    gap: "var(--space-2)",
+  },
+};
+
 /**
  * @param items    Trust items to render (built by the caller from client config).
  * @param variant  Container context — controls icon size/color and text color.
+ * @param layout   Stacking direction. "row" (default) is the wrapping horizontal
+ *                 strip; "column" stacks items left-aligned (HomeHero). Layout is
+ *                 applied after the variant, so icon size/color, text color, and
+ *                 font are unaffected.
  * @param className Optional class merged onto the <ul> (e.g. `section__inner`).
  * @param style    Optional inline overrides merged after the variant defaults.
  */
 export function TrustBar({
   items,
   variant,
+  layout = "row",
   className,
   style,
 }: {
   items: TrustItem[];
   variant: TrustBarVariant;
+  layout?: TrustBarLayout;
   className?: string;
   style?: CSSProperties;
 }) {
   if (items.length === 0) return null;
   const v = VARIANTS[variant];
   return (
-    <ul role="list" className={className} style={{ ...v.ul, ...style }}>
+    <ul role="list" className={className} style={{ ...v.ul, ...LAYOUTS[layout], ...style }}>
       {items.map((it) => (
         <li key={it.label} style={v.item}>
           <LucideIcon name={ICON_NAME[it.icon]} size={v.iconSize} color={v.iconColor(it.icon)} />

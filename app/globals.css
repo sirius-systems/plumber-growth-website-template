@@ -290,6 +290,54 @@ img {
     grid-template-columns: repeat(3, 1fr);
   }
 }
+
+/* Common Problems section: image placeholder + 2-col content grid (docs/04 §6). */
+.problems-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-8);
+  align-items: center;
+}
+@media (min-width: 64rem) {
+  .problems-layout {
+    grid-template-columns: minmax(280px, 380px) 1fr;
+  }
+}
+.problems-image-placeholder {
+  aspect-ratio: 4 / 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  background: var(--color-background-alt);
+  border: 1.5px dashed var(--color-border);
+  border-radius: var(--radius-lg);
+}
+/* Compound selector so this wins over the base .problems-grid 48rem/64rem
+   breakpoints regardless of source order: inside the two-column shell the
+   items are 2 across, never 3. */
+.problems-grid.problems-grid--paired {
+  grid-template-columns: 1fr;
+}
+@media (min-width: 40rem) {
+  .problems-grid.problems-grid--paired {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Why Choose Us: icon+text rows beside a supporting image (docs/06 §25). */
+.why-choose-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-8);
+  align-items: center;
+}
+@media (min-width: 64rem) {
+  .why-choose-layout {
+    grid-template-columns: 1fr 1fr;
+  }
+}
 /* Site-wide mobile content centering (docs/06 §12). On mobile every section
    stacks to a single column, so section headings/eyebrows and card content are
    centered for a consistent mobile look. Long section-level body copy (prose,
@@ -357,6 +405,21 @@ img {
   }
   .service-grid--dense {
     grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  }
+}
+/* Centered service-card row (docs/06 §25). Same count-agnostic flex pattern as
+   .featured-grid below: auto-fill leaves an empty left-aligned phantom column
+   when a curated subset doesn't fill the track count (homepage), so swap to
+   wrap + justify-content:center from 48rem up. Below 48rem the base
+   .service-grid single-column rule still applies, unchanged. */
+@media (min-width: 48rem) {
+  .service-grid--centered {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .service-grid--centered > li {
+    flex: 0 1 280px;
   }
 }
 
@@ -897,9 +960,15 @@ body {
     grid-template-columns: 1fr;
   }
 }
-/* Hero eyebrow — hidden on mobile per spec. */
+/* Hero availability badge. `display` lives here, not inline, so the mobile rule
+   below can hide it (an inline style would win over the media query). */
+.hero-badge {
+  display: inline-flex;
+}
+/* Hero eyebrow + badge — hidden on mobile per spec. */
 @media (max-width: 48rem) {
-  .hero-eyebrow {
+  .hero-eyebrow,
+  .hero-badge {
     display: none;
   }
 }

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { clientConfig } from "@/config/client";
 import { homeFaqs } from "@/content/homepage/faqs";
 import { HomeHero } from "@/components/sections/HomeHero";
+import { SiteTrustBand } from "@/components/sections/SiteTrustBand";
 import { ServicesGrid } from "@/components/sections/rebuild/ServicesGrid";
 import { CommonProblems } from "@/components/sections/CommonProblems";
 import { WhyChooseUs } from "@/components/sections/rebuild/WhyChooseUs";
@@ -55,6 +56,7 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(plumberJsonLd) }}
       />
       <HomeHero />
+      <SiteTrustBand />
       <ServicesGrid
         featuredSlugs={[
           "water-heater-repair",
@@ -63,6 +65,7 @@ export default function HomePage() {
           "sewer-line-repair",
         ]}
         viewAllHref="/services/"
+        centered
       />
       <CommonProblems />
       <WhyChooseUs />

@@ -1,11 +1,17 @@
+import Image from "next/image";
 import { clientConfig } from "@/config/client";
 import { LucideIcon } from "@/components/ui/LucideIcon";
 import { Button } from "@/components/ui/Button";
 
+/** Shared placeholder until per-client pathway images are provided in config. */
+const PATHWAY_CARD_PLACEHOLDER = "/images/placeholders/pathway-card.svg";
+
 /**
- * Residential / commercial pathway cards (docs/04 §6). No images. Optional
- * bullet lists render below each card body (used on the services hub); when
- * omitted, the component renders exactly as before (no regressions).
+ * Residential / commercial pathway cards (docs/04 §6). 7:4 image on top
+ * (full-bleed to the card edges, same pattern as ServiceCard), then title, body,
+ * optional bullets, and the CTA. Optional bullet lists render below each card
+ * body (used on the services hub); when omitted, the component renders as
+ * before. Shared by the homepage and the services hub.
  */
 export function AudiencePathways({
   residentialBullets,
@@ -57,24 +63,36 @@ export function AudiencePathways({
                 border: "1px solid var(--color-border)",
                 borderRadius: "var(--radius-lg)",
                 boxShadow: "var(--shadow-sm)",
-                padding: "2rem",
+                overflow: "hidden",
               }}
             >
-              <h3 style={{ marginTop: 0, fontSize: "20px", fontWeight: 700 }}>{c.title}</h3>
-              <p style={{ color: "var(--color-text-muted)", fontSize: "15px" }}>{c.body}</p>
-              {c.bullets && c.bullets.length > 0 && (
-                <ul style={{ listStyle: "none", padding: 0, margin: "0 0 var(--space-4)", display: "flex", flexDirection: "column", gap: "0.375rem" }}>
-                  {c.bullets.map((b) => (
-                    <li key={b} style={{ display: "flex", alignItems: "flex-start", gap: "0.375rem", fontSize: "13px", color: "var(--color-text-muted)" }}>
-                      <LucideIcon name="Check" size={12} color="var(--color-primary-600)" style={{ marginTop: "3px", flex: "none" }} />
-                      {b}
-                    </li>
-                  ))}
-                </ul>
-              )}
-              <Button variant="secondary" href={c.href}>
-                {c.title}
-              </Button>
+              <div style={{ position: "relative", width: "100%", aspectRatio: "7 / 4" }}>
+                <Image
+                  src={PATHWAY_CARD_PLACEHOLDER}
+                  alt={`${c.title} services`}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  style={{ objectFit: "cover", objectPosition: "center" }}
+                />
+              </div>
+              {/* Card padding lives here so the image above stays full-bleed. */}
+              <div style={{ padding: "2rem" }}>
+                <h3 style={{ marginTop: 0, fontSize: "20px", fontWeight: 700 }}>{c.title}</h3>
+                <p style={{ color: "var(--color-text-muted)", fontSize: "15px" }}>{c.body}</p>
+                {c.bullets && c.bullets.length > 0 && (
+                  <ul style={{ listStyle: "none", padding: 0, margin: "0 0 var(--space-4)", display: "flex", flexDirection: "column", gap: "0.375rem" }}>
+                    {c.bullets.map((b) => (
+                      <li key={b} style={{ display: "flex", alignItems: "flex-start", gap: "0.375rem", fontSize: "13px", color: "var(--color-text-muted)" }}>
+                        <LucideIcon name="Check" size={12} color="var(--color-primary-600)" style={{ marginTop: "3px", flex: "none" }} />
+                        {b}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                <Button variant="secondary" href={c.href}>
+                  {c.title}
+                </Button>
+              </div>
             </li>
           ))}
         </ul>

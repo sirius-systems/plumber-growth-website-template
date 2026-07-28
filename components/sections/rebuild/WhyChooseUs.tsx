@@ -1,7 +1,10 @@
 import { clientConfig } from "@/config/client";
 import { LucideIcon } from "@/components/ui/LucideIcon";
 
-/** Why-choose-us differentiators (docs/06 §25). 2×2 grid, amber icons. */
+/**
+ * Why-choose-us differentiators (docs/06 §25). Two columns: icon + text rows on
+ * the left, supporting image on the right; stacks to one column below 64rem.
+ */
 export function WhyChooseUs() {
   const { business, credentials, location } = clientConfig;
   const licenseText =
@@ -40,24 +43,50 @@ export function WhyChooseUs() {
         <h2 className="section-heading" style={{ fontSize: "var(--font-size-2xl)", marginTop: 0 }}>
           Why Homeowners Choose {business.publicName}
         </h2>
-        <ul
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(16rem, 1fr))",
-            gap: "var(--space-6)",
-            listStyle: "none",
-            padding: 0,
-            margin: "var(--space-8) 0 0",
-          }}
-        >
-          {items.map((it) => (
-            <li key={it.title} className="stacked-card" style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)" }}>
-              <LucideIcon name={it.icon} size={24} color="var(--color-accent-500)" className="stacked-card-icon" />
-              <h3 style={{ margin: 0, fontSize: "16px" }}>{it.title}</h3>
-              <p style={{ margin: 0, fontSize: "14px", color: "var(--color-text-muted)" }}>{it.desc}</p>
-            </li>
-          ))}
-        </ul>
+        <div className="why-choose-layout" style={{ marginTop: "var(--space-8)" }}>
+          <ul
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "var(--space-6)",
+              listStyle: "none",
+              padding: 0,
+              margin: 0,
+            }}
+          >
+            {items.map((it) => (
+              <li key={it.title} className="stacked-card" style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)" }}>
+                <LucideIcon name={it.icon} size={24} color="var(--color-accent-500)" className="stacked-card-icon" />
+                <h3 style={{ margin: 0, fontSize: "16px" }}>{it.title}</h3>
+                <p style={{ margin: 0, fontSize: "14px", color: "var(--color-text-muted)" }}>{it.desc}</p>
+              </li>
+            ))}
+          </ul>
+          {/* Image placeholder, signals a real team photo is needed (same
+              convention as RegionMap). No src is invented here. */}
+          <div
+            role="img"
+            aria-label={`Photo of the ${business.publicName} team`}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "var(--space-2)",
+              aspectRatio: "4 / 3",
+              background: "var(--color-background-alt)",
+              borderRadius: "var(--radius-lg)",
+              border: "1.5px dashed var(--color-border)",
+              padding: "3rem 2rem",
+              textAlign: "center",
+            }}
+          >
+            <LucideIcon name="Wrench" size={40} color="var(--color-neutral-500)" />
+            <p style={{ margin: 0, fontSize: "14px", color: "var(--color-text-muted)" }}>
+              Team photo, {business.publicName}
+            </p>
+          </div>
+        </div>
       </div>
     </section>
   );

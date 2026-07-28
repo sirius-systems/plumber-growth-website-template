@@ -13,13 +13,19 @@ import { Button } from "@/components/ui/Button";
  *                      slugs are skipped. Omit to render every enabled service.
  * @param viewAllHref   When set, render a "View All Services" button below the
  *                      grid linking here (used on the homepage subset).
+ * @param centered      Center the cards as a wrapping flex row instead of the
+ *                      full-width auto-fill grid (docs/06 §25). Used by the
+ *                      homepage subset, where auto-fill would otherwise leave a
+ *                      left-aligned phantom column. The /services hub omits it.
  */
 export function ServicesGrid({
   featuredSlugs,
   viewAllHref,
+  centered,
 }: {
   featuredSlugs?: ServiceSlug[];
   viewAllHref?: string;
+  centered?: boolean;
 } = {}) {
   const all = enabledServices();
   const services = featuredSlugs
@@ -44,7 +50,7 @@ export function ServicesGrid({
         >
           From emergencies to everyday repairs and installations, our licensed team handles it.
         </p>
-        <ul className="service-grid">
+        <ul className={centered ? "service-grid service-grid--centered" : "service-grid"}>
           {services.map((s) => (
             <li key={s.slug} style={{ display: "flex" }}>
               <ServiceCard service={s} />
