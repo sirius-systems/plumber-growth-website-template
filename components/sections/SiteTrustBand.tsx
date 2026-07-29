@@ -1,46 +1,49 @@
-import { clientConfig } from "@/config/client";
-import { reviewsSummary } from "@/config/reviews";
 import { TrustBar, type TrustItem } from "@/components/ui/TrustBar";
 
 /**
- * Site-wide credibility band (docs/06 §27, §42). A dark navy strip of verified
- * signals shown on key public pages. Renders only items backed by verified
- * config values — no empty slots. Item rendering is delegated to the shared
- * TrustBar (dark-bar variant); this component just supplies the section chrome
- * and the config-driven items. (Formerly the standalone `TrustBar` — renamed to
+ * Site-wide credibility band (docs/06 §27, §42). A light strip of trust signals
+ * shown on key public pages. Item rendering is delegated to the shared TrustBar
+ * (light-card variant, the existing light-surface treatment); this component
+ * supplies the section chrome. (Formerly the standalone `TrustBar` — renamed to
  * free that name for the shared primitive in components/ui/TrustBar.tsx.)
+ *
+ * These four labels are universal template copy, not client facts pulled from
+ * config, so the band always renders exactly four items.
  */
+const ITEMS: TrustItem[] = [
+  { icon: "shield-check", label: "Licensed & Insured" },
+  { icon: "clock", label: "Fast Response Time" },
+  { icon: "map-pin", label: "Local Experts" },
+  { icon: "star", label: "5-Star Rated" },
+];
+
 export function SiteTrustBand() {
-  const { credentials, operations, seo } = clientConfig;
-
-  const items: TrustItem[] = [];
-  if (credentials.licenseNumber) items.push({ icon: "badge-check", label: "Licensed" });
-  if (credentials.insured) items.push({ icon: "shield", label: "Fully Insured" });
-  if (credentials.bonded) items.push({ icon: "shield-check", label: "Bonded" });
-  if (credentials.yearsInBusiness)
-    items.push({ icon: "award", label: `${credentials.yearsInBusiness}+ Years of Experience` });
-  if (operations.emergencyServiceAvailable && operations.twentyFourSevenService)
-    items.push({ icon: "zap", label: "24/7 Emergency Service" });
-  if (seo.primaryMarket) items.push({ icon: "map-pin", label: `Serving ${seo.primaryMarket}` });
-  if (reviewsSummary.count > 0)
-    items.push({ icon: "star", label: `${reviewsSummary.rating.toFixed(1)}★ (${reviewsSummary.count} reviews)` });
-
-  if (items.length === 0) return null;
-
   return (
     <section
       aria-label="Credentials"
       style={{
-        background: "var(--brand-primary-dark)",
-        color: "var(--color-text-inverse)",
+        background: "var(--color-background-alt)",
+        color: "var(--color-text)",
         borderBottom: "4px solid var(--brand-accent)",
       }}
     >
       <TrustBar
-        variant="dark-bar"
-        items={items}
-        className="container"
-        style={{ padding: "var(--space-3) var(--page-gutter)" }}
+        variant="light-card"
+        items={ITEMS}
+        className="container trust-band-list"
+        // Spread last, so these win over the variant defaults:
+        // - marginInline is required — every TrustBar variant sets `margin: 0`
+        //   inline, which beats .container's `margin-inline: auto` and would
+        //   otherwise pin the strip to the left edge past --container-lg.
+        // - space-between spreads the four signals across the full content
+        //   width instead of clustering them mid-line.
+        // - one step up the type scale (sm -> lg) for a more prominent band.
+        style={{
+          padding: "var(--space-6) var(--page-gutter)",
+          marginInline: "auto",
+          justifyContent: "space-between",
+          fontSize: "var(--font-size-lg)",
+        }}
       />
     </section>
   );
