@@ -2,18 +2,13 @@ import Image from "next/image";
 import { clientConfig } from "@/config/client";
 import { subheading, introParagraph } from "@/content/services-hub";
 import { HeroFormCard } from "@/components/forms/HeroFormCard";
-import { TrustBar, type TrustItem } from "@/components/ui/TrustBar";
+import { BenefitsList } from "@/components/ui/BenefitsList";
+import { HeroCtaButtons } from "@/components/ui/HeroCtaButtons";
 
 /** Services hub hero (docs/06 §26). Shared hero bg + overlay; general-quote form. */
 export function ServicesHubHero() {
-  const { marketing, region, credentials } = clientConfig;
+  const { marketing, region } = clientConfig;
 
-  const trustItems: TrustItem[] = [
-    { icon: "badge-check", label: "Licensed" },
-    { icon: "shield", label: "Insured" },
-  ];
-  if (credentials.bonded) trustItems.push({ icon: "shield-check", label: "Bonded" });
-  trustItems.push({ icon: "map-pin", label: region.name });
 
   return (
     <section className="hero" style={{ display: "flex", alignItems: "center" }}>
@@ -30,7 +25,9 @@ export function ServicesHubHero() {
             <h1 className="heading-accent">Plumbing Services in {region.name}</h1>
             <p style={{ maxWidth: "480px", fontSize: "18px", color: "var(--color-text-on-media)" }}>{subheading}</p>
             <p style={{ maxWidth: "480px", fontSize: "15px", lineHeight: 1.75, color: "var(--color-text-on-media)" }}>{introParagraph}</p>
-            <TrustBar variant="over-media" items={trustItems} />
+            <BenefitsList />
+            {/* Services link omitted — self-referential on /services/. */}
+            <HeroCtaButtons showServicesLink={false} />
           </div>
 
           <HeroFormCard heading="Request Plumbing Service" showLogo />

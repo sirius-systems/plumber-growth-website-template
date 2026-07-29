@@ -3,11 +3,12 @@ import { clientConfig } from "@/config/client";
 import { commercialSubheading } from "@/content/commercial";
 import { LucideIcon } from "@/components/ui/LucideIcon";
 import { CommercialQuoteForm } from "@/components/forms/CommercialQuoteForm";
-import { TrustBar, type TrustItem } from "@/components/ui/TrustBar";
+import { BenefitsList } from "@/components/ui/BenefitsList";
+import { HeroCtaButtons } from "@/components/ui/HeroCtaButtons";
 
 /** Commercial hero (docs/06 §26). Shared hero bg + overlay; commercial form card. */
 export function CommercialHero() {
-  const { marketing, region, credentials } = clientConfig;
+  const { marketing, region } = clientConfig;
   const subheading = clientConfig.commercialSubheading ?? commercialSubheading;
   const bullets = [
     "24/7 emergency support for commercial properties",
@@ -15,12 +16,6 @@ export function CommercialHero() {
     "Written proposals and post-job documentation",
   ];
 
-  const trustItems: TrustItem[] = [
-    { icon: "badge-check", label: "Licensed" },
-    { icon: "shield", label: "Insured" },
-  ];
-  if (credentials.bonded) trustItems.push({ icon: "shield-check", label: "Bonded" });
-  trustItems.push({ icon: "check-circle", label: "Code-Compliant" });
 
   return (
     <section className="hero" style={{ display: "flex", alignItems: "center" }}>
@@ -36,7 +31,7 @@ export function CommercialHero() {
             </p>
             <h1 className="heading-accent">Commercial Plumbing Services in {region.name}</h1>
             <p style={{ maxWidth: "480px", fontSize: "18px", color: "var(--color-text-on-media)" }}>{subheading}</p>
-            <TrustBar variant="over-media" items={trustItems} />
+            <BenefitsList />
             <ul style={{ listStyle: "none", padding: 0, margin: "var(--space-4) 0 0", fontSize: "14px" }}>
               {bullets.map((b) => (
                 <li key={b} style={{ display: "flex", alignItems: "flex-start", gap: "6px", color: "var(--color-text-on-media)" }}>
@@ -45,6 +40,7 @@ export function CommercialHero() {
                 </li>
               ))}
             </ul>
+            <HeroCtaButtons />
           </div>
 
           <div className="hero-form-card">

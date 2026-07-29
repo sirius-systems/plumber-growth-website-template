@@ -5,23 +5,18 @@ import type { ServiceAreaReference } from "@/config/client";
 import type { LocationContent } from "@/config/location-content";
 import { LucideIcon } from "@/components/ui/LucideIcon";
 import { HeroFormCard } from "@/components/forms/HeroFormCard";
-import { TrustBar, type TrustItem } from "@/components/ui/TrustBar";
+import { BenefitsList } from "@/components/ui/BenefitsList";
+import { HeroCtaButtons } from "@/components/ui/HeroCtaButtons";
 
 /** Location hero (docs/06 §26). Shared hero bg + overlay pattern. */
 export function LocationHero({ area, content }: { area: ServiceAreaReference; content?: LocationContent }) {
-  const { marketing, credentials } = clientConfig;
+  const { marketing } = clientConfig;
   const subheading =
     content?.intro ??
     `Fast repairs, same-day service, and emergency plumbing for homes and businesses in ${area.name}.`;
   const neighborhoods = content?.neighborhoods ?? [];
   const shown = neighborhoods.slice(0, 4);
 
-  const trustItems: TrustItem[] = [
-    { icon: "badge-check", label: "Licensed" },
-    { icon: "shield", label: "Insured" },
-  ];
-  if (credentials.bonded) trustItems.push({ icon: "shield-check", label: "Bonded" });
-  trustItems.push({ icon: "map-pin", label: "Local Technicians" });
 
   return (
     <section className="hero" style={{ display: "flex", alignItems: "center" }}>
@@ -41,7 +36,7 @@ export function LocationHero({ area, content }: { area: ServiceAreaReference; co
               Plumbing Services in {area.name}, {area.state}
             </h1>
             <p style={{ maxWidth: "480px", fontSize: "18px", color: "var(--color-text-on-media)" }}>{subheading}</p>
-            <TrustBar variant="over-media" items={trustItems} />
+            <BenefitsList />
             {shown.length > 0 && (
               <div style={{ marginTop: "var(--space-4)", fontSize: "14px", color: "var(--color-text-on-media)" }}>
                 <span>Serving {area.name} including: </span>
@@ -56,6 +51,7 @@ export function LocationHero({ area, content }: { area: ServiceAreaReference; co
                 </span>
               </div>
             )}
+            <HeroCtaButtons />
           </div>
 
           <HeroFormCard heading={`Get Help in ${area.name}`} showLogo />

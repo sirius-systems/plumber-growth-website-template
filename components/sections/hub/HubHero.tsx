@@ -1,18 +1,13 @@
 import Image from "next/image";
 import { clientConfig } from "@/config/client";
 import { HeroFormCard } from "@/components/forms/HeroFormCard";
-import { TrustBar, type TrustItem } from "@/components/ui/TrustBar";
+import { BenefitsList } from "@/components/ui/BenefitsList";
+import { HeroCtaButtons } from "@/components/ui/HeroCtaButtons";
 
 /** Service-areas hub hero (docs/06 §26). Shared hero bg + overlay pattern. */
 export function HubHero() {
-  const { marketing, region, serviceAreas, credentials } = clientConfig;
+  const { marketing, region, serviceAreas } = clientConfig;
 
-  const trustItems: TrustItem[] = [
-    { icon: "badge-check", label: "Licensed" },
-    { icon: "shield", label: "Insured" },
-  ];
-  if (credentials.bonded) trustItems.push({ icon: "shield-check", label: "Bonded" });
-  trustItems.push({ icon: "map-pin", label: `Serving ${region.name}` });
 
   return (
     <section className="hero" style={{ display: "flex", alignItems: "center" }}>
@@ -28,7 +23,7 @@ export function HubHero() {
             </p>
             <h1 className="heading-accent">Plumbing Services in {region.name}</h1>
             <p style={{ maxWidth: "480px", fontSize: "18px", color: "var(--color-text-on-media)" }}>{region.subheading}</p>
-            <TrustBar variant="over-media" items={trustItems} />
+            <BenefitsList />
             <ul style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", listStyle: "none", padding: 0, margin: "var(--space-4) 0 0" }}>
               {serviceAreas.map((a) => (
                 <li
@@ -39,6 +34,7 @@ export function HubHero() {
                 </li>
               ))}
             </ul>
+            <HeroCtaButtons />
           </div>
 
           <HeroFormCard heading="Request Service" showLogo />

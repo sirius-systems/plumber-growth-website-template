@@ -1,9 +1,8 @@
 import Image from "next/image";
 import { clientConfig } from "@/config/client";
-import { reviewsSummary } from "@/config/reviews";
-import { telHref, formatPhoneDisplay } from "@/lib/utilities/format";
 import { HeroFormCard } from "@/components/forms/HeroFormCard";
-import { TrustBar, type TrustItem } from "@/components/ui/TrustBar";
+import { BenefitsList } from "@/components/ui/BenefitsList";
+import { HeroCtaButtons } from "@/components/ui/HeroCtaButtons";
 
 /**
  * Closing conversion band (docs/04 §6). Background image + dark overlay, white
@@ -13,21 +12,15 @@ export function FinalCta({
   heading = "Ready to get your plumbing problem solved?",
   subtext = "Tell us what's going on and we'll follow up to confirm timing.",
   currentService,
+  showServicesLink,
 }: {
   heading?: string;
   subtext?: string;
   currentService?: string;
+  /** Set false on /services/, where the services link is self-referential. */
+  showServicesLink?: boolean;
 }) {
-  const { business, marketing, credentials, operations } = clientConfig;
-
-  const trust: TrustItem[] = [];
-  if (credentials.licenseNumber) trust.push({ icon: "badge-check", label: "Licensed" });
-  if (credentials.insured) trust.push({ icon: "shield", label: "Insured" });
-  if (credentials.bonded) trust.push({ icon: "shield-check", label: "Bonded" });
-  if (credentials.yearsInBusiness) trust.push({ icon: "award", label: `${credentials.yearsInBusiness}+ years` });
-  trust.push({ icon: "star", label: `${reviewsSummary.rating.toFixed(1)}★ (${reviewsSummary.count} reviews)` });
-  if (operations.emergencyServiceAvailable && operations.twentyFourSevenService)
-    trust.push({ icon: "zap", label: "24/7 emergency" });
+  const { marketing } = clientConfig;
 
   return (
     <section className="hero">
@@ -44,12 +37,8 @@ export function FinalCta({
             <p style={{ fontSize: "16px", color: "var(--color-text-on-media)", maxWidth: "480px" }}>
               {subtext}
             </p>
-            <p style={{ margin: "var(--space-4) 0" }}>
-              <a href={telHref(business.phone)} style={{ fontSize: "20px", fontWeight: 700 }}>
-                {formatPhoneDisplay(business.phone)}
-              </a>
-            </p>
-            <TrustBar variant="over-media" items={trust} />
+            <BenefitsList />
+            <HeroCtaButtons showServicesLink={showServicesLink} />
           </div>
 
           <HeroFormCard heading="Request Service" defaultService={currentService} showLogo />

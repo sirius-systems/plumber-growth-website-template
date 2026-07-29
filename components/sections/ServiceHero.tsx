@@ -5,18 +5,13 @@ import type { PlumbingService } from "@/config/services";
 import type { ServiceContent } from "@/config/service-content";
 import { LucideIcon } from "@/components/ui/LucideIcon";
 import { HeroFormCard } from "@/components/forms/HeroFormCard";
-import { TrustBar, type TrustItem } from "@/components/ui/TrustBar";
+import { BenefitsList } from "@/components/ui/BenefitsList";
+import { HeroCtaButtons } from "@/components/ui/HeroCtaButtons";
 
 /** Service page hero (docs/06 §26). Reuses the shared hero bg + overlay pattern. */
 export function ServiceHero({ svc, content }: { svc: PlumbingService; content?: ServiceContent }) {
-  const { marketing, seo, credentials, operations } = clientConfig;
+  const { marketing, seo } = clientConfig;
   const subheading = content?.subheading ?? content?.intro ?? svc.shortDescription;
-  const trust: TrustItem[] = [
-    { icon: "badge-check", label: "Licensed" },
-    { icon: "shield", label: "Insured" },
-  ];
-  if (credentials.bonded) trust.push({ icon: "shield-check", label: "Bonded" });
-  if (operations.emergencyServiceAvailable) trust.push({ icon: "clock", label: "Same-day service available" });
   const bullets = (content?.covers ?? []).slice(0, 4);
 
   return (
@@ -39,7 +34,7 @@ export function ServiceHero({ svc, content }: { svc: PlumbingService; content?: 
             <p style={{ maxWidth: "480px", fontSize: "var(--font-size-lg)", color: "var(--color-text-on-media)" }}>
               {subheading}
             </p>
-            <TrustBar variant="over-media" items={trust} />
+            <BenefitsList />
             {bullets.length > 0 && (
               <ul style={{ listStyle: "none", padding: 0, margin: "var(--space-4) 0 0", fontSize: "var(--font-size-sm)" }}>
                 {bullets.map((b) => (
@@ -50,6 +45,7 @@ export function ServiceHero({ svc, content }: { svc: PlumbingService; content?: 
                 ))}
               </ul>
             )}
+            <HeroCtaButtons />
           </div>
 
           <HeroFormCard heading={`Request ${svc.name}`} defaultService={svc.slug} showLogo />

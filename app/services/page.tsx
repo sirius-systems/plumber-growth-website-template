@@ -68,7 +68,7 @@ export default function ServicesHubPage() {
       <HowItWorks />
       <ServiceAreas />
       <ServicesHubFaq />
-      <FinalCta heading={ctaHeading} subtext={ctaSubtext} />
+      <FinalCta heading={ctaHeading} subtext={ctaSubtext} showServicesLink={false} />
     </>
   );
 }
