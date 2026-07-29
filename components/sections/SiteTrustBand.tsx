@@ -1,3 +1,5 @@
+import { clientConfig } from "@/config/client";
+import { reviewsSummary } from "@/config/reviews";
 import { TrustBar, type TrustItem } from "@/components/ui/TrustBar";
 
 /**
@@ -7,17 +9,36 @@ import { TrustBar, type TrustItem } from "@/components/ui/TrustBar";
  * supplies the section chrome. (Formerly the standalone `TrustBar` — renamed to
  * free that name for the shared primitive in components/ui/TrustBar.tsx.)
  *
- * These four labels are universal template copy, not client facts pulled from
- * config, so the band always renders exactly four items.
+ * Claims that are client FACTS are derived from config and gated on it, per
+ * docs/17 §22 — never asserted as static copy. The rating in particular is read
+ * from reviewsSummary rather than hardcoded, so it cannot drift from the data
+ * the rest of the site displays. "Fast Response Time" and "Local Experts" stay
+ * static: they are positioning copy, not verifiable claims about credentials,
+ * licensing or reviews.
  */
-const ITEMS: TrustItem[] = [
-  { icon: "shield-check", label: "Licensed & Insured" },
-  { icon: "clock", label: "Fast Response Time" },
-  { icon: "map-pin", label: "Local Experts" },
-  { icon: "star", label: "5-Star Rated" },
-];
+function buildItems(): TrustItem[] {
+  const { credentials } = clientConfig;
+  const items: TrustItem[] = [];
+
+  if (credentials.licenseNumber && credentials.insured)
+    items.push({ icon: "shield-check", label: "Licensed & Insured" });
+  else if (credentials.licenseNumber) items.push({ icon: "shield-check", label: "Licensed" });
+
+  items.push({ icon: "clock", label: "Fast Response Time" });
+  items.push({ icon: "map-pin", label: "Local Experts" });
+
+  // Reads the real average (4.9), not a rounded-up "5-Star" claim, and is
+  // omitted entirely when a client has no reviews yet.
+  if (reviewsSummary.count > 0)
+    items.push({ icon: "star", label: `${reviewsSummary.rating.toFixed(1)}-Star Rated` });
+
+  return items;
+}
 
 export function SiteTrustBand() {
+  const ITEMS = buildItems();
+  if (ITEMS.length === 0) return null;
+
   return (
     <section
       aria-label="Credentials"
