@@ -132,7 +132,9 @@ const LAYOUTS: Record<TrustBarLayout, CSSProperties> = {
   column: {
     flexDirection: "column",
     alignItems: "flex-start",
-    gap: "var(--space-2)",
+    // Matches the over-media variant's ul gap. This is spread AFTER the variant,
+    // so a smaller value here silently overrides it for the vertical list.
+    gap: "var(--space-3)",
   },
 };
 
