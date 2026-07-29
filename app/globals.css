@@ -598,7 +598,7 @@ img {
   padding: var(--space-3) var(--space-6);
   border-radius: var(--radius-md);
   font-family: inherit;
-  font-weight: 600;
+  font-weight: 700;
   font-size: var(--font-size-base);
   line-height: 1.2;
   text-align: center;
@@ -1165,6 +1165,26 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .carousel-track {
     animation: none;
+  }
+}
+
+/* Site trust band: stack the strip vertically on mobile so each signal reads on
+   its own line instead of wrapping unevenly. The TrustBar variant sets display,
+   align-items and gap inline but NOT flex-direction, so this override applies
+   cleanly without touching the shared component. */
+@media (max-width: 48rem) {
+  .trust-band-list {
+    flex-direction: column;
+  }
+}
+
+/* Service cards: centre the card body on mobile, where each card spans the full
+   column and left-aligned text reads as ragged against the centred section
+   heading. The card's content div sets no text-align/align-items inline. */
+@media (max-width: 48rem) {
+  .service-grid article > div:last-child {
+    text-align: center;
+    align-items: center;
   }
 }
 
