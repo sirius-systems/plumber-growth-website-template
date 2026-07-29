@@ -39,7 +39,9 @@ export function AudiencePathways({
   if (cards.length === 0) return null;
 
   return (
-    <section className="section section-alternate">
+    // section-default (white) rather than -alternate: ServicesGrid directly below
+    // is -alternate, and matching backgrounds made the two read as one section.
+    <section className="section section-default">
       <div className="section__inner">
         <h2 className="section-heading" style={{ fontSize: "var(--font-size-2xl)", marginTop: 0 }}>
           Residential &amp; Commercial Plumbing

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { clientConfig } from "@/config/client";
 import { homeFaqs } from "@/content/homepage/faqs";
 import { HomeHero } from "@/components/sections/HomeHero";
+import { SiteTrustBand } from "@/components/sections/SiteTrustBand";
 import { ServicesGrid } from "@/components/sections/rebuild/ServicesGrid";
 import { CommonProblems } from "@/components/sections/CommonProblems";
 import { WhyChooseUs } from "@/components/sections/rebuild/WhyChooseUs";
@@ -54,10 +55,9 @@ export default function HomePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(plumberJsonLd) }}
       />
-      {/* SiteTrustBand intentionally omitted here: HomeHero already renders the
-          same credentials as a vertical TrustBar (over-media). Still used on
-          /residential-plumbing/ and /services/[service]/. */}
       <HomeHero />
+      <SiteTrustBand />
+      <AudiencePathways />
       <ServicesGrid
         featuredSlugs={[
           "water-heater-repair",
@@ -71,7 +71,6 @@ export default function HomePage() {
       <CommonProblems />
       <WhyChooseUs />
       <HowItWorks />
-      <AudiencePathways />
       <EmergencyCta />
       <ServiceAreas />
       <ReviewsCarousel />
