@@ -63,7 +63,7 @@ const VARIANTS: Record<TrustBarVariant, VariantConfig> = {
       flexWrap: "wrap",
       justifyContent: "center",
       alignItems: "center",
-      gap: "var(--space-2)",
+      gap: "var(--space-3)",
       listStyle: "none",
       margin: 0,
       padding: 0,
@@ -71,7 +71,18 @@ const VARIANTS: Record<TrustBarVariant, VariantConfig> = {
       fontWeight: 500,
       color: "var(--color-text-on-media)",
     },
-    item: { display: "inline-flex", alignItems: "center", gap: "4px" },
+    item: {
+      display: "inline-flex",
+      alignItems: "center",
+      gap: "6px",
+      // Dark fill, not translucent white: a white fill lightens the backdrop
+      // under the 0.90-opacity text and drops WCAG 1.4.3 below 4.5:1 at the
+      // weak end of the hero overlay gradient over bright imagery (audit H2).
+      background: "rgba(0,0,0,0.18)",
+      border: "1px solid rgba(255,255,255,0.3)",
+      borderRadius: "var(--radius-md)",
+      padding: "0.5rem 0.875rem",
+    },
     iconColor: () => "var(--color-accent-500)",
   },
   // Solid dark navy section (LocationTrustBar). Amber icons, white text.
@@ -121,7 +132,9 @@ const LAYOUTS: Record<TrustBarLayout, CSSProperties> = {
   column: {
     flexDirection: "column",
     alignItems: "flex-start",
-    gap: "var(--space-2)",
+    // Matches the over-media variant's ul gap. This is spread AFTER the variant,
+    // so a smaller value here silently overrides it for the vertical list.
+    gap: "var(--space-3)",
   },
 };
 
