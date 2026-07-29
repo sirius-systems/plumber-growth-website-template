@@ -1,28 +1,28 @@
 import Image from "next/image";
 import { clientConfig } from "@/config/client";
-import { reviewsSummary } from "@/config/reviews";
-import { telHref, formatPhoneDisplay } from "@/lib/utilities/format";
 import { HeroFormCard } from "@/components/forms/HeroFormCard";
-import { TrustBar, type TrustItem } from "@/components/ui/TrustBar";
-import { Button } from "@/components/ui/Button";
+import { BenefitsList } from "@/components/ui/BenefitsList";
+import { HeroCtaButtons } from "@/components/ui/HeroCtaButtons";
+
+/** "A, B, and C" — service-area names stay sourced from client config. */
+function formatAreaList(names: string[]): string {
+  const last = names.at(-1);
+  if (last === undefined) return "";
+  if (names.length === 1) return last;
+  return `${names.slice(0, -1).join(", ")}, and ${last}`;
+}
 
 /**
  * Homepage hero (docs/06 §26). Full-bleed background image + dark overlay; white
  * copy on the left, the short capture form in a white elevated card on the right.
  */
 export function HomeHero() {
-  const { business, credentials, marketing, seo, operations } = clientConfig;
+  const { marketing, seo, operations, serviceAreas } = clientConfig;
 
-  // Same verified condition that gates the 24/7 TrustBar item below (docs/06 §38).
+  // Gates the emergency availability pill above the eyebrow (docs/06 §38).
   const emergency247 = operations.emergencyServiceAvailable && operations.twentyFourSevenService;
 
-  const trust: TrustItem[] = [];
-  if (credentials.licenseNumber) trust.push({ icon: "badge-check", label: "Licensed" });
-  if (credentials.insured) trust.push({ icon: "shield", label: "Insured" });
-  if (credentials.bonded) trust.push({ icon: "shield-check", label: "Bonded" });
-  if (credentials.yearsInBusiness) trust.push({ icon: "award", label: `${credentials.yearsInBusiness}+ years` });
-  trust.push({ icon: "star", label: `${reviewsSummary.rating.toFixed(1)}★ (${reviewsSummary.count} reviews)` });
-  if (emergency247) trust.push({ icon: "zap", label: "24/7 emergency" });
+  const areaList = formatAreaList(serviceAreas.map((a) => a.name));
 
   return (
     <section
@@ -92,25 +92,12 @@ export function HomeHero() {
               {marketing.heroHeadline}
             </h1>
             <p style={{ maxWidth: "480px", fontSize: "var(--font-size-lg)", color: "var(--color-text-on-media)" }}>
-              {marketing.heroSubheadline}
+              Fast, reliable plumbing solutions for {areaList} — licensed, insured, and ready
+              when you need us most.
             </p>
-            <div
-              style={{
-                display: "flex",
-                flexWrap: "wrap",
-                alignItems: "center",
-                gap: "var(--space-3)",
-                margin: "var(--space-4) 0",
-              }}
-            >
-              <a href={telHref(business.phone)} style={{ fontSize: "var(--font-size-xl)", fontWeight: 700 }}>
-                {formatPhoneDisplay(business.phone)}
-              </a>
-              <Button variant="inverse" href="/services/">
-                View Our Services
-              </Button>
-            </div>
-            <TrustBar variant="over-media" items={trust} layout="column" />
+
+            <BenefitsList />
+            <HeroCtaButtons />
           </div>
 
           <HeroFormCard heading="Request Service" showLogo />
