@@ -75,7 +75,10 @@ const VARIANTS: Record<TrustBarVariant, VariantConfig> = {
       display: "inline-flex",
       alignItems: "center",
       gap: "6px",
-      background: "rgba(255,255,255,0.12)",
+      // Dark fill, not translucent white: a white fill lightens the backdrop
+      // under the 0.90-opacity text and drops WCAG 1.4.3 below 4.5:1 at the
+      // weak end of the hero overlay gradient over bright imagery (audit H2).
+      background: "rgba(0,0,0,0.18)",
       border: "1px solid rgba(255,255,255,0.3)",
       borderRadius: "var(--radius-md)",
       padding: "0.5rem 0.875rem",
