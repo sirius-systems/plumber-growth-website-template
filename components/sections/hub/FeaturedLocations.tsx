@@ -10,7 +10,7 @@ export function FeaturedLocations() {
   return (
     <section className="section section-alternate">
       <div className="section__inner">
-        <h2 className="section-heading" style={{ fontSize: "var(--font-size-2xl)", marginTop: 0 }}>
+        <h2 className="section-heading">
           Top Service Areas
         </h2>
         <p style={{ textAlign: "center", color: "var(--color-text-muted)", marginBottom: "var(--space-8)" }}>

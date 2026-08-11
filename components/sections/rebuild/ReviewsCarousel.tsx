@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/Button";
 function AggregateStars() {
   const full = Math.round(reviewsSummary.rating);
   return (
-    <span style={{ display: "inline-flex", gap: "3px", verticalAlign: "middle" }}>
+    <span style={{ display: "inline-flex", gap: "var(--space-1)", verticalAlign: "middle" }}>
       {[0, 1, 2, 3, 4].map((i) => (
         <svg key={i} width={22} height={22} viewBox="0 0 24 24" fill={i < full ? "var(--color-accent-500)" : "var(--color-neutral-200)"} aria-hidden="true">
           <path d="M12 3l2.9 6 6.1.9-4.5 4.3 1.1 6.1L12 17.8 6.4 20.3l1.1-6.1L3 9.9 9.1 9 12 3z" />
@@ -52,21 +52,21 @@ export function ReviewsCarousel({
   return (
     <section className="section section-alternate">
       <div className="section__inner">
-        <h2 className="section-heading" style={{ fontSize: "var(--font-size-2xl)", marginTop: 0 }}>
+        <h2 className="section-heading">
           {headingLocation ? `What ${headingLocation} Customers Say` : "What Our Customers Say"}
         </h2>
 
         <div style={{ textAlign: "center", marginBottom: "var(--space-8)" }}>
           <p style={{ margin: 0 }}>
-            <span style={{ fontSize: "52px", fontWeight: 700, color: "var(--color-primary-900)", lineHeight: 1 }}>
+            <span style={{ fontSize: "var(--font-size-4xl)", fontWeight: 700, color: "var(--color-primary-900)", lineHeight: "var(--line-height-tight)" }}>
               {reviewsSummary.rating.toFixed(1)}
             </span>{" "}
-            <span style={{ fontSize: "16px", color: "var(--color-text-muted)" }}>out of 5</span>
+            <span style={{ fontSize: "var(--font-size-base)", color: "var(--color-text-muted)" }}>out of 5</span>
           </p>
           <div style={{ margin: "var(--space-2) 0" }}>
             <AggregateStars />
           </div>
-          <p style={{ margin: 0, fontSize: "13px", color: "var(--color-text-muted)" }}>
+          <p style={{ margin: 0, fontSize: "var(--font-size-sm)", color: "var(--color-text-muted)" }}>
             Based on {reviewsSummary.count} reviews
           </p>
         </div>
@@ -94,7 +94,7 @@ export function ReviewsCarousel({
         </div>
 
         <p style={{ textAlign: "center", marginTop: "var(--space-8)" }}>
-          <Button variant="secondary" href={reviewUrl} target="_blank" rel="noopener noreferrer">
+          <Button variant="accent" href={reviewUrl} target="_blank" rel="noopener noreferrer">
             {leaveLabel}
           </Button>
         </p>

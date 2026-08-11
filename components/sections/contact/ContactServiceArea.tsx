@@ -14,10 +14,10 @@ export function ContactServiceArea() {
     <>
       <section className="section section-default" style={{ paddingBottom: 0 }}>
         <div className="section__inner">
-          <h2 className="section-heading" style={{ fontSize: "var(--font-size-2xl)", marginTop: 0 }}>
+          <h2 className="section-heading">
             Areas We Serve
           </h2>
-          <p style={{ maxWidth: "600px", margin: "0 auto", textAlign: "center", fontSize: "16px", color: "var(--color-text)" }}>
+          <p style={{ maxWidth: "var(--measure-reading)", margin: "0 auto", textAlign: "center", fontSize: "var(--font-size-base)", color: "var(--color-text)" }}>
             We serve homeowners and businesses across {region.name} including {nearby} and
             surrounding communities.
           </p>

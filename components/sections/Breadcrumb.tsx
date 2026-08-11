@@ -11,7 +11,9 @@ export interface Crumb {
  */
 export function Breadcrumb({ items }: { items: Crumb[] }) {
   return (
-    <nav aria-label="Breadcrumb" style={{ fontSize: "0.875rem" }}>
+    // 24px min-height on the crumb links: at --font-size-sm the bare text box
+    // measured 19px, under the WCAG 2.2 2.5.8 target floor (docs/06 §40).
+    <nav aria-label="Breadcrumb" className="breadcrumb" style={{ fontSize: "var(--font-size-sm)" }}>
       {items.map((item, i) => {
         const isLast = i === items.length - 1;
         return (

@@ -24,10 +24,10 @@ export function LocationHero({ area, content }: { area: ServiceAreaReference; co
         <Image src={marketing.heroImageSrc} alt="" fill priority sizes="100vw" style={{ objectFit: "cover" }} />
       </div>
       <div className="hero-overlay" aria-hidden="true" />
-      <div className="hero-content section__inner" style={{ paddingBlock: "64px" }}>
+      <div className="hero-content section__inner" style={{ paddingBlock: "var(--space-16)" }}>
         <div className="hero-2col">
           <div className="hero-copy">
-            <nav aria-label="Breadcrumb" style={{ fontSize: "13px", color: "var(--color-text-on-media)" }}>
+            <nav aria-label="Breadcrumb" className="breadcrumb" style={{ fontSize: "var(--font-size-sm)", color: "var(--color-text-on-media)" }}>
               <Link href="/">Home</Link> {" › "}
               <Link href="/service-areas/">Service Areas</Link> {" › "}
               <span aria-current="page">{area.name}</span>
@@ -35,14 +35,14 @@ export function LocationHero({ area, content }: { area: ServiceAreaReference; co
             <h1 className="heading-accent">
               Plumbing Services in {area.name}, {area.state}
             </h1>
-            <p style={{ maxWidth: "480px", fontSize: "18px", color: "var(--color-text-on-media)" }}>{subheading}</p>
+            <p style={{ maxWidth: "var(--measure-copy)", fontSize: "var(--font-size-lg)", color: "var(--color-text-on-media)" }}>{subheading}</p>
             <BenefitsList />
             {shown.length > 0 && (
-              <div style={{ marginTop: "var(--space-4)", fontSize: "14px", color: "var(--color-text-on-media)" }}>
+              <div style={{ marginTop: "var(--space-4)", fontSize: "var(--font-size-sm)", color: "var(--color-text-on-media)" }}>
                 <span>Serving {area.name} including: </span>
                 <span style={{ display: "inline-flex", flexWrap: "wrap", gap: "var(--space-3)", marginTop: "var(--space-2)" }}>
                   {shown.map((n) => (
-                    <span key={n} style={{ display: "inline-flex", alignItems: "center", gap: "4px" }}>
+                    <span key={n} style={{ display: "inline-flex", alignItems: "center", gap: "var(--space-1)" }}>
                       <LucideIcon name="MapPin" size={13} color="var(--color-accent-500)" />
                       {n}
                     </span>

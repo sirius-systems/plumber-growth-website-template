@@ -23,11 +23,11 @@ export function LocationCta({ area, content }: { area: ServiceAreaReference; con
             <h2 className="display-heading" style={{ marginTop: 0, fontSize: "var(--font-size-3xl)", color: "var(--color-text-on-media)" }}>
               Ready for Plumbing Help in {area.name}?
             </h2>
-            <p style={{ fontSize: "16px", color: "var(--color-text-on-media)" }}>
+            <p style={{ fontSize: "var(--font-size-base)", color: "var(--color-text-on-media)" }}>
               Call us or submit a request and we&rsquo;ll confirm timing for your {area.name} service.
             </p>
             <p style={{ margin: "var(--space-4) 0" }}>
-              <a href={telHref(business.phone)} style={{ fontSize: "20px", fontWeight: 700 }}>
+              <a href={telHref(business.phone)} style={{ fontSize: "var(--font-size-xl)", fontWeight: 700 }}>
                 {formatPhoneDisplay(business.phone)}
               </a>
             </p>
@@ -38,19 +38,19 @@ export function LocationCta({ area, content }: { area: ServiceAreaReference; con
               style={{
                 background: "rgba(255,255,255,0.08)",
                 borderRadius: "var(--radius-md)",
-                padding: "2rem",
+                padding: "var(--space-8)",
                 border: "1px dashed rgba(255,255,255,0.20)",
                 textAlign: "center",
                 marginTop: "var(--space-4)",
               }}
             >
               <LucideIcon name="MapPin" size={32} color="rgba(255,255,255,0.5)" />
-              <p style={{ margin: "var(--space-2) 0 0", fontSize: "13px", color: "var(--color-text-on-media)" }}>
+              <p style={{ margin: "var(--space-2) 0 0", fontSize: "var(--font-size-sm)", color: "var(--color-text-on-media)" }}>
                 Service area map, {area.name}
               </p>
             </div>
             {neighborhoods.length > 0 && (
-              <p style={{ marginTop: "var(--space-3)", fontSize: "13px", color: "var(--color-text-on-media)" }}>
+              <p style={{ marginTop: "var(--space-3)", fontSize: "var(--font-size-sm)", color: "var(--color-text-on-media)" }}>
                 {neighborhoods.join(", ")}
                 {(content?.neighborhoods.length ?? 0) > 6 ? " + more" : ""}
               </p>

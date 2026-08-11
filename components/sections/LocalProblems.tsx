@@ -19,7 +19,7 @@ export function LocalProblems({ area, content }: { area: ServiceAreaReference; c
   return (
     <section className="section section-default">
       <div className="section__inner">
-        <h2 className="section-heading" style={{ fontSize: "var(--font-size-2xl)", marginTop: 0 }}>
+        <h2 className="section-heading">
           Common Plumbing Issues in {area.name}
         </h2>
         <ul
@@ -40,8 +40,8 @@ export function LocalProblems({ area, content }: { area: ServiceAreaReference; c
                 color={p.icon === "AlertTriangle" ? "var(--color-danger)" : "var(--color-primary-600)"}
                 className="stacked-card-icon"
               />
-              <h3 style={{ margin: 0, fontSize: "15px", color: "var(--color-primary-900)" }}>{p.title}</h3>
-              <p style={{ margin: 0, fontSize: "14px", color: "var(--color-text-muted)" }}>{p.description}</p>
+              <h3 style={{ margin: 0, fontSize: "var(--font-size-base)", color: "var(--color-primary-900)" }}>{p.title}</h3>
+              <p style={{ margin: 0, fontSize: "var(--font-size-sm)", color: "var(--color-text-muted)" }}>{p.description}</p>
             </li>
           ))}
         </ul>

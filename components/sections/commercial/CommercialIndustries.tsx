@@ -6,8 +6,8 @@ import { LucideIcon } from "@/components/ui/LucideIcon";
 export function CommercialIndustries() {
   return (
     <section id="industries" className="section section-default">
-      <div className="section__inner" style={{ maxWidth: "900px" }}>
-        <h2 className="section-heading" style={{ fontSize: "var(--font-size-2xl)", marginTop: 0 }}>
+      <div className="section__inner" style={{ maxWidth: "56.25rem" }}>
+        <h2 className="section-heading">
           Who We Serve
         </h2>
         <p style={{ textAlign: "center", color: "var(--color-text-muted)", marginBottom: "var(--space-8)" }}>
@@ -26,8 +26,8 @@ export function CommercialIndustries() {
           {commercialIndustries.map((it) => (
             <li key={it.label} className="stacked-card" style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)" }}>
               <LucideIcon name={it.icon} size={28} color="var(--color-primary-600)" className="stacked-card-icon" />
-              <h3 style={{ margin: 0, fontSize: "16px", color: "var(--color-primary-900)" }}>{it.label}</h3>
-              <p style={{ margin: 0, fontSize: "14px", color: "var(--color-text-muted)" }}>{it.description}</p>
+              <h3 style={{ margin: 0, fontSize: "var(--font-size-base)", color: "var(--color-primary-900)" }}>{it.label}</h3>
+              <p style={{ margin: 0, fontSize: "var(--font-size-sm)", color: "var(--color-text-muted)" }}>{it.description}</p>
             </li>
           ))}
         </ul>

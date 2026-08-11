@@ -34,15 +34,15 @@ export function CommercialMetrics() {
   return (
     <section className="section section-emphasis">
       <div className="section__inner">
-        <h2 className="section-heading" style={{ fontSize: "var(--font-size-2xl)", marginTop: 0 }}>
+        <h2 className="section-heading">
           Built for Commercial Reliability
         </h2>
-        <div style={{ display: "flex", justifyContent: "center", flexWrap: "wrap", gap: "2rem 3rem", maxWidth: "900px", margin: "var(--space-8) auto 0" }}>
+        <div style={{ display: "flex", justifyContent: "center", flexWrap: "wrap", gap: "var(--space-8) var(--space-12)", maxWidth: "56.25rem", margin: "var(--space-8) auto 0" }}>
           {items.map((it) => (
-            <div key={it.label} style={{ textAlign: "center", maxWidth: "220px" }}>
-              <div style={{ fontSize: "48px", fontWeight: 700, color: "#fff", lineHeight: 1 }}>{it.value}</div>
-              <div style={{ fontSize: "14px", color: "rgba(255,255,255,0.75)", marginTop: "var(--space-2)" }}>{it.label}</div>
-              <div style={{ fontSize: "13px", color: "rgba(255,255,255,0.60)" }}>{it.description}</div>
+            <div key={it.label} style={{ textAlign: "center", maxWidth: "13.75rem" }}>
+              <div style={{ fontSize: "var(--font-size-4xl)", fontWeight: 700, color: "#fff", lineHeight: "var(--line-height-tight)" }}>{it.value}</div>
+              <div style={{ fontSize: "var(--font-size-sm)", color: "rgba(255,255,255,0.75)", marginTop: "var(--space-2)" }}>{it.label}</div>
+              <div style={{ fontSize: "var(--font-size-sm)", color: "rgba(255,255,255,0.60)" }}>{it.description}</div>
             </div>
           ))}
         </div>

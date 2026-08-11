@@ -14,7 +14,7 @@ export function ServiceProblems({ svc, content }: { svc: PlumbingService; conten
   return (
     <section className="section section-alternate">
       <div className="section__inner">
-        <h2 className="section-heading" style={{ fontSize: "var(--font-size-2xl)", marginTop: 0 }}>
+        <h2 className="section-heading">
           Signs You Need {svc.name}
         </h2>
         <ul
@@ -28,9 +28,9 @@ export function ServiceProblems({ svc, content }: { svc: PlumbingService; conten
           }}
         >
           {problems.map((p) => (
-            <li key={p} style={{ display: "flex", gap: "0.75rem", alignItems: "flex-start" }}>
-              <LucideIcon name="AlertTriangle" size={22} color="var(--color-danger)" style={{ flex: "none", marginTop: "2px" }} />
-              <span style={{ fontSize: "15px", color: "var(--color-text)" }}>{p}</span>
+            <li key={p} style={{ display: "flex", gap: "var(--space-3)", alignItems: "flex-start" }}>
+              <LucideIcon name="AlertTriangle" size={22} color="var(--color-danger)" style={{ flex: "none", marginTop: "var(--space-1)" }} />
+              <span style={{ fontSize: "var(--font-size-base)", color: "var(--color-text)" }}>{p}</span>
             </li>
           ))}
         </ul>

@@ -37,17 +37,13 @@ export function ServicesGrid({
   return (
     <section className="section section-alternate">
       <div className="section__inner">
-        <h2 className="section-heading" style={{ fontSize: "var(--font-size-2xl)", marginTop: 0 }}>
+        <h2 className="section-heading">
           Our Plumbing Services
         </h2>
-        <p
-          style={{
-            textAlign: "center",
-            maxWidth: "560px",
-            margin: "0 auto var(--space-8)",
-            color: "var(--color-text-muted)",
-          }}
-        >
+        {/* --wide: this lede is ~85 characters, so the default 68ch reading
+            measure broke it across two lines. It sets on one line from 48rem up
+            and still wraps normally on narrow screens. */}
+        <p className="section-lede section-lede--wide">
           From emergencies to everyday repairs and installations, our licensed team handles it.
         </p>
         <ul className={centered ? "service-grid service-grid--centered" : "service-grid"}>

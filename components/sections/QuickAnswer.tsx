@@ -7,28 +7,31 @@
 export function QuickAnswer({ answer }: { answer: string }) {
   return (
     <section className="section section-default">
-      <div className="section__inner" style={{ maxWidth: "720px" }}>
+      <div className="section__inner" style={{ maxWidth: "var(--measure-narrow)" }}>
         <div
           style={{
             background: "var(--color-background-alt)",
             borderRadius: "var(--radius-lg)",
             borderLeft: "3px solid var(--color-accent-500)",
-            padding: "1.5rem 2rem",
+            padding: "var(--space-6) var(--space-8)",
           }}
         >
           <p
             style={{
-              margin: "0 0 0.5rem",
-              fontSize: "11px",
+              margin: "0 0 var(--space-2)",
+              fontSize: "var(--font-size-xs)",
               fontWeight: 600,
               textTransform: "uppercase",
               letterSpacing: "0.08em",
-              color: "var(--color-accent-600)",
+              // --color-accent-600 measured 2.96:1 on --color-background-alt at
+              // 12px/600 — a WCAG 1.4.3 failure. The amber is kept as the panel
+              // rule/icon; the label itself uses the compliant navy (docs/06 §7).
+              color: "var(--color-primary-700)",
             }}
           >
             Quick Answer
           </p>
-          <p style={{ margin: 0, fontSize: "16px", lineHeight: 1.75, color: "var(--color-text)" }}>
+          <p style={{ margin: 0, fontSize: "var(--font-size-base)", lineHeight: "var(--line-height-loose)", color: "var(--color-text)" }}>
             {answer}
           </p>
         </div>

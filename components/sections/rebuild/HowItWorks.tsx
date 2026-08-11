@@ -13,7 +13,7 @@ export function HowItWorks() {
   return (
     <section className="section section-default">
       <div className="section__inner">
-        <h2 className="section-heading" style={{ fontSize: "var(--font-size-2xl)", marginTop: 0 }}>
+        <h2 className="section-heading">
           How It Works
         </h2>
         <ol
@@ -31,15 +31,15 @@ export function HowItWorks() {
               <div
                 aria-hidden="true"
                 className="display-heading process-step__number"
-                style={{ fontSize: "56px", lineHeight: 1, color: "var(--color-primary-100)" }}
+                style={{ fontSize: "var(--font-size-4xl)", lineHeight: "var(--line-height-tight)", color: "var(--color-primary-100)" }}
               >
                 {i + 1}
               </div>
-              <h3 style={{ margin: "var(--space-2) 0", fontSize: "16px" }}>
+              <h3 style={{ margin: "var(--space-2) 0", fontSize: "var(--font-size-base)" }}>
                 <span className="sr-only">{`Step ${i + 1}: `}</span>
                 {step.title}
               </h3>
-              <p style={{ margin: 0, fontSize: "14px", color: "var(--color-text-muted)" }}>{step.body}</p>
+              <p style={{ margin: 0, fontSize: "var(--font-size-sm)", color: "var(--color-text-muted)" }}>{step.body}</p>
             </li>
           ))}
         </ol>

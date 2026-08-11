@@ -95,7 +95,7 @@ export function SiteFooter() {
                     justifyContent: "space-between",
                     gap: "var(--space-3)",
                     color: "var(--color-text-muted)",
-                    fontSize: "0.875rem",
+                    fontSize: "var(--font-size-sm)",
                   }}
                 >
                   <span>{label}</span>
@@ -216,7 +216,7 @@ export function SiteFooter() {
           textAlign: "center",
           paddingBottom: "var(--space-8)",
           color: "var(--color-text-muted)",
-          fontSize: "0.875rem",
+          fontSize: "var(--font-size-sm)",
         }}
       >
         <p style={{ margin: 0 }}>{copyrightParts.join(" · ")}</p>

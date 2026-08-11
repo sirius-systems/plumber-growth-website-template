@@ -12,19 +12,21 @@ export function ServiceLinks({ svc }: { svc: PlumbingService }) {
     .slice(0, 5);
   const primary = serviceAreas.find((a) => a.primary) ?? serviceAreas[0];
 
-  const linkStyle = { display: "inline-flex", alignItems: "center", gap: "6px", fontSize: "15px", fontWeight: 500 };
+  // minHeight lifts these list links to the 24px target floor (WCAG 2.2 2.5.8);
+  // the bare text box measured 22px.
+  const linkStyle = { display: "inline-flex", alignItems: "center", minHeight: "var(--space-6)", gap: "var(--space-2)", fontSize: "var(--font-size-base)", fontWeight: 500 };
 
   return (
     <section className="section section-alternate">
       <div className="section__inner">
-        <h2 className="section-heading" style={{ fontSize: "var(--font-size-2xl)", marginTop: 0 }}>
+        <h2 className="section-heading">
           Related Services and Areas We Serve
         </h2>
         <div
           style={{
             display: "grid",
             gridTemplateColumns: "1fr 1fr",
-            gap: "3rem",
+            gap: "var(--space-12)",
             marginTop: "var(--space-8)",
             maxWidth: "var(--container-md)",
             marginInline: "auto",
@@ -32,7 +34,7 @@ export function ServiceLinks({ svc }: { svc: PlumbingService }) {
           }}
         >
           <div>
-            <h3 style={{ marginTop: 0, fontSize: "16px", color: "var(--color-primary-900)" }}>Related Services</h3>
+            <h3 style={{ marginTop: 0, fontSize: "var(--font-size-base)", color: "var(--color-primary-900)" }}>Related Services</h3>
             <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "grid", gap: "var(--space-3)" }}>
               {related.map((r) => (
                 <li key={r.slug}>
@@ -45,7 +47,7 @@ export function ServiceLinks({ svc }: { svc: PlumbingService }) {
             </ul>
           </div>
           <div>
-            <h3 style={{ marginTop: 0, fontSize: "16px", color: "var(--color-primary-900)" }}>Service Areas</h3>
+            <h3 style={{ marginTop: 0, fontSize: "var(--font-size-base)", color: "var(--color-primary-900)" }}>Service Areas</h3>
             <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "grid", gap: "var(--space-3)" }}>
               {serviceAreas.map((area) => {
                 const href =

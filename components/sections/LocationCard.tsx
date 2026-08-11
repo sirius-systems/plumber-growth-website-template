@@ -29,6 +29,12 @@ export function LocationCard({ area }: { area: ServiceAreaReference }) {
         borderRadius: "var(--radius-md)",
         boxShadow: "var(--shadow-sm)",
         overflow: "hidden",
+        // The card sits inside a `display:flex` <li>. Without an explicit width
+        // it is sized by its own content, so on mobile — where the grid gives
+        // each <li> the full column — a short card shrank to ~233px of a 358px
+        // column and sat flush left. 100% makes every card fill (and therefore
+        // centre in) its column, which is what .service-grid already intended.
+        width: "100%",
         height: "100%",
       }}
     >
@@ -46,7 +52,7 @@ export function LocationCard({ area }: { area: ServiceAreaReference }) {
           display: "flex",
           flexDirection: "column",
           gap: "var(--space-2)",
-          padding: "1.25rem",
+          padding: "var(--space-5)",
         }}
       >
         <h3 style={{ margin: 0, fontSize: "var(--font-size-lg)" }}>

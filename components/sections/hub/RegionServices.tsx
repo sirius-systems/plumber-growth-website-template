@@ -25,7 +25,7 @@ export function RegionServices() {
   return (
     <section className="section section-default">
       <div className="section__inner">
-        <h2 className="section-heading" style={{ fontSize: "var(--font-size-2xl)", marginTop: 0 }}>
+        <h2 className="section-heading">
           Plumbing Services Available Across {region.name}
         </h2>
         <p style={{ textAlign: "center", color: "var(--color-text-muted)", marginBottom: "var(--space-8)" }}>
@@ -40,8 +40,8 @@ export function RegionServices() {
                 style={{
                   display: "flex",
                   alignItems: "center",
-                  gap: "0.75rem",
-                  padding: "0.875rem 1rem",
+                  gap: "var(--space-3)",
+                  padding: "var(--space-3) var(--space-4)",
                   background: "var(--color-background-alt)",
                   borderRadius: "var(--radius-md)",
                   border: "1px solid var(--color-border)",
@@ -49,7 +49,7 @@ export function RegionServices() {
                 }}
               >
                 <LucideIcon name={SERVICE_ICON[s.slug] ?? "Wrench"} size={20} color="var(--color-primary-600)" />
-                <span style={{ fontSize: "15px", fontWeight: 500, color: "var(--color-primary-900)" }}>{s.name}</span>
+                <span style={{ fontSize: "var(--font-size-base)", fontWeight: 500, color: "var(--color-primary-900)" }}>{s.name}</span>
                 <LucideIcon name="ChevronRight" size={14} color="var(--color-text-muted)" style={{ marginLeft: "auto" }} />
               </Link>
             </li>

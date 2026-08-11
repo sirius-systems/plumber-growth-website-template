@@ -29,11 +29,22 @@ const DEFAULT_STEPS: { icon: string; title: string; body: string }[] = [
   },
 ];
 
-export function ServiceProcess({ svc }: { svc: PlumbingService }) {
+/**
+ * @param background Section tone. Defaults to "default" — the value every
+ *   service page used before the water-heater-repair iteration, which needs
+ *   "alternate" so this section stays distinct from the white band above it.
+ */
+export function ServiceProcess({
+  svc,
+  background = "default",
+}: {
+  svc: PlumbingService;
+  background?: "default" | "alternate";
+}) {
   return (
-    <section className="section section-default">
-      <div className="section__inner" style={{ maxWidth: "800px" }}>
-        <h2 className="section-heading" style={{ fontSize: "var(--font-size-2xl)", marginTop: 0 }}>
+    <section className={`section section-${background}`}>
+      <div className="section__inner" style={{ maxWidth: "50rem" }}>
+        <h2 className="section-heading">
           How We Handle {svc.name}
         </h2>
         <ol style={{ listStyle: "none", padding: 0, margin: "var(--space-8) 0 0" }}>
@@ -43,9 +54,9 @@ export function ServiceProcess({ svc }: { svc: PlumbingService }) {
               style={{
                 display: "grid",
                 gridTemplateColumns: "56px 1fr",
-                gap: "1.5rem",
+                gap: "var(--space-6)",
                 alignItems: "start",
-                padding: "1.5rem 0",
+                padding: "var(--space-6) 0",
                 borderBottom: i < DEFAULT_STEPS.length - 1 ? "1px solid var(--color-border)" : "none",
               }}
             >
@@ -61,17 +72,17 @@ export function ServiceProcess({ svc }: { svc: PlumbingService }) {
                   justifyContent: "center",
                 }}
               >
-                <span className="display-heading" style={{ fontSize: "22px", color: "var(--color-primary-700)" }}>
+                <span className="display-heading" style={{ fontSize: "var(--font-size-xl)", color: "var(--color-primary-700)" }}>
                   {i + 1}
                 </span>
               </div>
               <div>
-                <LucideIcon name={step.icon} size={20} color="var(--color-accent-500)" style={{ marginBottom: "0.5rem" }} />
-                <h3 style={{ margin: "0 0 0.25rem", fontSize: "17px", color: "var(--color-primary-900)" }}>
+                <LucideIcon name={step.icon} size={20} color="var(--color-accent-500)" style={{ marginBottom: "var(--space-2)" }} />
+                <h3 style={{ margin: "0 0 var(--space-1)", fontSize: "var(--font-size-lg)", color: "var(--color-primary-900)" }}>
                   <span className="sr-only">{`Step ${i + 1}: `}</span>
                   {step.title}
                 </h3>
-                <p style={{ margin: 0, fontSize: "15px", lineHeight: 1.7, color: "var(--color-text)" }}>{step.body}</p>
+                <p style={{ margin: 0, fontSize: "var(--font-size-base)", lineHeight: "var(--line-height-loose)", color: "var(--color-text)" }}>{step.body}</p>
               </div>
             </li>
           ))}

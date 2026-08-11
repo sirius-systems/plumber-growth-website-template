@@ -16,25 +16,25 @@ export function AreaOverview({ area, content }: { area: ServiceAreaReference; co
   return (
     <section className="section section-default">
       <div className="section__inner">
-        <h2 className="section-heading" style={{ fontSize: "var(--font-size-2xl)", marginTop: 0 }}>
+        <h2 className="section-heading">
           Plumbing Services in {area.name}
         </h2>
         <div
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit, minmax(18rem, 1fr))",
-            gap: "3rem",
+            gap: "var(--space-12)",
             marginTop: "var(--space-8)",
           }}
         >
           <div>
-            <p style={{ fontSize: "16px", lineHeight: 1.75, marginTop: 0 }}>{overview}</p>
+            <p style={{ fontSize: "var(--font-size-base)", lineHeight: "var(--line-height-loose)", marginTop: 0 }}>{overview}</p>
           </div>
           <div
             style={{
               background: "var(--color-background-alt)",
               borderRadius: "var(--radius-lg)",
-              padding: "1.5rem",
+              padding: "var(--space-6)",
               borderLeft: "3px solid var(--color-accent-500)",
               alignSelf: "start",
             }}
@@ -47,7 +47,7 @@ export function AreaOverview({ area, content }: { area: ServiceAreaReference; co
                 <li key={s.slug}>
                   <Link
                     href={`/services/${s.slug}/`}
-                    style={{ display: "inline-flex", alignItems: "center", gap: "6px", fontSize: "14px" }}
+                    style={{ display: "inline-flex", alignItems: "center", minHeight: "var(--space-6)", gap: "var(--space-2)", fontSize: "var(--font-size-sm)" }}
                   >
                     <LucideIcon name="ChevronRight" size={14} color="var(--color-primary-600)" />
                     {s.name}

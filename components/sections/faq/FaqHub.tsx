@@ -9,13 +9,13 @@ import { LucideIcon } from "@/components/ui/LucideIcon";
 export function FaqHub() {
   return (
     <section className="section section-default">
-      <div className="section__inner" style={{ maxWidth: "800px" }}>
+      <div className="section__inner" style={{ maxWidth: "50rem" }}>
         {faqCategories.map((cat) => (
-          <div key={cat.id} id={cat.id} style={{ marginBottom: "3rem" }}>
-            <h2 style={{ fontSize: "22px", fontWeight: 700, color: "var(--color-primary-900)", paddingBottom: "0.5rem", borderBottom: "2px solid var(--color-primary-100)", marginBottom: "0.5rem" }}>
+          <div key={cat.id} id={cat.id} style={{ marginBottom: "var(--space-12)" }}>
+            <h2 style={{ fontSize: "var(--font-size-xl)", fontWeight: 700, color: "var(--color-primary-900)", paddingBottom: "var(--space-2)", borderBottom: "2px solid var(--color-primary-100)", marginBottom: "var(--space-2)" }}>
               {cat.heading}
             </h2>
-            <p style={{ fontSize: "15px", color: "var(--color-text-muted)", lineHeight: 1.65, marginBottom: "1.25rem" }}>
+            <p style={{ fontSize: "var(--font-size-base)", color: "var(--color-text-muted)", lineHeight: "var(--line-height-body)", marginBottom: "var(--space-5)" }}>
               {cat.intro}
             </p>
             {cat.items.map((item, i) => (
@@ -27,10 +27,10 @@ export function FaqHub() {
                 <div>
                   <p style={{ margin: 0 }}>{item.answer}</p>
                   {item.internalLinks && item.internalLinks.length > 0 && (
-                    <p style={{ margin: "0.75rem 0 0", fontSize: "13px", fontWeight: 500, color: "var(--color-primary-600)", display: "flex", flexWrap: "wrap", gap: "0.75rem", alignItems: "center" }}>
+                    <p style={{ margin: "var(--space-3) 0 0", fontSize: "var(--font-size-sm)", fontWeight: 500, color: "var(--color-primary-600)", display: "flex", flexWrap: "wrap", gap: "var(--space-3)", alignItems: "center" }}>
                       <span style={{ color: "var(--color-text-muted)" }}>Related:</span>
                       {item.internalLinks.map((l) => (
-                        <Link key={l.href} href={l.href} style={{ display: "inline-flex", alignItems: "center", gap: "0.25rem" }}>
+                        <Link key={l.href} href={l.href} style={{ display: "inline-flex", alignItems: "center", gap: "var(--space-1)" }}>
                           <LucideIcon name="ChevronRight" size={12} color="var(--color-primary-600)" />
                           {l.text}
                         </Link>

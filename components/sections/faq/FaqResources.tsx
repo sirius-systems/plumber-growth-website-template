@@ -28,8 +28,8 @@ export function FaqResources() {
 
   return (
     <section className="section section-alternate">
-      <div className="section__inner" style={{ maxWidth: "900px" }}>
-        <h2 className="section-heading" style={{ fontSize: "var(--font-size-2xl)", marginTop: 0 }}>
+      <div className="section__inner" style={{ maxWidth: "56.25rem" }}>
+        <h2 className="section-heading">
           Explore Service Pages
         </h2>
         <p style={{ textAlign: "center", color: "var(--color-text-muted)", marginBottom: "var(--space-8)" }}>
@@ -38,13 +38,13 @@ export function FaqResources() {
         <ul style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))", gap: "var(--space-4)", listStyle: "none", padding: 0, margin: 0 }}>
           {resources.map((r) => (
             <li key={r.href}>
-              <Link href={r.href} style={{ display: "flex", alignItems: "center", gap: "0.75rem", padding: "1rem 1.25rem", background: "var(--color-surface)", border: "1px solid var(--color-border)", borderRadius: "var(--radius-md)", textDecoration: "none" }}>
+              <Link href={r.href} style={{ display: "flex", alignItems: "center", gap: "var(--space-3)", padding: "var(--space-4) var(--space-5)", background: "var(--color-surface)", border: "1px solid var(--color-border)", borderRadius: "var(--radius-md)", textDecoration: "none" }}>
                 <LucideIcon
                   name={r.icon}
                   size={20}
                   color={r.icon === "AlertTriangle" ? "var(--color-danger)" : "var(--color-primary-600)"}
                 />
-                <span style={{ fontSize: "14px", fontWeight: 600, color: "var(--color-primary-900)" }}>{r.label}</span>
+                <span style={{ fontSize: "var(--font-size-sm)", fontWeight: 600, color: "var(--color-primary-900)" }}>{r.label}</span>
                 <LucideIcon name="ChevronRight" size={14} color="var(--color-text-muted)" style={{ marginLeft: "auto" }} />
               </Link>
             </li>

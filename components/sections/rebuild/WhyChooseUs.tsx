@@ -40,7 +40,7 @@ export function WhyChooseUs() {
   return (
     <section className="section section-alternate">
       <div className="section__inner">
-        <h2 className="section-heading" style={{ fontSize: "var(--font-size-2xl)", marginTop: 0 }}>
+        <h2 className="section-heading">
           Why Homeowners Choose {business.publicName}
         </h2>
         <div className="why-choose-layout" style={{ marginTop: "var(--space-8)" }}>
@@ -57,8 +57,8 @@ export function WhyChooseUs() {
             {items.map((it) => (
               <li key={it.title} className="stacked-card" style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)" }}>
                 <LucideIcon name={it.icon} size={24} color="var(--color-accent-500)" className="stacked-card-icon" />
-                <h3 style={{ margin: 0, fontSize: "16px" }}>{it.title}</h3>
-                <p style={{ margin: 0, fontSize: "14px", color: "var(--color-text-muted)" }}>{it.desc}</p>
+                <h3 style={{ margin: 0, fontSize: "var(--font-size-base)" }}>{it.title}</h3>
+                <p style={{ margin: 0, fontSize: "var(--font-size-sm)", color: "var(--color-text-muted)" }}>{it.desc}</p>
               </li>
             ))}
           </ul>
@@ -77,12 +77,12 @@ export function WhyChooseUs() {
               background: "var(--color-background-alt)",
               borderRadius: "var(--radius-lg)",
               border: "1.5px dashed var(--color-border)",
-              padding: "3rem 2rem",
+              padding: "var(--space-12) var(--space-8)",
               textAlign: "center",
             }}
           >
             <LucideIcon name="Wrench" size={40} color="var(--color-neutral-500)" />
-            <p style={{ margin: 0, fontSize: "14px", color: "var(--color-text-muted)" }}>
+            <p style={{ margin: 0, fontSize: "var(--font-size-sm)", color: "var(--color-text-muted)" }}>
               Team photo, {business.publicName}
             </p>
           </div>

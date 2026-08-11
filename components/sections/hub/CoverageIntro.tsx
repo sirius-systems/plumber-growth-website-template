@@ -18,15 +18,15 @@ export function CoverageIntro() {
   return (
     <section className="section section-default">
       <div className="section__inner">
-        <p style={{ maxWidth: "720px", margin: "0 auto", textAlign: "center", fontSize: "17px", lineHeight: 1.75 }}>
+        <p style={{ maxWidth: "var(--measure-narrow)", margin: "0 auto", textAlign: "center", fontSize: "var(--font-size-lg)", lineHeight: "var(--line-height-loose)" }}>
           {overview}
         </p>
         {stats.length > 0 && (
-          <div style={{ display: "flex", justifyContent: "center", gap: "3rem", flexWrap: "wrap", marginTop: "var(--space-8)" }}>
+          <div style={{ display: "flex", justifyContent: "center", gap: "var(--space-12)", flexWrap: "wrap", marginTop: "var(--space-8)" }}>
             {stats.map((s) => (
               <div key={s.label} style={{ textAlign: "center" }}>
-                <div style={{ fontSize: "36px", fontWeight: 700, color: "var(--color-primary-700)" }}>{s.value}</div>
-                <div style={{ fontSize: "14px", color: "var(--color-text-muted)" }}>{s.label}</div>
+                <div style={{ fontSize: "var(--font-size-3xl)", fontWeight: 700, color: "var(--color-primary-700)" }}>{s.value}</div>
+                <div style={{ fontSize: "var(--font-size-sm)", color: "var(--color-text-muted)" }}>{s.label}</div>
               </div>
             ))}
           </div>

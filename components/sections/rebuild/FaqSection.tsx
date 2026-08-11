@@ -19,15 +19,11 @@ export function FaqSection({
 }) {
   return (
     <section id={id} className="section section-default">
-      <div className="section__inner" style={{ maxWidth: "800px" }}>
-        <h2 className="section-heading" style={{ fontSize: "var(--font-size-2xl)", marginTop: 0 }}>
+      <div className="section__inner" style={{ maxWidth: "50rem" }}>
+        <h2 className="section-heading">
           {heading}
         </h2>
-        {subheading && (
-          <p style={{ textAlign: "center", color: "var(--color-text-muted)", marginBottom: "var(--space-6)" }}>
-            {subheading}
-          </p>
-        )}
+        {subheading && <p className="section-lede">{subheading}</p>}
         {items.map((f, i) => (
           <details className="faq-q" key={i}>
             <summary>

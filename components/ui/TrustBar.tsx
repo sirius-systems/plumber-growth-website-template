@@ -74,14 +74,14 @@ const VARIANTS: Record<TrustBarVariant, VariantConfig> = {
     item: {
       display: "inline-flex",
       alignItems: "center",
-      gap: "6px",
+      gap: "var(--space-2)",
       // Dark fill, not translucent white: a white fill lightens the backdrop
       // under the 0.90-opacity text and drops WCAG 1.4.3 below 4.5:1 at the
       // weak end of the hero overlay gradient over bright imagery (audit H2).
       background: "rgba(0,0,0,0.18)",
       border: "1px solid rgba(255,255,255,0.3)",
       borderRadius: "var(--radius-md)",
-      padding: "0.5rem 0.875rem",
+      padding: "var(--space-2) var(--space-3)",
     },
     iconColor: () => "var(--color-accent-500)",
   },
@@ -93,7 +93,7 @@ const VARIANTS: Record<TrustBarVariant, VariantConfig> = {
       flexWrap: "wrap",
       justifyContent: "center",
       alignItems: "center",
-      gap: "1.5rem 2.5rem",
+      gap: "var(--space-6) var(--space-10)",
       listStyle: "none",
       margin: 0,
       padding: 0,
@@ -101,7 +101,7 @@ const VARIANTS: Record<TrustBarVariant, VariantConfig> = {
       fontWeight: 500,
       color: "#fff",
     },
-    item: { display: "inline-flex", alignItems: "center", gap: "0.5rem", whiteSpace: "nowrap" },
+    item: { display: "inline-flex", alignItems: "center", gap: "var(--space-2)", whiteSpace: "nowrap" },
     iconColor: () => "var(--color-accent-500)",
   },
   // Light background / card (ContactTrust, FaqTrust). Amber star, navy for the
@@ -113,7 +113,7 @@ const VARIANTS: Record<TrustBarVariant, VariantConfig> = {
       flexWrap: "wrap",
       justifyContent: "center",
       alignItems: "center",
-      gap: "1rem 2rem",
+      gap: "var(--space-4) var(--space-8)",
       listStyle: "none",
       margin: 0,
       padding: 0,
@@ -121,7 +121,7 @@ const VARIANTS: Record<TrustBarVariant, VariantConfig> = {
       fontWeight: 500,
       color: "var(--color-text)",
     },
-    item: { display: "inline-flex", alignItems: "center", gap: "0.5rem" },
+    item: { display: "inline-flex", alignItems: "center", gap: "var(--space-2)" },
     iconColor: (icon) => (icon === "star" ? "var(--color-accent-500)" : "var(--color-primary-600)"),
   },
 };

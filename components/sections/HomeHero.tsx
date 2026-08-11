@@ -15,6 +15,11 @@ function formatAreaList(names: string[]): string {
 /**
  * Homepage hero (docs/06 §26). Full-bleed background image + dark overlay; white
  * copy on the left, the short capture form in a white elevated card on the right.
+ *
+ * Sizing lives in `.hero--home` (globals.css), not inline: the previous
+ * `minHeight: 580` + `paddingBlock: 80px` were raw values outside the spacing
+ * scale, so they applied identically at 375px and 1440px and could not pick up
+ * the section-rhythm breakpoints every other band uses.
  */
 export function HomeHero() {
   const { marketing, seo, operations, serviceAreas } = clientConfig;
@@ -25,10 +30,7 @@ export function HomeHero() {
   const areaList = formatAreaList(serviceAreas.map((a) => a.name));
 
   return (
-    <section
-      className="hero"
-      style={{ minHeight: 580, display: "flex", alignItems: "center" }}
-    >
+    <section className="hero hero--home">
       <div className="hero-media" aria-hidden="true">
         <Image
           src={marketing.heroImageSrc}
@@ -41,7 +43,7 @@ export function HomeHero() {
       </div>
       <div className="hero-overlay" aria-hidden="true" />
 
-      <div className="hero-content section__inner" style={{ paddingBlock: "80px" }}>
+      <div className="hero-content section__inner">
         <div className="hero-2col">
           <div className="hero-copy">
             {/* Emergency availability pill — same translucent chrome as the
@@ -52,12 +54,12 @@ export function HomeHero() {
                 className="hero-badge"
                 style={{
                   alignItems: "center",
-                  gap: "0.5rem",
+                  gap: "var(--space-2)",
                   margin: "0 0 var(--space-3)",
                   background: "rgba(255,255,255,0.12)",
                   borderRadius: "var(--radius-pill)",
-                  padding: "0.25rem 0.75rem",
-                  fontSize: "13px",
+                  padding: "var(--space-1) var(--space-3)",
+                  fontSize: "var(--font-size-sm)",
                   fontWeight: 500,
                   color: "#fff",
                 }}
@@ -65,8 +67,8 @@ export function HomeHero() {
                 <span
                   aria-hidden="true"
                   style={{
-                    width: 8,
-                    height: 8,
+                    width: "var(--space-2)",
+                    height: "var(--space-2)",
                     borderRadius: "50%",
                     background: "var(--color-accent-500)",
                     flex: "none",
@@ -91,7 +93,7 @@ export function HomeHero() {
             <h1 className="heading-accent" style={{ maxWidth: "18ch" }}>
               {marketing.heroHeadline}
             </h1>
-            <p style={{ maxWidth: "480px", fontSize: "var(--font-size-lg)", color: "var(--color-text-on-media)" }}>
+            <p style={{ maxWidth: "var(--measure-copy)", fontSize: "var(--font-size-lg)", color: "var(--color-text-on-media)" }}>
               Fast, reliable plumbing solutions for {areaList} — licensed, insured, and ready
               when you need us most.
             </p>

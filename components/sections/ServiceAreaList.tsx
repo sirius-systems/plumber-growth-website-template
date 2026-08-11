@@ -68,7 +68,9 @@ export function ServiceAreaList({
             </li>
           ))}
         </ul>
-        <Link href="/service-areas/">View all service areas →</Link>
+        <Link href="/service-areas/" style={{ display: "inline-flex", alignItems: "center", minHeight: "var(--space-6)" }}>
+          View all service areas →
+        </Link>
       </div>
     </section>
   );

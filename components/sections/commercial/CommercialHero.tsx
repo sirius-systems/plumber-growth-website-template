@@ -23,19 +23,19 @@ export function CommercialHero() {
         <Image src={marketing.heroImageSrc} alt="" fill priority sizes="100vw" style={{ objectFit: "cover" }} />
       </div>
       <div className="hero-overlay" aria-hidden="true" />
-      <div className="hero-content section__inner" style={{ paddingBlock: "64px" }}>
+      <div className="hero-content section__inner" style={{ paddingBlock: "var(--space-16)" }}>
         <div className="hero-2col">
           <div className="hero-copy">
-            <p className="hero-eyebrow" style={{ margin: 0, fontSize: "12px", fontWeight: 500, textTransform: "uppercase", letterSpacing: "0.08em", color: "var(--color-text-on-media)" }}>
+            <p className="hero-eyebrow" style={{ margin: 0, fontSize: "var(--font-size-xs)", fontWeight: 500, textTransform: "uppercase", letterSpacing: "0.08em", color: "var(--color-text-on-media)" }}>
               For Property and Facility Managers
             </p>
             <h1 className="heading-accent">Commercial Plumbing Services in {region.name}</h1>
-            <p style={{ maxWidth: "480px", fontSize: "18px", color: "var(--color-text-on-media)" }}>{subheading}</p>
+            <p style={{ maxWidth: "var(--measure-copy)", fontSize: "var(--font-size-lg)", color: "var(--color-text-on-media)" }}>{subheading}</p>
             <BenefitsList />
-            <ul style={{ listStyle: "none", padding: 0, margin: "var(--space-4) 0 0", fontSize: "14px" }}>
+            <ul style={{ listStyle: "none", padding: 0, margin: "var(--space-4) 0 0", fontSize: "var(--font-size-sm)" }}>
               {bullets.map((b) => (
-                <li key={b} style={{ display: "flex", alignItems: "flex-start", gap: "6px", color: "var(--color-text-on-media)" }}>
-                  <LucideIcon name="Check" size={14} color="var(--color-accent-500)" style={{ marginTop: "4px", flex: "none" }} />
+                <li key={b} style={{ display: "flex", alignItems: "flex-start", gap: "var(--space-2)", color: "var(--color-text-on-media)" }}>
+                  <LucideIcon name="Check" size={14} color="var(--color-accent-500)" style={{ marginTop: "var(--space-1)", flex: "none" }} />
                   {b}
                 </li>
               ))}
@@ -44,7 +44,7 @@ export function CommercialHero() {
           </div>
 
           <div className="hero-form-card">
-            <h2 style={{ marginTop: 0, fontSize: "16px", fontWeight: 600, color: "var(--color-primary-900)" }}>
+            <h2 style={{ marginTop: 0, fontSize: "var(--font-size-base)", fontWeight: 600, color: "var(--color-primary-900)" }}>
               Request Commercial Service
             </h2>
             <CommercialQuoteForm />

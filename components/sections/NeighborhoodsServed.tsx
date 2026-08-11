@@ -11,10 +11,10 @@ export function NeighborhoodsServed({ area, content }: { area: ServiceAreaRefere
   return (
     <section className="section section-alternate">
       <div className="section__inner">
-        <h2 className="section-heading" style={{ fontSize: "var(--font-size-2xl)", marginTop: 0 }}>
+        <h2 className="section-heading">
           Areas We Serve in {area.name}
         </h2>
-        <p style={{ textAlign: "center", color: "var(--color-text-muted)", maxWidth: "640px", margin: "0 auto var(--space-6)" }}>
+        <p style={{ textAlign: "center", color: "var(--color-text-muted)", maxWidth: "var(--measure-narrow)", margin: "0 auto var(--space-6)" }}>
           We provide plumbing service throughout {area.name} including these neighborhoods and communities.
         </p>
         <ul
@@ -22,7 +22,7 @@ export function NeighborhoodsServed({ area, content }: { area: ServiceAreaRefere
             display: "flex",
             flexWrap: "wrap",
             justifyContent: "center",
-            gap: "0.625rem",
+            gap: "var(--space-3)",
             listStyle: "none",
             padding: 0,
             margin: 0,
@@ -34,7 +34,7 @@ export function NeighborhoodsServed({ area, content }: { area: ServiceAreaRefere
             </li>
           ))}
         </ul>
-        <p style={{ textAlign: "center", marginTop: "var(--space-6)", fontSize: "13px", color: "var(--color-text-muted)" }}>
+        <p style={{ textAlign: "center", marginTop: "var(--space-6)", fontSize: "var(--font-size-sm)", color: "var(--color-text-muted)" }}>
           Service availability in specific neighborhoods may vary. Call{" "}
           {formatPhoneDisplay(clientConfig.business.phone)} to confirm coverage in your area.
         </p>

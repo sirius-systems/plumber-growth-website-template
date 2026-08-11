@@ -9,10 +9,10 @@ export function RegionMap() {
   return (
     <section className="section section-alternate">
       <div className="section__inner">
-        <h2 className="section-heading" style={{ fontSize: "var(--font-size-2xl)", marginTop: 0 }}>
+        <h2 className="section-heading">
           Our Service Region
         </h2>
-        <div style={{ maxWidth: "800px", margin: "var(--space-8) auto 0" }}>
+        <div style={{ maxWidth: "50rem", margin: "var(--space-8) auto 0" }}>
           {region.mapImage ? (
             <div style={{ position: "relative", width: "100%", aspectRatio: "16 / 9", borderRadius: "var(--radius-lg)", overflow: "hidden", boxShadow: "var(--shadow-md)" }}>
               <Image src={region.mapImage} alt={`Plumbing service area map for ${region.name}`} fill sizes="800px" style={{ objectFit: "cover" }} />
@@ -25,19 +25,19 @@ export function RegionMap() {
                 background: "var(--color-background-alt)",
                 borderRadius: "var(--radius-lg)",
                 border: "1.5px dashed var(--color-border)",
-                padding: "3rem 2rem",
+                padding: "var(--space-12) var(--space-8)",
                 textAlign: "center",
               }}
             >
               <LucideIcon name="MapPin" size={40} color="var(--color-neutral-500)" />
-              <p style={{ margin: "var(--space-2) 0 0", fontSize: "14px", color: "var(--color-text-muted)" }}>
+              <p style={{ margin: "var(--space-2) 0 0", fontSize: "var(--font-size-sm)", color: "var(--color-text-muted)" }}>
                 Service area map, {region.name}
               </p>
             </div>
           )}
-          <ul style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "0.5rem 1.5rem", listStyle: "none", padding: 0, margin: "var(--space-6) 0 0" }}>
+          <ul style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "var(--space-2) var(--space-6)", listStyle: "none", padding: 0, margin: "var(--space-6) 0 0" }}>
             {serviceAreas.map((a) => (
-              <li key={a.name} style={{ display: "inline-flex", alignItems: "center", gap: "4px", fontSize: "13px", color: "var(--color-text-muted)" }}>
+              <li key={a.name} style={{ display: "inline-flex", alignItems: "center", gap: "var(--space-1)", fontSize: "var(--font-size-sm)", color: "var(--color-text-muted)" }}>
                 <LucideIcon name="MapPin" size={12} color="var(--color-primary-600)" />
                 {a.name}
               </li>

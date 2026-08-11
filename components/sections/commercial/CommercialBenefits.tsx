@@ -10,8 +10,8 @@ import { LucideIcon } from "@/components/ui/LucideIcon";
 export function CommercialBenefits({ alternate = false }: { alternate?: boolean }) {
   return (
     <section className={`section ${alternate ? "section-alternate" : "section-default"}`}>
-      <div className="section__inner" style={{ maxWidth: "900px" }}>
-        <h2 className="section-heading" style={{ fontSize: "var(--font-size-2xl)", marginTop: 0 }}>
+      <div className="section__inner" style={{ maxWidth: "56.25rem" }}>
+        <h2 className="section-heading">
           Why Businesses Choose {clientConfig.business.publicName}
         </h2>
         <ul
@@ -32,9 +32,9 @@ export function CommercialBenefits({ alternate = false }: { alternate?: boolean 
                 border: "1px solid var(--color-border)",
                 borderRadius: "var(--radius-lg)",
                 boxShadow: "var(--shadow-sm)",
-                padding: "1.5rem",
+                padding: "var(--space-6)",
                 display: "flex",
-                gap: "1rem",
+                gap: "var(--space-4)",
                 alignItems: "flex-start",
               }}
             >
@@ -42,8 +42,8 @@ export function CommercialBenefits({ alternate = false }: { alternate?: boolean 
                 <LucideIcon name={b.icon} size={24} color="var(--color-primary-600)" />
               </span>
               <div>
-                <h3 style={{ margin: "0 0 0.25rem", fontSize: "16px", color: "var(--color-primary-900)" }}>{b.heading}</h3>
-                <p style={{ margin: 0, fontSize: "14px", color: "var(--color-text-muted)", lineHeight: 1.6 }}>{b.description}</p>
+                <h3 style={{ margin: "0 0 var(--space-1)", fontSize: "var(--font-size-base)", color: "var(--color-primary-900)" }}>{b.heading}</h3>
+                <p style={{ margin: 0, fontSize: "var(--font-size-sm)", color: "var(--color-text-muted)", lineHeight: "var(--line-height-body)" }}>{b.description}</p>
               </div>
             </li>
           ))}

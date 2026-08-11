@@ -43,7 +43,7 @@ export function AudiencePathways({
     // is -alternate, and matching backgrounds made the two read as one section.
     <section className="section section-default">
       <div className="section__inner">
-        <h2 className="section-heading" style={{ fontSize: "var(--font-size-2xl)", marginTop: 0 }}>
+        <h2 className="section-heading">
           Residential &amp; Commercial Plumbing
         </h2>
         <ul
@@ -78,14 +78,14 @@ export function AudiencePathways({
                 />
               </div>
               {/* Card padding lives here so the image above stays full-bleed. */}
-              <div style={{ padding: "2rem" }}>
-                <h3 style={{ marginTop: 0, fontSize: "20px", fontWeight: 700 }}>{c.title}</h3>
-                <p style={{ color: "var(--color-text-muted)", fontSize: "15px" }}>{c.body}</p>
+              <div style={{ padding: "var(--space-8)" }}>
+                <h3 style={{ marginTop: 0, fontSize: "var(--font-size-xl)", fontWeight: 700 }}>{c.title}</h3>
+                <p style={{ color: "var(--color-text-muted)", fontSize: "var(--font-size-base)" }}>{c.body}</p>
                 {c.bullets && c.bullets.length > 0 && (
-                  <ul style={{ listStyle: "none", padding: 0, margin: "0 0 var(--space-4)", display: "flex", flexDirection: "column", gap: "0.375rem" }}>
+                  <ul style={{ listStyle: "none", padding: 0, margin: "0 0 var(--space-4)", display: "flex", flexDirection: "column", gap: "var(--space-2)" }}>
                     {c.bullets.map((b) => (
-                      <li key={b} style={{ display: "flex", alignItems: "flex-start", gap: "0.375rem", fontSize: "13px", color: "var(--color-text-muted)" }}>
-                        <LucideIcon name="Check" size={12} color="var(--color-primary-600)" style={{ marginTop: "3px", flex: "none" }} />
+                      <li key={b} style={{ display: "flex", alignItems: "flex-start", gap: "var(--space-2)", fontSize: "var(--font-size-sm)", color: "var(--color-text-muted)" }}>
+                        <LucideIcon name="Check" size={12} color="var(--color-primary-600)" style={{ marginTop: "var(--space-1)", flex: "none" }} />
                         {b}
                       </li>
                     ))}

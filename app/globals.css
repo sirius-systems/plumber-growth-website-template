@@ -37,6 +37,9 @@
   --color-text-on-media: rgba(255, 255, 255, 0.9);
   --color-text-on-media-muted: rgba(255, 255, 255, 0.75);
   --color-border: var(--color-neutral-200);
+  /* Boundary for interactive controls, which need 3:1 against the surface
+     (WCAG 1.4.11) — --color-border is a ~1.4:1 separator and does not. */
+  --color-border-strong: var(--color-neutral-500);
   --color-link: var(--brand-primary);
   --color-link-hover: var(--brand-primary-dark);
   --color-action: var(--brand-primary);
@@ -54,9 +57,19 @@
   --color-accent-500: var(--brand-accent);
   --color-accent-600: #c9830d;
 
-  /* Section rhythm (docs/06 §12). */
-  --section-padding-desktop: 80px;
-  --section-padding-mobile: 48px;
+  /* Section rhythm (docs/06 §12): mobile 48–64, tablet 64–80, desktop 80–96.
+     Expressed in spacing-scale tokens so section padding cannot drift from the
+     scale, plus compact/loose steps for density variation (§12 "conversion
+     sections may be more compact when urgency warrants"). */
+  --section-padding-desktop: var(--space-20);
+  --section-padding-tablet: var(--space-16);
+  --section-padding-mobile: var(--space-12);
+  --section-padding-desktop-compact: var(--space-12);
+  --section-padding-tablet-compact: var(--space-10);
+  --section-padding-mobile-compact: var(--space-8);
+  --section-padding-desktop-loose: var(--space-24);
+  --section-padding-tablet-loose: var(--space-20);
+  --section-padding-mobile-loose: var(--space-16);
 
   /* Typography (docs/06 §8–§10) */
   --font-sans: "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -70,20 +83,34 @@
   --font-size-2xl: clamp(1.5rem, 2vw, 1.875rem);
   --font-size-3xl: clamp(1.875rem, 3vw, 2.5rem);
   --font-size-4xl: clamp(2.25rem, 5vw, 3.75rem);
+  --line-height-tight: 1.15;
   --line-height-body: 1.6;
   --line-height-heading: 1.25;
-  --measure-reading: 68ch;
+  --line-height-loose: 1.75;
 
-  /* Spacing (docs/06 §11) */
+  /* Content measures (docs/06 §10). Character-based so a measure tracks the
+     type size instead of freezing at one pixel width — the ad-hoc 440/480/520px
+     paragraph caps this replaced did not. */
+  --measure-copy: 52ch;
+  --measure-reading: 68ch;
+  --measure-narrow: 42rem;
+
+  /* Spacing (docs/06 §11) — full 4px-based scale. */
+  --space-1: 0.25rem;
   --space-2: 0.5rem;
   --space-3: 0.75rem;
   --space-4: 1rem;
+  --space-5: 1.25rem;
   --space-6: 1.5rem;
   --space-8: 2rem;
+  --space-10: 2.5rem;
   --space-12: 3rem;
   --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
 
   /* Layout (docs/06 §12) */
+  --container-sm: 42rem;
   --container-md: 64rem;
   --container-lg: 75rem;
   --container-xl: 84rem;
@@ -110,7 +137,7 @@ html {
 }
 /* Anchored sections clear the content top when jumped to. */
 [id] {
-  scroll-margin-top: 2rem;
+  scroll-margin-top: var(--space-8);
 }
 
 body {
@@ -126,7 +153,7 @@ body {
 body::before {
   content: "";
   display: block;
-  height: 4px;
+  height: var(--space-1);
   background: var(--brand-accent);
 }
 
@@ -134,18 +161,23 @@ body::before {
 .heading-accent::after {
   content: "";
   display: block;
-  width: 3rem;
-  height: 4px;
+  width: var(--space-12);
+  height: var(--space-1);
   margin-top: var(--space-3);
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   background: var(--brand-accent);
 }
 .heading-accent--center::after {
   margin-inline: auto;
 }
 
-/* Primary-nav hover/focus indicator in amber (contrasts with blue nav text). */
+/* Primary-nav hover/focus indicator in amber (contrasts with blue nav text).
+   The block padding also lifts each link to the 24px target floor (WCAG 2.2
+   2.5.8) — at --font-size-sm the bare text box measured 23px. */
 header nav[aria-label="Primary"] a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--space-6);
   border-bottom: 2px solid transparent;
   padding-bottom: 2px;
 }
@@ -168,9 +200,12 @@ h1,
   font-weight: 400;
   letter-spacing: -0.01em;
 }
+/* Page H1 is 4XL on the documented type scale (docs/06 §9). The previous
+   clamp(40px, 5vw, 56px) was a raw-value override of that scale: it never fell
+   below 40px, which forced the hero headline to ~8 lines at 375px. */
 h1 {
-  font-size: clamp(40px, 5vw, 56px);
-  line-height: 1.15;
+  font-size: var(--font-size-4xl);
+  line-height: var(--line-height-tight);
 }
 
 /* ─── Link decoration ─────────────────────────────────────
@@ -225,12 +260,40 @@ img {
   padding-inline: var(--page-gutter);
 }
 
+/* Vertical rhythm (docs/06 §12). Three steps, not two: the previous rule jumped
+   straight from 80px to 48px at 48rem, so tablets got mobile spacing. Density
+   modifiers let a page vary section to section instead of stamping one identical
+   band height down the whole page — `--compact` for scannable indexes and urgent
+   interrupts, `--loose` for the closing conversion moment. */
 .section {
-  padding-block: var(--section-padding-desktop);
+  padding-block: var(--section-padding-mobile);
 }
-@media (max-width: 48rem) {
+.section--compact {
+  padding-block: var(--section-padding-mobile-compact);
+}
+.section--loose {
+  padding-block: var(--section-padding-mobile-loose);
+}
+@media (min-width: 48rem) {
   .section {
-    padding-block: var(--section-padding-mobile);
+    padding-block: var(--section-padding-tablet);
+  }
+  .section--compact {
+    padding-block: var(--section-padding-tablet-compact);
+  }
+  .section--loose {
+    padding-block: var(--section-padding-tablet-loose);
+  }
+}
+@media (min-width: 64rem) {
+  .section {
+    padding-block: var(--section-padding-desktop);
+  }
+  .section--compact {
+    padding-block: var(--section-padding-desktop-compact);
+  }
+  .section--loose {
+    padding-block: var(--section-padding-desktop-loose);
   }
 }
 
@@ -247,6 +310,104 @@ img {
   background: var(--color-primary-900);
   color: #fff;
 }
+
+/* Emergency interrupt band (docs/04 §6, UX-003). Reads as an urgent strip cut
+   into the page, not as another full-height conversion section: compact
+   density, an amber edge rule, and a single horizontal row from 64rem up with
+   the actions pulled to the end. Calm, not loud — no red flood, no animation
+   (docs/06 §3.3). */
+.emergency-band {
+  border-block: var(--space-1) solid var(--brand-accent);
+}
+.emergency-band__inner {
+  display: grid;
+  gap: var(--space-6);
+  align-items: center;
+}
+.emergency-band__heading {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin: 0;
+  font-size: var(--font-size-2xl);
+}
+.emergency-band__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+@media (min-width: 64rem) {
+  .emergency-band__inner {
+    grid-template-columns: 1fr auto;
+    column-gap: var(--space-12);
+  }
+  .emergency-band__actions {
+    justify-content: flex-end;
+  }
+  /* The safety notice spans the full width beneath both columns. */
+  .emergency-band__notice {
+    grid-column: 1 / -1;
+  }
+}
+@media (max-width: 64rem) {
+  .emergency-band__inner {
+    text-align: center;
+    justify-items: center;
+  }
+  .emergency-band__actions,
+  .emergency-band__heading {
+    justify-content: center;
+  }
+}
+
+/* Scannable problem index (docs/04 §6). A visitor with an active leak scans for
+   their symptom; six equal cards force six equal stops, so this is a rule-
+   separated index instead — title-led rows, two columns from 48rem, no card
+   chrome. It also breaks up the card-grid repetition of the sections above. */
+.problem-index {
+  display: grid;
+  grid-template-columns: 1fr;
+  column-gap: var(--space-12);
+  list-style: none;
+  padding: 0;
+  margin: var(--space-8) 0 0;
+  border-top: 1px solid var(--color-border);
+}
+@media (min-width: 48rem) {
+  .problem-index {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+.problem-index__item {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-2) var(--space-4);
+  align-items: start;
+  padding-block: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+}
+.problem-index__icon {
+  grid-row: span 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--space-10);
+  height: var(--space-10);
+  border-radius: var(--radius-pill);
+  background: var(--color-primary-50);
+  flex: none;
+}
+.problem-index__title {
+  margin: 0;
+  align-self: center;
+  font-size: var(--font-size-base);
+  color: var(--color-primary-900);
+}
+.problem-index__desc {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
 .section-emphasis h2,
 .section-emphasis h3,
 .section-emphasis p,
@@ -261,14 +422,33 @@ img {
 }
 /* Inner wrapper for the rebuilt homepage/service sections. */
 .section__inner {
-  max-width: 80rem;
+  max-width: var(--container-xl);
   margin-inline: auto;
   padding-inline: var(--page-gutter);
   width: 100%;
 }
-/* Centered section headings on the rebuilt templates. */
+/* Centered section headings on the rebuilt templates. Size and leading margin
+   live here rather than being repeated as an inline style on every section. */
 .section-heading {
   text-align: center;
+  margin-top: 0;
+  font-size: var(--font-size-2xl);
+}
+/* Section intro paragraph under a centered heading (docs/06 §10 measure). */
+.section-lede {
+  max-width: var(--measure-reading);
+  margin: 0 auto var(--space-8);
+  text-align: center;
+  color: var(--color-text-muted);
+}
+/* Single-line lede: for a one-sentence intro that runs past the 68ch reading
+   measure and is meant to sit on one line. Only lifts the cap — the section
+   container still bounds it, and below 48rem it wraps like any other lede
+   rather than forcing a horizontal scroll. */
+@media (min-width: 48rem) {
+  .section-lede--wide {
+    max-width: none;
+  }
 }
 
 /* "Common problems we solve" grid: 1 col mobile, 2 tablet, 3 desktop (docs/04 §6). */
@@ -338,6 +518,29 @@ img {
     grid-template-columns: 1fr 1fr;
   }
 }
+
+/* Content beside a supporting image (docs/06 §25). Currently used only by the
+   water-heater-repair page iteration; mirrors .problems-layout but with the
+   image side selectable. Single column below 64rem so nothing is squeezed.
+   Compound selectors so the modifiers win over the base rule regardless of
+   source order, matching the .problems-grid--paired convention above. */
+.wh-split {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-8);
+  align-items: center;
+}
+@media (min-width: 64rem) {
+  .wh-split {
+    grid-template-columns: minmax(280px, 380px) 1fr;
+  }
+  .wh-split.wh-split--image-end {
+    grid-template-columns: 1fr minmax(280px, 380px);
+  }
+  .wh-split.wh-split--even {
+    grid-template-columns: 1fr 1fr;
+  }
+}
 /* Site-wide mobile content centering (docs/06 §12). On mobile every section
    stacks to a single column, so section headings/eyebrows and card content are
    centered for a consistent mobile look. Long section-level body copy (prose,
@@ -352,10 +555,15 @@ img {
   /* Broad: section headings + eyebrows on every inner-page template. Body
      paragraphs are intentionally excluded here. (`.eyebrow`/`.section-eyebrow`
      are not used in the codebase today; kept for forward-compat.) */
-  .section__inner:not(.hero-content) :is(h2, h3),
+  .section__inner:not(.hero-content) :is(h2, h3):not(.problem-index__title),
   .section__inner:not(.hero-content) .eyebrow,
   .section__inner:not(.hero-content) .section-eyebrow {
     text-align: center;
+  }
+  /* The problem index is a left-aligned scannable list with a leading icon
+     column at every width; centering only its title would break the row. */
+  .problem-index__title {
+    text-align: start;
   }
 
   /* Card content: center icon + heading + description inside each card. Each
@@ -487,14 +695,14 @@ img {
 .legal-layout {
   display: grid;
   grid-template-columns: 220px 1fr;
-  gap: 3rem;
-  max-width: 1080px;
+  gap: var(--space-12);
+  max-width: 67.5rem;
   margin: 0 auto;
-  padding: 64px 2rem;
+  padding: var(--space-16) var(--space-8);
 }
 .legal-toc {
   position: sticky;
-  top: 80px;
+  top: var(--space-20);
   align-self: flex-start;
   max-height: calc(100vh - 100px);
   overflow-y: auto;
@@ -502,7 +710,7 @@ img {
 @media (max-width: 48rem) {
   .legal-layout {
     grid-template-columns: 1fr;
-    gap: 1.5rem;
+    gap: var(--space-6);
   }
   .legal-toc {
     position: static;
@@ -511,8 +719,8 @@ img {
 }
 .legal-toc a {
   display: block;
-  padding: 0.375rem 0 0.375rem 0.75rem;
-  font-size: 13px;
+  padding: var(--space-2) 0 var(--space-2) var(--space-3);
+  font-size: var(--font-size-sm);
   color: var(--color-text-muted);
   text-decoration: none;
   border-left: 2px solid transparent;
@@ -530,12 +738,12 @@ img {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 1rem;
-  padding: 1rem 0;
+  gap: var(--space-4);
+  padding: var(--space-4) 0;
   cursor: pointer;
   list-style: none;
   font-weight: 600;
-  font-size: 15px;
+  font-size: var(--font-size-base);
   color: var(--color-primary-900);
 }
 .faq-q > summary::-webkit-details-marker {
@@ -549,18 +757,27 @@ img {
   transform: rotate(180deg);
 }
 .faq-q > div {
-  padding: 0 0 1rem;
-  font-size: 15px;
-  line-height: 1.7;
+  padding: 0 0 var(--space-4);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-loose);
   color: var(--color-text);
+}
+
+/* Breadcrumb links (docs/04 §28) — 24px target floor (WCAG 2.2 2.5.8). */
+.breadcrumb a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--space-6);
 }
 
 /* Location / service-area pills. */
 .pill {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
   border-radius: var(--radius-pill);
-  padding: 0.5rem 1.25rem;
-  font-size: 14px;
+  min-height: 44px;
+  padding: var(--space-3) var(--space-5);
+  font-size: var(--font-size-sm);
   font-weight: 500;
   text-decoration: none;
   transition: background 150ms ease;
@@ -600,7 +817,7 @@ img {
   font-family: inherit;
   font-weight: 700;
   font-size: var(--font-size-base);
-  line-height: 1.2;
+  line-height: var(--line-height-tight);
   text-align: center;
   text-decoration: none;
   cursor: pointer;
@@ -731,6 +948,70 @@ img {
   }
 }
 
+/* Form controls (docs/06 §28). There was no control styling anywhere in the
+   system, so every field rendered at the user-agent default: ~21px tall with
+   13.3px text and a hairline border. That is under the 24px target floor
+   (WCAG 2.2 2.5.8), under the 3:1 boundary contrast for a UI component
+   (1.4.11), and small enough to trigger focus-zoom on iOS. Sizes come from the
+   spacing scale; the 44px floor matches .btn (§23). */
+input:not(
+    [type="checkbox"],
+    [type="radio"],
+    [type="hidden"],
+    [type="submit"],
+    [type="button"],
+    [type="reset"],
+    [type="range"],
+    [type="color"],
+    [type="file"]
+  ),
+select,
+textarea {
+  min-height: 44px;
+  padding: var(--space-2) var(--space-3);
+  font-family: inherit;
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-body);
+  color: var(--color-text);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+}
+textarea {
+  min-height: var(--space-24);
+  resize: vertical;
+}
+input:where([type="checkbox"], [type="radio"]) {
+  width: var(--space-6);
+  height: var(--space-6);
+  flex: none;
+  accent-color: var(--color-action);
+}
+input:not([type="checkbox"], [type="radio"], [type="hidden"]):focus,
+select:focus,
+textarea:focus {
+  border-color: var(--color-action);
+}
+/* The honeypot is positioned off-screen and must not gain a 44px box. */
+[aria-hidden="true"] input {
+  min-height: 0;
+}
+/* Radio/checkbox groups (docs/06 §28). The UA default fieldset border + inset
+   legend collided with the two-column field grid — the legend wrapped across
+   the border and the box read as a rendering fault. The group is presented as
+   a labelled row instead; the fieldset/legend semantics are untouched. */
+fieldset {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+fieldset > legend {
+  padding: 0;
+  margin-bottom: var(--space-2);
+  font-weight: 600;
+}
+
 /* Visually hidden but available to assistive tech. */
 .sr-only {
   position: absolute;
@@ -750,7 +1031,7 @@ img {
   color: var(--color-neutral-0);
   text-align: center;
   padding: var(--space-2) var(--space-4);
-  font-size: 0.875rem;
+  font-size: var(--font-size-sm);
   font-weight: 600;
 }
 
@@ -771,12 +1052,17 @@ img {
   border-top: 1px solid var(--color-border);
   box-shadow: var(--shadow-md);
 }
+/* Two half-width buttons at 375px leave ~168px each. "Call (888) 308-3262" at
+   the base bold size overflows that; utility size + a tight inline padding
+   keeps both labels on one line without shortening either string. The 44px
+   min-height from .btn is untouched (docs/06 §23 touch target). */
 .mobile-action-bar .btn {
-  padding-inline: var(--space-3);
+  padding-inline: var(--space-2);
+  font-size: var(--font-size-sm);
 }
 /* Keep fixed bar from covering page end on mobile. */
 body {
-  padding-bottom: 5rem;
+  padding-bottom: var(--space-20);
 }
 @media (min-width: 48rem) {
   .mobile-action-bar {
@@ -790,16 +1076,16 @@ body {
 /* Footer-only reduced horizontal padding (overrides the shared .container gutter).
    Mobile 1rem → tablet 1.25rem → desktop 1.5rem. Vertical padding unchanged. */
 .site-footer .container {
-  padding-inline: 1rem;
+  padding-inline: var(--space-4);
 }
 @media (min-width: 48rem) {
   .site-footer .container {
-    padding-inline: 1.25rem;
+    padding-inline: var(--space-5);
   }
 }
 @media (min-width: 64rem) {
   .site-footer .container {
-    padding-inline: 2rem;
+    padding-inline: var(--space-8);
   }
 }
 
@@ -840,6 +1126,14 @@ body {
   list-style: none;
   padding: 0;
   margin: 0;
+}
+/* Footer links sat at 19–21px — under the 24px target floor (WCAG 2.2 2.5.8)
+   and cramped to tap in a stacked mobile column. inline-flex keeps the legal
+   row's " · " separators on the same line. */
+.site-footer a:not(.btn) {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--space-6);
 }
 
 /* Desktop: render like the previous static heading + list. The summary keeps
@@ -936,28 +1230,110 @@ body {
   inset: 0;
   z-index: 0;
 }
+/* The weak end of the scrim is 0.72, not 0.65: at 0.65 the on-media text tokens
+   measure ~4.0:1 over a white image, so a client swapping in a bright hero
+   photo would silently drop the hero copy below WCAG 1.4.3. At 0.72 the worst
+   case is ~5.2:1 for any image. Against the committed placeholder both values
+   look effectively identical. */
 .hero-overlay {
-  background: linear-gradient(90deg, rgba(16, 43, 73, 0.82), rgba(16, 43, 73, 0.65));
+  background: linear-gradient(90deg, rgba(16, 43, 73, 0.82), rgba(16, 43, 73, 0.72));
 }
 .hero-content {
   position: relative;
   z-index: 1;
 }
+
+/* Homepage hero sizing (docs/06 §26). Replaces the inline
+   `minHeight: 580; paddingBlock: 80px`, which was a raw-value opt-out of the
+   spacing scale: 580px + 80px of block padding does not respond to viewport at
+   all, so at 375px the hero was taller than the screen before the form card had
+   even started. The floor is now viewport-relative and the block padding uses
+   the same section-rhythm tokens as every other band. */
+.hero--home {
+  display: flex;
+  align-items: center;
+  min-height: min(36.25rem, 92vh);
+}
+.hero--home > .hero-content {
+  padding-block: var(--section-padding-mobile-loose);
+}
+@media (min-width: 48rem) {
+  .hero--home > .hero-content {
+    padding-block: var(--section-padding-tablet-loose);
+  }
+}
+@media (min-width: 64rem) {
+  .hero--home > .hero-content {
+    padding-block: var(--section-padding-desktop-loose);
+  }
+}
+/* Below 48rem the hero stacks (copy over form card) and is content-tall; a
+   min-height would only add dead space above the fold. */
+@media (max-width: 48rem) {
+  .hero--home {
+    min-height: 0;
+  }
+}
+
+/* Hero proof points (docs/06 §26). Shared by every over-media surface. */
+.hero-benefits {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  list-style: none;
+  margin: var(--space-4) 0 0;
+  padding: 0;
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  color: var(--color-text-on-media);
+}
+.hero-benefits__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* Closing conversion band (docs/04 §6). Deliberately NOT the same block as the
+   page-opening hero: a deeper top-down scrim instead of the hero's left-right
+   gradient, an amber rule that bookends the stripe at the top of the page, and
+   the loose density step so it lands as the page's final beat. */
+.final-cta {
+  border-top: var(--space-1) solid var(--brand-accent);
+}
+.final-cta .hero-overlay {
+  background: linear-gradient(180deg, rgba(16, 43, 73, 0.9), rgba(16, 43, 73, 0.97));
+}
+/* The benefits list repeats the hero's three proof points, so it is set at
+   utility size in two columns here rather than restating the hero's stacked
+   base-size list. Same items, different rhythm. */
+@media (min-width: 30rem) {
+  .final-cta .hero-benefits {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: var(--space-6);
+  }
+}
+.final-cta .hero-benefits {
+  font-size: var(--font-size-sm);
+}
 /* Compact single-column interior hero. */
 .hero-compact {
-  max-width: 720px;
+  max-width: var(--container-sm);
 }
 /* 45/55 hero split used by the rebuilt heroes — the capture form gets the wider
-   column. Stacks to a single column below 48rem. */
+   column. Single column below 64rem, not 48rem: this hero carries an eight-field
+   request form, and between 768 and 1024 the split left the copy ~330px wide
+   (a five-line H1) and squeezed the form's paired fields. 64rem is also where
+   .why-choose-layout, .problems-layout and .wh-split go two-up (docs/06 §14). */
 .hero-2col {
   display: grid;
-  grid-template-columns: 45fr 55fr;
-  gap: 3rem;
+  grid-template-columns: 1fr;
+  gap: var(--space-12);
   align-items: center;
 }
-@media (max-width: 48rem) {
+@media (min-width: 64rem) {
   .hero-2col {
-    grid-template-columns: 1fr;
+    grid-template-columns: 45fr 55fr;
   }
 }
 /* Hero availability badge. `display` lives here, not inline, so the mobile rule
@@ -1036,19 +1412,19 @@ body {
    heights are unchanged; at ≤48rem the logo shrinks so it does not dominate the
    mobile viewport. width:auto preserves the logo aspect ratio. */
 .site-logo {
-  height: 80px;
+  height: var(--space-20);
   width: auto;
 }
 .footer-logo {
-  height: 72px;
+  height: 4.5rem;
   width: auto;
 }
 @media (max-width: 48rem) {
   .site-logo {
-    height: 48px;
+    height: var(--space-12);
   }
   .footer-logo {
-    height: 44px;
+    height: 2.75rem;
   }
 }
 
@@ -1058,7 +1434,7 @@ body {
   background: #fff;
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-md);
-  padding: 1.5rem var(--space-4);
+  padding: var(--space-6) var(--space-4);
 }
 
 /* GeneralQuoteForm two-column field grid (docs/08). Paired fields sit side by
@@ -1146,9 +1522,9 @@ body {
 }
 .carousel-track {
   display: flex;
-  gap: 1.5rem;
+  gap: var(--space-6);
   width: max-content;
-  padding: 0.5rem 2rem;
+  padding: var(--space-2) var(--space-8);
   animation: carousel-scroll linear infinite;
 }
 .carousel--reduced {
