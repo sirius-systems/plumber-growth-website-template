@@ -63,7 +63,7 @@ export function CoverageAreas() {
         <p className="home-area-note">{coverage.reassurance}</p>
 
         <div className="home-section-actions">
-          <Button variant="secondary" href={coverage.viewAll.href}>
+          <Button variant="accent" href={coverage.viewAll.href}>
             {coverage.viewAll.label}
           </Button>
         </div>

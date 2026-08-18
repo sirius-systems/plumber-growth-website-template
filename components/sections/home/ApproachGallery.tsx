@@ -27,7 +27,7 @@ export function ApproachGallery() {
             {gallery.heading}
           </h2>
           <p className="home-gallery__lede">{gallery.lede}</p>
-          <Button variant="secondary" href={primaryCta.href}>
+          <Button variant="accent" href={primaryCta.href}>
             {primaryCta.label}
           </Button>
         </div>

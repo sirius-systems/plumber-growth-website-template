@@ -44,7 +44,7 @@ export function AudienceBand() {
             ))}
           </ul>
 
-          <Button variant="secondary" href={audience.cta.href}>
+          <Button variant="accent" href={audience.cta.href}>
             {audience.cta.label}
           </Button>
         </div>

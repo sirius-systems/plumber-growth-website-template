@@ -39,14 +39,18 @@ export function FinalCtaBanner() {
             <Button variant="accent" size="lg" href={primaryCta.href}>
               {primaryCta.label}
             </Button>
+            {/* Phone icon then the number, on the amber fill — same treatment as
+                HeroCtaButtons. The visible label is the number alone, and the
+                aria-label contains it verbatim so the accessible name still
+                matches the visible text (WCAG 2.5.3). */}
             <Button
-              variant="secondary"
+              variant="accent"
               size="lg"
               href={phone.href}
               aria-label={`Call ${phone.display}`}
             >
               <LucideIcon name="Phone" size={18} />
-              Call {phone.display}
+              {phone.display}
             </Button>
           </div>
 

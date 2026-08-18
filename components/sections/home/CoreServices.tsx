@@ -71,7 +71,7 @@ export function CoreServices() {
         </ul>
 
         <div className="home-section-actions">
-          <Button variant="secondary" href={services.viewAll.href}>
+          <Button variant="accent" href={services.viewAll.href}>
             {services.viewAll.label}
           </Button>
         </div>
