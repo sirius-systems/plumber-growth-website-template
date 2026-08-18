@@ -2,7 +2,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { clientConfig } from "@/config/client";
 import { enabledServices } from "@/config/services";
+import { companyNav, legalNav, SITE_PRIMARY_CTA } from "@/config/navigation";
 import { telHref, formatPhoneDisplay } from "@/lib/utilities/format";
+import { LucideIcon } from "@/components/ui/LucideIcon";
+import { Button } from "@/components/ui/Button";
 
 const DAY_LABELS: { key: keyof typeof clientConfig.operations.businessHours; label: string }[] = [
   { key: "monday", label: "Mon" },
@@ -14,11 +17,26 @@ const DAY_LABELS: { key: keyof typeof clientConfig.operations.businessHours; lab
   { key: "sunday", label: "Sun" },
 ];
 
-/** Site footer (docs/04 §5.4). Six-column main grid + centered legal/copyright. */
+/**
+ * Site footer (docs/04 §5.4). Deep-navy surface closing the page, six-column
+ * main grid, then centered legal + copyright lines.
+ *
+ * Everything rendered here is config-gated: hours, address, financing, social
+ * profiles and the license line all disappear for a client that has not supplied
+ * them, rather than showing placeholder text (docs/17 §22). The reversed logo is
+ * used when `branding.logoInverseSrc` is set — the primary navy mark would be
+ * unreadable on this surface.
+ *
+ * Link groups stay native `<details open>` disclosures: always rendered for
+ * desktop columns with no JavaScript, collapsible below 48rem.
+ */
 export function SiteFooter() {
-  const { business, location, operations, credentials, serviceAreas, seo, branding } = clientConfig;
+  const { business, location, operations, credentials, serviceAreas, seo, branding, social } =
+    clientConfig;
   const services = enabledServices();
   const year = 2026; // Build-stamped; avoids runtime Date in static export.
+  const logoSrc = branding.logoInverseSrc ?? branding.logoSrc;
+  const showAddress = location.addressDisplayMode === "full" && Boolean(location.streetAddress);
 
   const addressLine = [
     location.streetAddress,
@@ -27,77 +45,93 @@ export function SiteFooter() {
     .filter(Boolean)
     .join(" · ");
 
-  // Copyright line: only verified facts (docs/07 §32).
-  const copyrightParts = [`© ${year} ${business.legalName}. All rights reserved.`];
-  if (credentials.licenseNumber && credentials.insured) copyrightParts.push("Licensed & Insured");
-  if (seo.primaryMarket) copyrightParts.push(`Serving ${seo.primaryMarket} and Surrounding Areas`);
+  // Copyright line: only verified facts (docs/07 §32). Rendered as spans rather
+  // than one joined string so the market clause can be kept unbreakable — see
+  // `.site-footer__nowrap`.
+  const copyrightNotice = `© ${year} ${business.legalName}. All rights reserved.`;
+  const marketNotice = seo.primaryMarket
+    ? `Serving ${seo.primaryMarket} and Surrounding Areas`
+    : null;
+
+  const credentialBadges = [
+    credentials.licenseNumber ? "Licensed" : null,
+    credentials.bonded ? "Bonded" : null,
+    credentials.insured ? "Insured" : null,
+  ].filter((value): value is string => value !== null);
 
   return (
-    <footer
-      className="site-footer"
-      style={{
-        background: "var(--color-background-alt)",
-        borderTop: "1px solid var(--color-border)",
-        marginTop: "var(--space-16)",
-      }}
-    >
+    <footer className="site-footer site-footer--dark">
       <div className="container container--wide section footer-grid">
-        {/* Col 1, logo placeholder + identity */}
-        <div>
-          {branding.logoSrc ? (
+        {/* Col 1 — brand identity, contact, socials */}
+        <div className="site-footer__brand">
+          {logoSrc ? (
             <Image
-              src={branding.logoSrc}
+              src={logoSrc}
               alt={branding.logoAlt}
               width={1200}
               height={360}
               className="footer-logo"
             />
           ) : (
-            <span
-              role="img"
-              aria-label={`${business.publicName} logo`}
-              style={{
-                display: "block",
-                width: 140,
-                height: 36,
-                background: "var(--color-neutral-200)",
-                borderRadius: "var(--radius-sm)",
-              }}
-            />
+            <p className="site-footer__wordmark">{branding.wordmark}</p>
           )}
-          <p style={{ fontWeight: 700, margin: "var(--space-3) 0 0" }}>{business.publicName}</p>
-          <address style={{ fontStyle: "normal", color: "var(--color-text-muted)" }}>
-            {addressLine}
-          </address>
-          <p style={{ margin: "var(--space-2) 0 0" }}>
-            <a href={telHref(business.phone)}>{formatPhoneDisplay(business.phone)}</a>
+
+          <p className="site-footer__blurb">
+            Licensed plumbing service for homes and businesses across {seo.primaryMarket} and the
+            surrounding valley.
           </p>
-          <p style={{ margin: "var(--space-2) 0 0" }}>
-            <a href={`mailto:${business.email}`}>{business.email}</a>
+
+          {showAddress && (
+            <address className="site-footer__address">{addressLine}</address>
+          )}
+
+          <p className="site-footer__contact">
+            <a href={telHref(business.phone)}>
+              <LucideIcon name="Phone" size={16} color="var(--color-accent-500)" />
+              {formatPhoneDisplay(business.phone)}
+            </a>
           </p>
-          {operations.twentyFourSevenService && (
-            <p style={{ margin: "var(--space-3) 0 0", color: "var(--color-text-muted)" }}>
-              24/7 emergency service
+          <p className="site-footer__contact">
+            <a href={`mailto:${business.email}`}>
+              <LucideIcon name="Mail" size={16} color="var(--color-accent-500)" />
+              {business.email}
+            </a>
+          </p>
+
+          {operations.emergencyServiceAvailable && (
+            <p className="site-footer__note">
+              <LucideIcon name="Zap" size={16} color="var(--color-accent-500)" />
+              {operations.twentyFourSevenService
+                ? "24/7 emergency service available"
+                : "Emergency service available"}
             </p>
+          )}
+
+          {social && social.length > 0 && (
+            <ul className="site-footer__social" role="list">
+              {social.map((profile) => (
+                <li key={profile.href}>
+                  <a
+                    href={profile.href}
+                    aria-label={profile.label}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <LucideIcon name={profile.icon} size={18} />
+                  </a>
+                </li>
+              ))}
+            </ul>
           )}
         </div>
 
-        {/* Col 2, Hours */}
+        {/* Col 2 — Hours */}
         <div>
           <details className="footer-group" open>
             <summary className="footer-group__heading">Hours</summary>
             <ul className="footer-group__list">
               {DAY_LABELS.map(({ key, label }) => (
-                <li
-                  key={key}
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    gap: "var(--space-3)",
-                    color: "var(--color-text-muted)",
-                    fontSize: "var(--font-size-sm)",
-                  }}
-                >
+                <li key={key} className="site-footer__hours-row">
                   <span>{label}</span>
                   <span>{operations.businessHours[key].label}</span>
                 </li>
@@ -106,7 +140,7 @@ export function SiteFooter() {
           </details>
         </div>
 
-        {/* Col 3, Services */}
+        {/* Col 3 — Services */}
         <nav aria-label="Services">
           <details className="footer-group" open>
             <summary className="footer-group__heading">Services</summary>
@@ -116,14 +150,14 @@ export function SiteFooter() {
                   <Link href={`/services/${s.slug}/`}>{s.name}</Link>
                 </li>
               ))}
-              <li style={{ marginTop: "var(--space-2)" }}>
-                <Link href="/services/">View all</Link>
+              <li className="site-footer__more">
+                <Link href="/services/">View all services →</Link>
               </li>
             </ul>
           </details>
         </nav>
 
-        {/* Col 4, Service areas */}
+        {/* Col 4 — Service areas */}
         <nav aria-label="Service areas">
           <details className="footer-group" open>
             <summary className="footer-group__heading">Service Areas</summary>
@@ -137,95 +171,82 @@ export function SiteFooter() {
                   )}
                 </li>
               ))}
-              <li style={{ marginTop: "var(--space-2)" }}>
-                <Link href="/service-areas/">All areas</Link>
+              <li className="site-footer__more">
+                <Link href="/service-areas/">All areas →</Link>
               </li>
             </ul>
           </details>
         </nav>
 
-        {/* Col 5, Company */}
+        {/* Col 5 — Company (includes the residential/commercial audience paths) */}
         <nav aria-label="Company">
           <details className="footer-group" open>
             <summary className="footer-group__heading">Company</summary>
             <ul className="footer-group__list">
-              <li>
-                <Link href="/about/">About</Link>
-              </li>
-              <li>
-                <Link href="/reviews/">Reviews</Link>
-              </li>
-              <li>
-                <Link href="/faqs/">FAQs</Link>
-              </li>
-              <li>
-                <Link href="/contact/">Contact</Link>
-              </li>
-              {operations.financingOffered && (
-                <li>
-                  <Link href="/financing/">Financing</Link>
+              {companyNav().map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href}>{link.label}</Link>
                 </li>
-              )}
+              ))}
             </ul>
           </details>
         </nav>
 
-        {/* Col 6, Get started */}
+        {/* Col 6 — Get started */}
         <nav aria-label="Customer actions">
           <details className="footer-group" open>
             <summary className="footer-group__heading">Get Started</summary>
             <ul className="footer-group__list">
               <li>
-                <Link href="/contact/">Get a Quote</Link>
-              </li>
-              {operations.emergencyServiceAvailable && (
-                <li>
-                  <a href={telHref(business.phone)}>Emergency: Call {formatPhoneDisplay(business.phone)}</a>
-                </li>
-              )}
-              <li>
-                <Link href="/review-feedback/">Leave Feedback</Link>
+                <Link href={SITE_PRIMARY_CTA.href}>{SITE_PRIMARY_CTA.label}</Link>
               </li>
               <li>
                 <a href={telHref(business.phone)}>Call {formatPhoneDisplay(business.phone)}</a>
               </li>
+              <li>
+                <Link href="/review-feedback/">Leave Feedback</Link>
+              </li>
             </ul>
+            <div className="site-footer__cta">
+              <Button variant="accent" size="sm" href={SITE_PRIMARY_CTA.href}>
+                {SITE_PRIMARY_CTA.label}
+              </Button>
+            </div>
           </details>
         </nav>
       </div>
 
-      {/* Full-width line 1, legal (centered) */}
-      <div
-        className="container"
-        style={{
-          textAlign: "center",
-          paddingBottom: "var(--space-4)",
-          borderTop: "1px solid var(--color-border)",
-          paddingTop: "var(--space-6)",
-        }}
-      >
-        <Link href="/privacy-policy/">Privacy Policy</Link>
-        <span style={{ color: "var(--color-text-muted)" }}> · </span>
-        <Link href="/terms/">Terms &amp; Conditions</Link>
-      </div>
+      <div className="container container--wide site-footer__legal">
+        <p className="site-footer__legal-links">
+          {legalNav.map((link, index) => (
+            <span key={link.href}>
+              {index > 0 && <span aria-hidden="true"> · </span>}
+              <Link href={link.href}>{link.label}</Link>
+            </span>
+          ))}
+        </p>
 
-      {/* Full-width line 2, copyright + verified statements (centered) */}
-      <div
-        className="container"
-        style={{
-          textAlign: "center",
-          paddingBottom: "var(--space-8)",
-          color: "var(--color-text-muted)",
-          fontSize: "var(--font-size-sm)",
-        }}
-      >
-        <p style={{ margin: 0 }}>{copyrightParts.join(" · ")}</p>
+        <p className="site-footer__copyright">
+          <span>{copyrightNotice}</span>
+          {marketNotice && (
+            <>
+              <span aria-hidden="true"> · </span>
+              <span className="site-footer__nowrap">{marketNotice}</span>
+            </>
+          )}
+        </p>
+
         {credentials.licenseNumber && credentials.licenseJurisdiction && (
-          <p style={{ margin: "var(--space-2) 0 0" }}>
+          <p className="site-footer__copyright">
             {credentials.licenseJurisdiction} #{credentials.licenseNumber}
           </p>
         )}
-        <p style={{ margin: "var(--space-2) 0 0" }}>
+
+        {credentialBadges.length > 0 && (
+          <p className="site-footer__badges">{credentialBadges.join(" · ")}</p>
+        )}
+
+        <p className="site-footer__copyright">
           Submitting a form does not guarantee service or immediate response.
         </p>
       </div>

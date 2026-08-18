@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 400" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Water heater service">
+  <defs>
+    <linearGradient id="wh" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#edf2f8"/>
+      <stop offset="1" stop-color="#cddeef"/>
+    </linearGradient>
+  </defs>
+  <rect width="700" height="400" fill="url(#wh)"/>
+  <polygon points="0,300 700,150 700,265 0,360" fill="#ffffff" opacity="0.35"/>
+  <!-- tank -->
+  <g opacity="0.6">
+    <rect x="250" y="70" width="200" height="270" rx="34" fill="#1B4F8A"/>
+    <rect x="250" y="70" width="200" height="34" rx="17" fill="#123A66"/>
+  </g>
+  <rect x="286" y="150" width="128" height="60" rx="10" fill="#eef3f9" opacity="0.85"/>
+  <g stroke="#1B4F8A" stroke-width="8" opacity="0.7" fill="none" stroke-linecap="round">
+    <path d="M310 180 H390"/>
+    <path d="M350 180 l26 -22"/>
+  </g>
+  <circle cx="350" cy="180" r="9" fill="#F5A623"/>
+  <!-- supply pipes -->
+  <g stroke="#1B4F8A" stroke-width="24" fill="none" opacity="0.45" stroke-linecap="round">
+    <path d="M290 70 V26 H180"/>
+    <path d="M410 70 V26 H520"/>
+  </g>
+  <!-- burner flame -->
+  <g transform="translate(350 300)" fill="#F5A623" opacity="0.95">
+    <path d="M0 34 c-30 0 -46 -22 -46 -44 c0 -26 22 -36 26 -60 c16 12 20 26 20 26 c8 -14 8 -30 8 -38 c22 18 38 42 38 72 c0 22 -16 44 -46 44z"/>
+  </g>
+</svg>
