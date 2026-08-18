@@ -55,6 +55,7 @@ export const SERVICES: PlumbingService[] = [
     enabled: true,
     commercialAvailable: true,
     indexable: true,
+    image: "/images/services/emergency-plumbing.svg",
     relatedServices: ["drain-cleaning", "leak-detection", "pipe-repair"],
   },
   {
@@ -65,6 +66,7 @@ export const SERVICES: PlumbingService[] = [
     enabled: true,
     commercialAvailable: true,
     indexable: true,
+    image: "/images/services/drain-cleaning.svg",
     relatedServices: ["sewer-line-repair", "toilet-repair", "emergency-plumbing"],
   },
   {
@@ -75,6 +77,7 @@ export const SERVICES: PlumbingService[] = [
     enabled: true,
     commercialAvailable: true,
     indexable: true,
+    image: "/images/services/water-heater-repair.svg",
     relatedServices: ["water-heater-installation", "leak-detection"],
   },
   {
@@ -95,6 +98,7 @@ export const SERVICES: PlumbingService[] = [
     enabled: true,
     commercialAvailable: true,
     indexable: true,
+    image: "/images/services/leak-detection.svg",
     relatedServices: ["pipe-repair", "emergency-plumbing"],
   },
   {

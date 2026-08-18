@@ -109,6 +109,11 @@
   --space-20: 5rem;
   --space-24: 6rem;
 
+  /* Sticky-header height (docs/06 §22). Drives anchor scroll-margin so in-page
+     jumps are not hidden behind the header; kept in sync with the logo heights
+     in the .site-header block below. */
+  --header-height: 4.5rem;
+
   /* Layout (docs/06 §12) */
   --container-sm: 42rem;
   --container-md: 64rem;
@@ -135,9 +140,11 @@ html {
   -webkit-text-size-adjust: 100%;
   scroll-behavior: smooth;
 }
-/* Anchored sections clear the content top when jumped to. */
+/* Anchored sections clear the STICKY header when jumped to (docs/06 §22). The
+   previous --space-8 predated the sticky header and left in-page anchor targets
+   (e.g. the homepage #request form) tucked underneath it. */
 [id] {
-  scroll-margin-top: var(--space-8);
+  scroll-margin-top: calc(var(--header-height) + var(--space-4));
 }
 
 body {
@@ -173,16 +180,23 @@ body::before {
 
 /* Primary-nav hover/focus indicator in amber (contrasts with blue nav text).
    The block padding also lifts each link to the 24px target floor (WCAG 2.2
-   2.5.8) — at --font-size-sm the bare text box measured 23px. */
-header nav[aria-label="Primary"] a {
+   2.5.8) — at --font-size-sm the bare text box measured 23px.
+
+   Scoped to the nav LIST, not to every <a> inside the nav. The header now keeps
+   its phone link and primary CTA inside the same <nav> element (one DOM
+   instance serving both the desktop row and the mobile panel), and the looser
+   selector was beating .btn on specificity: it forced the CTA to min-height
+   24px with an asymmetric 8px/2px padding, which shrank the button under the
+   44px touch target and pushed its label off-centre. */
+header nav[aria-label="Primary"] .site-header__links a {
   display: inline-flex;
   align-items: center;
   min-height: var(--space-6);
   border-bottom: 2px solid transparent;
   padding-bottom: 2px;
 }
-header nav[aria-label="Primary"] a:hover,
-header nav[aria-label="Primary"] a:focus-visible {
+header nav[aria-label="Primary"] .site-header__links a:hover,
+header nav[aria-label="Primary"] .site-header__links a:focus-visible {
   border-bottom-color: var(--brand-accent);
 }
 
@@ -1390,38 +1404,164 @@ body {
   font-size: var(--font-size-sm);
 }
 
-/* Desktop header: single row (logo | nav | actions), vertically centered. Wraps
-   on smaller screens; the desktop breakpoint (64rem) forces a single row. */
-.site-header-inner {
+/* ─── Sticky site header (docs/04 §5.1, docs/06 §22) ──────────────────────
+   One row from 75rem up: logo | nav | phone + primary CTA. Below that the SAME
+   nav element becomes a disclosure panel driven by `data-open` on the toggle —
+   there is only ever one nav list in the DOM, so the desktop row and the mobile
+   panel cannot drift apart. 75rem (not 64rem) is the single-row breakpoint
+   because the seven-link nav plus the phone and CTA measured ~1000px, which
+   wrapped inside a 1024px viewport. */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 80;
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+}
+.site-header__inner {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
   gap: var(--space-4);
+  padding-block: var(--space-2);
 }
-.site-header-nav ul {
+.site-header__brand {
+  display: inline-flex;
+  flex-shrink: 0;
+}
+.site-header__wordmark {
+  font-weight: 800;
+  font-size: var(--font-size-lg);
+  color: var(--brand-primary-dark);
+}
+.site-header__compact {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.site-header__call-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 1.5px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  color: var(--color-primary-700);
+}
+.site-header__call-icon:hover {
+  background: var(--color-primary-50);
+  border-color: var(--color-primary-600);
+}
+.site-header__toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  padding: var(--space-2) var(--space-3);
+  font-family: inherit;
   font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--color-primary-700);
+  background: transparent;
+  border: 1.5px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  cursor: pointer;
 }
-@media (min-width: 64rem) {
-  .site-header-inner {
-    flex-wrap: nowrap;
+.site-header__toggle:hover {
+  background: var(--color-primary-50);
+  border-color: var(--color-primary-600);
+}
+.site-header__nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+}
+.site-header__links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+}
+.site-header__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+.site-header__call {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--color-primary-800);
+  white-space: nowrap;
+}
+
+/* Panel mode: below the single-row breakpoint the nav drops to its own full
+   width row and is hidden until the toggle opens it. */
+@media (max-width: 74.999rem) {
+  .site-header__nav {
+    flex-basis: 100%;
+    order: 3;
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-4);
+    padding-block: var(--space-4);
+    border-top: 1px solid var(--color-border);
+  }
+  .site-header__nav[data-open="false"] {
+    display: none;
+  }
+  .site-header__links {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-1);
+    font-size: var(--font-size-base);
+  }
+  .site-header__links a {
+    padding-block: var(--space-2);
+  }
+  .site-header__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .site-header__call {
+    justify-content: center;
   }
 }
 
-/* Header/footer logo sizing with a mobile step-down (docs/06 §20, §14). Desktop
-   heights are unchanged; at ≤48rem the logo shrinks so it does not dominate the
-   mobile viewport. width:auto preserves the logo aspect ratio. */
+/* Single-row mode: the compact call/toggle controls are unnecessary. */
+@media (min-width: 75rem) {
+  .site-header__compact {
+    display: none;
+  }
+  .site-header__nav {
+    flex: 1;
+    justify-content: flex-end;
+  }
+}
+
+/* Header/footer logo sizing with a mobile step-down (docs/06 §20, §14). The
+   header mark is sized against --header-height so the sticky bar stays compact;
+   width:auto preserves the logo aspect ratio. */
 .site-logo {
-  height: var(--space-20);
+  height: var(--space-12);
   width: auto;
 }
 .footer-logo {
-  height: 4.5rem;
+  height: 4rem;
   width: auto;
 }
 @media (max-width: 48rem) {
   .site-logo {
-    height: var(--space-12);
+    height: var(--space-10);
   }
   .footer-logo {
     height: 2.75rem;
@@ -1561,6 +1701,960 @@ body {
   .service-grid article > div:last-child {
     text-align: center;
     align-items: center;
+  }
+}
+
+/* ─── Dark footer (docs/04 §5.4, docs/06 §5) ──────────────────────────────
+   The footer closes the page on the deepest navy in the scale, one step below
+   the .section-emphasis bands above it so the two never merge. Every rule is
+   scoped to .site-footer--dark; nothing outside the footer is affected, and
+   removing the class returns the previous light footer verbatim. */
+.site-footer--dark {
+  background: var(--color-primary-900);
+  color: var(--color-text-on-media);
+  border-top: var(--space-1) solid var(--brand-accent);
+}
+.site-footer--dark :is(h2, h3, strong, .footer-group__heading) {
+  color: var(--color-neutral-0);
+}
+.site-footer--dark a:not(.btn) {
+  color: var(--color-text-on-media);
+}
+.site-footer--dark a:not(.btn):hover {
+  color: var(--color-neutral-0);
+  text-decoration: underline;
+}
+.site-footer--dark .footer-group,
+.site-footer--dark .site-footer__legal {
+  border-color: rgba(255, 255, 255, 0.18);
+}
+/* The mobile disclosure chevron is drawn from borders in --color-text-muted,
+   which is invisible here. */
+@media (max-width: 48rem) {
+  .site-footer--dark .footer-group__heading::after {
+    border-right-color: var(--color-text-on-media);
+    border-bottom-color: var(--color-text-on-media);
+  }
+}
+.site-footer__wordmark {
+  margin: 0;
+  font-size: var(--font-size-xl);
+  font-weight: 800;
+  color: var(--color-neutral-0);
+}
+.site-footer__blurb {
+  margin: var(--space-4) 0 0;
+  max-width: 28ch;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-on-media);
+}
+.site-footer__address {
+  margin: var(--space-4) 0 0;
+  font-style: normal;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-on-media);
+}
+.site-footer__contact,
+.site-footer__note {
+  display: flex;
+  align-items: center;
+  margin: var(--space-2) 0 0;
+  font-size: var(--font-size-sm);
+}
+.site-footer__contact a,
+.site-footer__note {
+  gap: var(--space-2);
+}
+.site-footer__contact a {
+  display: inline-flex;
+  align-items: center;
+  font-weight: 600;
+}
+.site-footer__note {
+  color: var(--color-text-on-media);
+}
+.site-footer__social {
+  display: flex;
+  gap: var(--space-3);
+  list-style: none;
+  margin: var(--space-5) 0 0;
+  padding: 0;
+}
+.site-footer__social a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: var(--radius-md);
+}
+.site-footer__social a:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+.site-footer__hours-row {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-on-media);
+}
+.site-footer__more {
+  margin-top: var(--space-2);
+  font-weight: 600;
+}
+.site-footer__cta {
+  margin-top: var(--space-4);
+}
+.site-footer__legal {
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--space-6);
+  padding-bottom: var(--space-8);
+  text-align: center;
+}
+.site-footer__legal-links {
+  margin: 0 0 var(--space-4);
+  font-weight: 600;
+}
+.site-footer__copyright {
+  margin: 0 0 var(--space-2);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-on-media);
+}
+/* Keeps "Serving <market> and Surrounding Areas" whole: the copyright line wraps
+   BEFORE the clause rather than splitting it. Scoped to 48rem and up so a long
+   market name can still wrap normally on a phone instead of overflowing. */
+@media (min-width: 48rem) {
+  .site-footer__nowrap {
+    white-space: nowrap;
+  }
+}
+.site-footer__badges {
+  margin: var(--space-3) 0 var(--space-2);
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-accent-500);
+}
+
+/* ═══ Homepage (components/sections/home/*) ══════════════════════════════
+   Layout and chrome for the conversion-hub homepage. Copy lives in
+   content/homepage/index.ts; colors are design tokens only. */
+
+/* Section eyebrow: navy label with a short amber rule. The label is NOT set in
+   amber — #c9830d on white measures ~3.1:1, below the 4.5:1 needed at this size
+   (WCAG 1.4.3) — so the brand accent is carried by the rule instead. */
+.home-eyebrow {
+  margin: 0 0 var(--space-3);
+  text-align: center;
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-primary-700);
+}
+.home-eyebrow::before {
+  content: "";
+  display: inline-block;
+  width: var(--space-6);
+  height: 2px;
+  margin-right: var(--space-2);
+  vertical-align: middle;
+  background: var(--brand-accent);
+}
+/* On dark surfaces amber clears 6:1, so the label itself can carry the accent. */
+.home-eyebrow--on-dark,
+.home-eyebrow--on-media {
+  color: var(--color-accent-500);
+}
+/* Left-aligned sections keep their eyebrow at the start of the column; the
+   site-wide mobile centering below returns them to center on small screens. */
+.home-hero__copy .home-eyebrow,
+.home-authority__copy .home-eyebrow,
+.home-audience__copy .home-eyebrow,
+.home-gallery__intro .home-eyebrow,
+.home-request__copy .home-eyebrow {
+  text-align: start;
+}
+
+.home-section-heading {
+  font-size: var(--font-size-3xl);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+.home-section-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--space-8);
+}
+
+/* ─── Hero ─── */
+.home-hero {
+  display: flex;
+  align-items: center;
+  min-height: min(40rem, 88vh);
+}
+/* A stronger scrim than the shared .hero-overlay: the copy column runs the full
+   height here with no form card beside it, and the weak end stays at 0.74 so
+   on-media text clears 1.4.3 even if a client swaps in a bright photo. */
+.home-hero__overlay {
+  background: linear-gradient(
+    100deg,
+    rgba(16, 43, 73, 0.95) 0%,
+    rgba(16, 43, 73, 0.88) 48%,
+    rgba(16, 43, 73, 0.74) 100%
+  );
+}
+.home-hero__copy {
+  /* Wide enough for the four config-gated trust chips to sit on one line at
+     desktop; the H1 and lede keep their own tighter measures. */
+  max-width: 52rem;
+  padding-block: var(--section-padding-mobile-loose);
+}
+@media (min-width: 48rem) {
+  .home-hero__copy {
+    padding-block: var(--section-padding-tablet-loose);
+  }
+}
+@media (min-width: 64rem) {
+  .home-hero__copy {
+    padding-block: var(--section-padding-desktop-loose);
+  }
+}
+@media (max-width: 48rem) {
+  .home-hero {
+    min-height: 0;
+  }
+}
+.home-hero__headline {
+  margin: 0 0 var(--space-4);
+  max-width: 20ch;
+}
+.home-hero__headline-accent {
+  color: var(--color-accent-500);
+}
+.home-hero__lede {
+  margin: 0;
+  max-width: var(--measure-copy);
+  font-size: var(--font-size-lg);
+  color: var(--color-text-on-media);
+}
+.home-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+}
+.home-hero__microcopy {
+  margin: var(--space-4) 0 0;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-on-media);
+}
+/* Hero CTAs stay at their natural width on mobile and wrap under the
+   left-aligned copy column — full-width bars read as a form, not a choice. */
+@media (max-width: 30rem) {
+  .home-hero__actions {
+    gap: var(--space-3);
+  }
+}
+
+/* ─── Intent routing ─── */
+.home-intent-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: var(--space-5);
+  list-style: none;
+  margin: var(--space-8) 0 0;
+  padding: 0;
+}
+.home-intent-grid > li {
+  display: flex;
+}
+.home-intent-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  width: 100%;
+  padding: var(--space-6);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  transition: border-color 150ms ease, box-shadow 150ms ease, transform 150ms ease;
+}
+.home-intent-card:hover {
+  border-color: var(--color-primary-600);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+.home-intent-card__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--space-12);
+  height: var(--space-12);
+  border-radius: var(--radius-md);
+  background: var(--color-primary-50);
+  color: var(--color-primary-600);
+}
+.home-intent-card__title {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--color-primary-900);
+}
+.home-intent-card__body {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+.home-intent-card__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: auto;
+  padding-top: var(--space-2);
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--color-link);
+}
+
+/* ─── Core services ─── */
+.home-service-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: var(--space-6);
+  list-style: none;
+  margin: var(--space-8) 0 0;
+  padding: 0;
+}
+.home-service-grid > li {
+  display: flex;
+}
+.home-service-card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+.home-service-card__media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 7 / 4;
+}
+/* Icon badge straddling the image edge. The card's overflow:hidden clips it to
+   the card, and the body's top padding leaves room — no fixed offsets outside
+   the spacing scale, and nothing breaks if the title wraps. */
+.home-service-card__badge {
+  position: absolute;
+  left: var(--space-5);
+  bottom: calc(var(--space-5) * -1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--space-10);
+  height: var(--space-10);
+  border-radius: var(--radius-pill);
+  background: var(--color-primary-600);
+  color: var(--color-neutral-0);
+  box-shadow: var(--shadow-sm);
+}
+.home-service-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  flex: 1;
+  padding: var(--space-8) var(--space-5) var(--space-5);
+}
+.home-service-card__title {
+  margin: 0;
+  font-size: var(--font-size-xl);
+}
+.home-service-card__copy {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+.home-card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: fit-content;
+  min-height: var(--space-10);
+  margin-top: auto;
+  font-weight: 700;
+  font-size: var(--font-size-sm);
+}
+
+/* ─── Authority band ─── */
+.home-authority__layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-10);
+  align-items: center;
+}
+@media (min-width: 64rem) {
+  .home-authority__layout {
+    grid-template-columns: minmax(0, 24rem) 1fr;
+    gap: var(--space-16);
+  }
+}
+.home-authority__media {
+  position: relative;
+  width: 100%;
+  max-width: 22rem;
+  margin-inline: auto;
+  aspect-ratio: 4 / 5;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+@media (min-width: 64rem) {
+  .home-authority__media {
+    max-width: none;
+  }
+}
+.home-authority__heading {
+  margin: 0 0 var(--space-4);
+  font-size: var(--font-size-3xl);
+}
+.home-authority__body {
+  max-width: var(--measure-reading);
+  color: var(--color-text-on-media);
+}
+.home-proof-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  list-style: none;
+  margin: var(--space-8) 0 0;
+  padding: 0;
+}
+.home-proof-list__item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+.home-proof-list__icon {
+  flex: none;
+  margin-top: 2px;
+}
+.home-proof-list__title {
+  display: block;
+  font-size: var(--font-size-base);
+  color: var(--color-neutral-0);
+}
+.home-proof-list__body {
+  display: block;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-on-media);
+}
+.home-authority__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-8);
+}
+
+/* ─── Process ─── */
+.home-process {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  gap: var(--space-8);
+  list-style: none;
+  margin: var(--space-10) 0 0;
+  padding: 0;
+}
+.home-process__step {
+  position: relative;
+}
+.home-process__marker {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--space-12);
+  height: var(--space-12);
+  border-radius: var(--radius-pill);
+  background: var(--color-primary-50);
+  color: var(--color-primary-600);
+}
+.home-process__number {
+  position: absolute;
+  top: calc(var(--space-2) * -1);
+  right: calc(var(--space-2) * -1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--space-6);
+  height: var(--space-6);
+  border-radius: var(--radius-pill);
+  background: var(--brand-accent);
+  color: var(--color-neutral-900);
+  font-size: var(--font-size-xs);
+  font-weight: 800;
+}
+.home-process__title {
+  margin: var(--space-4) 0 var(--space-2);
+  font-size: var(--font-size-base);
+}
+.home-process__body {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+/* Restrained connector between markers; decorative, drawn from a border so it
+   carries no content and disappears when the grid wraps to one column. */
+@media (min-width: 64rem) {
+  .home-process__step:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    top: var(--space-6);
+    left: var(--space-16);
+    right: calc(var(--space-8) * -1);
+    border-top: 2px dashed var(--color-border);
+  }
+}
+
+/* ─── Audience band ─── */
+.home-audience {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-10);
+  align-items: center;
+}
+@media (min-width: 64rem) {
+  .home-audience {
+    grid-template-columns: 45fr 55fr;
+    gap: var(--space-16);
+  }
+}
+.home-audience__media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 7 / 5;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.home-audience__heading {
+  margin: 0 0 var(--space-4);
+  font-size: var(--font-size-2xl);
+}
+.home-audience__body {
+  margin: 0;
+  max-width: var(--measure-reading);
+  color: var(--color-text-muted);
+}
+.home-benefit-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  list-style: none;
+  margin: var(--space-6) 0 var(--space-8);
+  padding: 0;
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+}
+.home-benefit-list li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+.home-benefit-list svg {
+  flex: none;
+}
+/* Each benefit gets its own meaning-carrying icon in a soft chip, rather than a
+   repeated checkmark. The chip keeps the icons on one optical column so the
+   labels still align even though the glyphs differ in width. */
+.home-benefit-list__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: var(--space-8);
+  height: var(--space-8);
+  border-radius: var(--radius-md);
+  background: var(--color-primary-50);
+  color: var(--color-primary-600);
+}
+
+/* ─── Confidence strip ─── */
+.home-confidence__list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: var(--space-6);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.home-confidence__item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+@media (min-width: 48rem) {
+  .home-confidence__item + .home-confidence__item {
+    padding-left: var(--space-6);
+    border-left: 1px solid var(--color-border);
+  }
+}
+.home-confidence__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--space-10);
+  height: var(--space-10);
+  flex: none;
+  border-radius: var(--radius-pill);
+  background: var(--color-primary-50);
+  color: var(--color-primary-600);
+}
+.home-confidence__title {
+  display: block;
+  font-size: var(--font-size-base);
+  color: var(--color-primary-900);
+}
+.home-confidence__body {
+  display: block;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+/* ─── Coverage ─── */
+/* Coverage tiles: two columns from 48rem, three from 64rem — so the six-area
+   default lands as two rows of three on desktop rather than one long strip.
+   The track count is fixed rather than auto-fit so the rhythm holds at any
+   container width; the max-width keeps a three-up row from stretching each
+   tile past a comfortable reading size on wide screens. */
+.home-area-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+  list-style: none;
+  margin: var(--space-8) auto 0;
+  padding: 0;
+}
+@media (min-width: 64rem) {
+  .home-area-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    max-width: 64rem;
+  }
+}
+/* Flex li + height:100% so a two-line name (e.g. "North Las Vegas") does not
+   leave its neighbours short in the same row. */
+.home-area-grid > li {
+  display: flex;
+}
+.home-area {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--space-16);
+  padding: var(--space-4);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-weight: 700;
+  color: var(--color-primary-900);
+}
+.home-area--link:hover {
+  background: var(--color-primary-50);
+  border-color: var(--color-primary-600);
+  color: var(--color-primary-900);
+}
+.home-area__pin {
+  flex: none;
+}
+.home-area__state {
+  margin-left: auto;
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--color-text-muted);
+}
+/* On mobile the grid's single 1fr track made every area tile a full-width bar,
+   which read as a stack of buttons rather than a coverage list. Below 48rem the
+   tiles size to their own content and wrap as a centered row instead. */
+@media (max-width: 48rem) {
+  .home-area-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .home-area-grid > li {
+    flex: 0 1 auto;
+  }
+  .home-area {
+    width: auto;
+    min-height: var(--space-12);
+    padding: var(--space-3) var(--space-4);
+  }
+  .home-area__state {
+    margin-left: var(--space-1);
+  }
+}
+.home-area-note {
+  margin: var(--space-6) 0 0;
+  text-align: center;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+/* ─── Approach gallery ─── */
+.home-gallery {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-10);
+  align-items: start;
+}
+@media (min-width: 64rem) {
+  .home-gallery {
+    grid-template-columns: minmax(0, 20rem) 1fr;
+    gap: var(--space-16);
+  }
+}
+.home-gallery__heading {
+  margin: 0 0 var(--space-4);
+  font-size: var(--font-size-2xl);
+}
+.home-gallery__lede {
+  margin: 0 0 var(--space-6);
+  color: var(--color-text-muted);
+}
+.home-gallery__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-5);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+@media (min-width: 30rem) {
+  .home-gallery__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+.home-gallery__media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 7 / 4;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.home-gallery__caption {
+  margin: var(--space-3) 0 0;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+/* ─── Testimonials ─── */
+.home-testimonials__head {
+  text-align: center;
+  margin-bottom: var(--space-10);
+}
+.home-testimonials__heading {
+  margin: 0 0 var(--space-4);
+  font-size: var(--font-size-3xl);
+}
+.home-testimonials__summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  margin: 0;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-on-media);
+}
+.home-stars {
+  display: inline-flex;
+  gap: var(--space-1);
+}
+.home-testimonials__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+  gap: var(--space-6);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.home-testimonials__grid > li {
+  display: flex;
+}
+.home-review {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  width: 100%;
+  margin: 0;
+  padding: var(--space-6);
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: var(--radius-lg);
+}
+.home-review__mark {
+  flex: none;
+}
+.home-review__quote {
+  margin: 0;
+}
+.home-review__quote p {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-loose);
+  color: var(--color-text-on-media);
+  display: -webkit-box;
+  -webkit-line-clamp: 7;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.home-review__byline {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin-top: auto;
+}
+.home-review__author {
+  font-weight: 700;
+  color: var(--color-neutral-0);
+}
+.home-review__location {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-on-media);
+}
+
+/* ─── Request form section ─── */
+.home-request__layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-10);
+  align-items: start;
+}
+@media (min-width: 64rem) {
+  .home-request__layout {
+    grid-template-columns: 5fr 7fr;
+    gap: var(--space-16);
+  }
+}
+.home-request__heading {
+  margin: 0 0 var(--space-4);
+  font-size: var(--font-size-3xl);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+.home-request__body {
+  margin: 0;
+  max-width: var(--measure-copy);
+  color: var(--color-text-muted);
+}
+.home-request__phone {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin: var(--space-6) 0 0;
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+}
+.home-request__phone-link {
+  white-space: nowrap;
+}
+.home-request__microcopy {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: var(--space-3) 0 0;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+.home-request__microcopy svg {
+  flex: none;
+}
+.home-request__card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: var(--space-6) var(--space-5);
+}
+
+/* ─── Closing banner ─── */
+.home-final__copy {
+  max-width: 48rem;
+  margin-inline: auto;
+  text-align: center;
+}
+.home-final__heading {
+  margin: 0 0 var(--space-4);
+  font-size: var(--font-size-3xl);
+  color: var(--color-text-on-media);
+}
+.home-final__body {
+  margin: 0 auto;
+  max-width: var(--measure-reading);
+  font-size: var(--font-size-lg);
+  color: var(--color-text-on-media);
+}
+.home-final__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-3);
+  margin-top: var(--space-8);
+}
+.home-final__microcopy {
+  margin: var(--space-4) 0 0;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-on-media);
+}
+
+/* Mobile centering for the homepage cards, matching the site-wide convention
+   above (which keys off .stacked-card / .process-step and so does not reach
+   these classes). Section body prose stays left-aligned for readability. */
+@media (max-width: 48rem) {
+  /* The hero keeps its left-aligned column at every width — its H1, lede, CTAs
+     and trust chips all start at the same edge — so it is excluded here. */
+  .home-eyebrow,
+  .home-authority__copy .home-eyebrow,
+  .home-audience__copy .home-eyebrow,
+  .home-gallery__intro .home-eyebrow,
+  .home-request__copy .home-eyebrow {
+    text-align: center;
+  }
+  .home-hero__copy .home-eyebrow {
+    text-align: start;
+  }
+  .home-intent-card,
+  .home-service-card__body,
+  .home-process__step,
+  .home-gallery__item {
+    text-align: center;
+    align-items: center;
+  }
+  .home-intent-card__cta,
+  .home-card-link {
+    align-self: center;
+  }
+  .home-confidence__item {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  /* Section CTAs keep their natural width on mobile and centre under the
+     centred heading above them, rather than stretching to full-width bars.
+     Targeted at the button itself — switching .btn from inline-flex to a
+     block-level flex box lets `margin-inline: auto` centre it — so the sibling
+     paragraphs and lists keep their normal left-aligned block width. */
+  .home-gallery__intro .btn,
+  .home-audience__copy .btn {
+    display: flex;
+    width: fit-content;
+    margin-inline: auto;
+  }
+  .home-authority__actions {
+    justify-content: center;
   }
 }
 

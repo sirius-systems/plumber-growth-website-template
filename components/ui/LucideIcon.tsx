@@ -40,6 +40,11 @@ import {
   Mail,
   AlertCircle,
   Zap,
+  Menu,
+  X,
+  ArrowRight,
+  Quote,
+  Lock,
   HelpCircle,
   type LucideProps,
 } from "lucide-react";
@@ -91,6 +96,11 @@ const ICONS: Record<string, React.ComponentType<LucideProps>> = {
   Mail,
   AlertCircle,
   Zap,
+  Menu,
+  X,
+  ArrowRight,
+  Quote,
+  Lock,
 };
 
 export function LucideIcon({ name, ...props }: { name: string } & LucideProps) {

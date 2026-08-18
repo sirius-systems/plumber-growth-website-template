@@ -17,7 +17,7 @@ interface Env {
 }
 
 const BANNER_HTML =
-  '<div class="demo-banner" role="note">⚠ DEMONSTRATION SITE — All business information is fictional. Forms submit to a test environment. Not a real plumbing company.</div>';
+  '<div class="demo-banner" role="note">⚠ DEMONSTRATION SITE - All business information is fictional. Forms submit to a test environment. Not a real plumbing company.</div>';
 
 class DemoBannerInjector {
   element(element: Element): void {

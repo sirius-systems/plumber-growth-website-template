@@ -66,12 +66,25 @@ export interface CommercialStats {
 
 export interface BrandConfig {
   logoSrc?: string;
+  /** Reversed (white) logo for dark surfaces — the footer. Falls back to logoSrc. */
+  logoInverseSrc?: string;
   logoAlt: string;
   /** Text fallback shown when no approved logo asset exists (docs/06 §20). */
   wordmark: string;
   primaryColor: string;
   primaryDarkColor: string;
   accentColor: string;
+}
+
+/**
+ * Public social profile. Only add profiles the client actually operates — an
+ * unset array renders no social row at all (docs/17 §22, never invent presence).
+ * `icon` is a Lucide name resolved via components/ui/LucideIcon.
+ */
+export interface SocialLink {
+  label: string;
+  href: string;
+  icon: string;
 }
 
 export interface CredentialsConfig {
@@ -141,6 +154,8 @@ export interface ClientConfig {
   credentials: CredentialsConfig;
   branding: BrandConfig;
   serviceAreas: ServiceAreaReference[];
+  /** Verified public social profiles. Omit/empty hides the footer social row. */
+  social?: SocialLink[];
   integrations: PublicIntegrationConfig;
   seo: SeoConfig;
   marketing: MarketingConfig;
@@ -236,6 +251,7 @@ export const clientConfig: ClientConfig = {
   },
   branding: {
     logoSrc: "/images/logos/las-vegas-pro-plumbing-primary-logo-web-1200x360.png",
+    logoInverseSrc: "/images/logos/las-vegas-pro-plumbing-logo-one-color-white.png",
     logoAlt: "Las Vegas Pro Plumbing",
     wordmark: "Las Vegas Pro Plumbing",
     primaryColor: "#1B4F8A",
@@ -272,6 +288,12 @@ export const clientConfig: ClientConfig = {
     { name: "Spring Valley", state: "NV", hasDetailPage: true, slug: "spring-valley", featured: false },
     { name: "Enterprise", state: "NV", hasDetailPage: true, slug: "enterprise", featured: false },
   ],
+  // Intentionally unset for the demo: no verified social profiles exist, and a
+  // fabricated profile URL would be invented client data (docs/17 §22). The
+  // footer social row hides entirely while this is empty. To enable, add e.g.
+  //   social: [{ label: "Facebook", href: "https://facebook.com/…", icon: "Facebook" }],
+  // and make sure the icon name is registered in components/ui/LucideIcon.tsx.
+  social: [],
   integrations: {
     // reviewUrl intentionally unset for the demo — the public review CTA falls
     // back to a placeholder. Set a verified Google review URL for a live client
