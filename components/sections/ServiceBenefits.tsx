@@ -1,9 +1,20 @@
+import Image from "next/image";
 import { clientConfig } from "@/config/client";
 import type { PlumbingService } from "@/config/services";
 import { LucideIcon } from "@/components/ui/LucideIcon";
 
-/** "Why choose us for [service]" benefit cards (docs/06 §25). Falls back to the
- * shared client differentiators. */
+/**
+ * "Why choose us for [service]" benefits (docs/06 §25). Falls back to the
+ * shared client differentiators.
+ *
+ * Restructured into the reference's authority split: the four benefits set as
+ * icon rows beside a supporting image, instead of four free-floating cards. The
+ * H2, all four titles, all four descriptions, their order, and the
+ * `credentials.licenseNumber` gate on the third are unchanged.
+ *
+ * No CTA is added here: the page already carries the hero actions, the hero
+ * request form, and the closing FinalCta, and this section had none before.
+ */
 export function ServiceBenefits({ svc }: { svc: PlumbingService }) {
   const { business, credentials } = clientConfig;
   const benefits: { icon: string; title: string; desc: string }[] = [
@@ -20,56 +31,39 @@ export function ServiceBenefits({ svc }: { svc: PlumbingService }) {
   ];
 
   return (
-    <section className="section section-alternate">
-      <div className="section__inner" style={{ maxWidth: "56.25rem" }}>
-        <h2 className="section-heading">
-          Why Choose {business.publicName} for {svc.name}
-        </h2>
-        <ul
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(20rem, 1fr))",
-            gap: "var(--space-6)",
-            listStyle: "none",
-            padding: 0,
-            margin: "var(--space-8) 0 0",
-          }}
-        >
-          {benefits.map((b) => (
-            <li
-              key={b.title}
-              style={{
-                background: "var(--color-surface)",
-                border: "1px solid var(--color-border)",
-                borderRadius: "var(--radius-lg)",
-                boxShadow: "var(--shadow-sm)",
-                padding: "var(--space-6)",
-                display: "flex",
-                gap: "var(--space-4)",
-                alignItems: "flex-start",
-              }}
-            >
-              <span
-                style={{
-                  width: 44,
-                  height: 44,
-                  flex: "none",
-                  borderRadius: "50%",
-                  background: "var(--color-primary-50)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <LucideIcon name={b.icon} size={24} color="var(--color-primary-600)" />
-              </span>
-              <div>
-                <h3 style={{ margin: "0 0 var(--space-1)", fontSize: "var(--font-size-base)", color: "var(--color-primary-900)" }}>{b.title}</h3>
-                <p style={{ margin: 0, fontSize: "var(--font-size-sm)", color: "var(--color-text-muted)", lineHeight: "var(--line-height-body)" }}>{b.desc}</p>
-              </div>
-            </li>
-          ))}
-        </ul>
+    <section className="section section-alternate" aria-labelledby="svc-benefits-heading">
+      <div className="section__inner">
+        <div className="svc-split svc-split--image-end">
+          <div className="svc-split__media svc-split__media--portrait">
+            <Image
+              src="/images/placeholders/team-portrait.svg"
+              alt={`A ${business.publicName} technician and service van`}
+              fill
+              sizes="(max-width: 64rem) 100vw, 40vw"
+              style={{ objectFit: "cover", objectPosition: "center" }}
+            />
+          </div>
+
+          <div>
+            <h2 id="svc-benefits-heading" className="svc-heading">
+              Why Choose {business.publicName} for {svc.name}
+            </h2>
+
+            <ul className="svc-benefit-list">
+              {benefits.map((b) => (
+                <li key={b.title} className="svc-benefit">
+                  <span className="svc-benefit__icon" aria-hidden="true">
+                    <LucideIcon name={b.icon} size={22} />
+                  </span>
+                  <div>
+                    <h3 className="svc-benefit__title">{b.title}</h3>
+                    <p className="svc-benefit__desc">{b.desc}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
       </div>
     </section>
   );

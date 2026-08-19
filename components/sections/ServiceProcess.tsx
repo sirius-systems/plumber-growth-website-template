@@ -2,9 +2,16 @@ import type { PlumbingService } from "@/config/services";
 import { LucideIcon } from "@/components/ui/LucideIcon";
 
 /**
- * Service process (docs/06 §37). Vertical numbered steps. Default steps are used
- * for every service; wording never states an appointment is confirmed instantly
- * (UX-003). (Separate from the homepage HowItWorks.)
+ * Service process (docs/06 §37). Numbered steps.
+ *
+ * Wording never states an appointment is confirmed instantly (UX-003).
+ * (Separate from the homepage HowItWorks.)
+ *
+ * DEFAULT_STEPS below is unchanged — same four steps, same icons, same titles,
+ * same body copy, same order. Only the presentation moved: from a vertical
+ * rule-separated list on a light band to the reference's dark navy band with
+ * four horizontal numbered markers and a dashed connector, which gives the page
+ * its mid-scroll dark beat. Steps stack to one column below 64rem.
  */
 const DEFAULT_STEPS: { icon: string; title: string; body: string }[] = [
   {
@@ -29,61 +36,28 @@ const DEFAULT_STEPS: { icon: string; title: string; body: string }[] = [
   },
 ];
 
-/**
- * @param background Section tone. Defaults to "default" — the value every
- *   service page used before the water-heater-repair iteration, which needs
- *   "alternate" so this section stays distinct from the white band above it.
- */
-export function ServiceProcess({
-  svc,
-  background = "default",
-}: {
-  svc: PlumbingService;
-  background?: "default" | "alternate";
-}) {
+export function ServiceProcess({ svc }: { svc: PlumbingService }) {
   return (
-    <section className={`section section-${background}`}>
-      <div className="section__inner" style={{ maxWidth: "50rem" }}>
-        <h2 className="section-heading">
+    <section className="section section-emphasis" aria-labelledby="svc-process-heading">
+      <div className="section__inner">
+        <h2 id="svc-process-heading" className="section-heading svc-heading">
           How We Handle {svc.name}
         </h2>
-        <ol style={{ listStyle: "none", padding: 0, margin: "var(--space-8) 0 0" }}>
+
+        <ol className="svc-process">
           {DEFAULT_STEPS.map((step, i) => (
-            <li
-              key={step.title}
-              style={{
-                display: "grid",
-                gridTemplateColumns: "56px 1fr",
-                gap: "var(--space-6)",
-                alignItems: "start",
-                padding: "var(--space-6) 0",
-                borderBottom: i < DEFAULT_STEPS.length - 1 ? "1px solid var(--color-border)" : "none",
-              }}
-            >
-              <div
-                aria-hidden="true"
-                style={{
-                  width: 56,
-                  height: 56,
-                  borderRadius: "50%",
-                  background: "var(--color-primary-50)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <span className="display-heading" style={{ fontSize: "var(--font-size-xl)", color: "var(--color-primary-700)" }}>
+            <li key={step.title} className="svc-process__step">
+              <span className="svc-process__marker">
+                <LucideIcon name={step.icon} size={22} aria-hidden="true" />
+                <span className="svc-process__number" aria-hidden="true">
                   {i + 1}
                 </span>
-              </div>
-              <div>
-                <LucideIcon name={step.icon} size={20} color="var(--color-accent-500)" style={{ marginBottom: "var(--space-2)" }} />
-                <h3 style={{ margin: "0 0 var(--space-1)", fontSize: "var(--font-size-lg)", color: "var(--color-primary-900)" }}>
-                  <span className="sr-only">{`Step ${i + 1}: `}</span>
-                  {step.title}
-                </h3>
-                <p style={{ margin: 0, fontSize: "var(--font-size-base)", lineHeight: "var(--line-height-loose)", color: "var(--color-text)" }}>{step.body}</p>
-              </div>
+              </span>
+              <h3 className="svc-process__title">
+                <span className="sr-only">{`Step ${i + 1}: `}</span>
+                {step.title}
+              </h3>
+              <p className="svc-process__body">{step.body}</p>
             </li>
           ))}
         </ol>

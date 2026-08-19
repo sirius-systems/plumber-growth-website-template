@@ -1,9 +1,25 @@
+import Image from "next/image";
 import { clientConfig } from "@/config/client";
 import type { PlumbingService } from "@/config/services";
 import type { ServiceContent } from "@/config/service-content";
 import { LucideIcon } from "@/components/ui/LucideIcon";
 
-/** Service overview + quick-facts panel (docs/06 §25). Two columns on desktop. */
+/** Shared fallback for services with no artwork configured yet. */
+const SERVICE_IMAGE_FALLBACK = "/images/placeholders/service-card.svg";
+
+/**
+ * Service overview + quick-facts panel (docs/06 §25).
+ *
+ * Restructured into the editorial split the reference uses: the service image on
+ * one side, the overview paragraph and quick-facts panel on the other. The H2,
+ * the overview paragraph, and the three quick facts are byte-identical to the
+ * previous version — including the `operations.emergencyServiceAvailable` gate
+ * on the second fact.
+ *
+ * The image is `svc.image` from the service catalog, falling back to the shared
+ * placeholder that ServiceCard already uses; the alt text follows ServiceCard's
+ * existing pattern rather than introducing a new phrasing convention.
+ */
 export function ServiceOverview({ svc, content }: { svc: PlumbingService; content?: ServiceContent }) {
   const { operations } = clientConfig;
   const overview = content?.overview ?? svc.shortDescription;
@@ -18,40 +34,36 @@ export function ServiceOverview({ svc, content }: { svc: PlumbingService; conten
   ];
 
   return (
-    <section className="section section-default">
+    <section className="section section-default" aria-labelledby="svc-overview-heading">
       <div className="section__inner">
-        <h2 className="section-heading">
-          What {svc.name} Covers and Who Needs It
-        </h2>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(18rem, 1fr))",
-            gap: "var(--space-12)",
-            marginTop: "var(--space-8)",
-          }}
-        >
-          <div>
-            <p style={{ fontSize: "var(--font-size-base)", lineHeight: "var(--line-height-loose)", marginTop: 0 }}>{overview}</p>
+        <div className="svc-split">
+          <div className="svc-split__media">
+            <Image
+              src={svc.image ?? SERVICE_IMAGE_FALLBACK}
+              alt={`${svc.name} plumbing service`}
+              fill
+              sizes="(max-width: 64rem) 100vw, 40vw"
+              style={{ objectFit: "cover", objectPosition: "center" }}
+            />
           </div>
-          <div
-            style={{
-              background: "var(--color-background-alt)",
-              borderRadius: "var(--radius-lg)",
-              padding: "var(--space-6)",
-              borderLeft: "3px solid var(--color-accent-500)",
-              alignSelf: "start",
-            }}
-          >
-            <p style={{ marginTop: 0, fontWeight: 600, color: "var(--color-primary-900)" }}>Quick facts</p>
-            <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "grid", gap: "var(--space-3)" }}>
-              {facts.map((f) => (
-                <li key={f.label} style={{ display: "flex", alignItems: "center", gap: "var(--space-2)", fontSize: "var(--font-size-sm)" }}>
-                  <LucideIcon name={f.icon} size={16} color="var(--color-primary-600)" />
-                  {f.label}
-                </li>
-              ))}
-            </ul>
+
+          <div>
+            <h2 id="svc-overview-heading" className="svc-heading">
+              What {svc.name} Covers and Who Needs It
+            </h2>
+            <p className="svc-split__body">{overview}</p>
+
+            <div className="svc-facts">
+              <p className="svc-facts__title">Quick facts</p>
+              <ul className="svc-facts__list">
+                {facts.map((f) => (
+                  <li key={f.label}>
+                    <LucideIcon name={f.icon} size={18} color="var(--color-primary-600)" />
+                    {f.label}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
       </div>

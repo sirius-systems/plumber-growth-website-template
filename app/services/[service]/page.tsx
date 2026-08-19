@@ -15,6 +15,8 @@ import { ServiceBenefits } from "@/components/sections/ServiceBenefits";
 import { ServiceLinks } from "@/components/sections/ServiceLinks";
 import { FaqSection } from "@/components/sections/rebuild/FaqSection";
 import { FinalCta } from "@/components/sections/rebuild/FinalCta";
+import { TimelyRepair } from "@/components/sections/water-heater-repair/TimelyRepair";
+import { WaterHeaterServiceArea } from "@/components/sections/water-heater-repair/WaterHeaterServiceArea";
 
 interface Params {
   service: string;
@@ -55,6 +57,10 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
   if (!svc) notFound();
 
   const content = SERVICE_CONTENT[svc.slug];
+  // water-heater-repair renders its own map-led service-area section, so the
+  // shared ServiceLinks suppresses its areas half there rather than listing the
+  // same areas twice on that one page.
+  const hasOwnServiceAreaSection = svc.slug === "water-heater-repair";
   const { business, seo, location, serviceAreas } = clientConfig;
   const canonical = `${business.websiteUrl}/services/${svc.slug}/`;
   const faqs = mergeServiceFaqs(content?.faqs ?? []);
@@ -84,15 +90,31 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }} />
 
+      {/* Template propagation of the water-heater-repair iteration (docs/04 §8):
+          the shared section components now carry that premium layout, so every
+          service renders the same stack. The three variants it superseded
+          (WaterHeaterOverview / WaterHeaterProblems / WaterHeaterRelated) emit
+          the same strings through the shared components and are no longer
+          referenced; the two that carry content unique to this service —
+          TimelyRepair and WaterHeaterServiceArea — still render, each gated on
+          its own data rather than on a slug check.
+
+          Section tone alternates down the page:
+            hero (media) → trust band (light) → quick answer (grey) →
+            overview (white) → problems (grey) → process (NAVY) →
+            timely repair (white, when present) → benefits (grey) →
+            FAQ (white) → related + areas (grey) → final CTA (media). */}
       <ServiceHero svc={svc} content={content} />
       <SiteTrustBand />
       <QuickAnswer answer={quickAnswerFor(svc)} />
       <ServiceOverview svc={svc} content={content} />
       <ServiceProblems svc={svc} content={content} />
       <ServiceProcess svc={svc} />
+      {content?.timelyRepair && <TimelyRepair content={content.timelyRepair} />}
       <ServiceBenefits svc={svc} />
       <FaqSection items={faqs} subheading={`${svc.name}, pricing, timing, and what to expect`} />
-      <ServiceLinks svc={svc} />
+      <ServiceLinks svc={svc} showServiceAreas={!hasOwnServiceAreaSection} />
+      {hasOwnServiceAreaSection && <WaterHeaterServiceArea />}
       <FinalCta heading={`Request ${svc.name} in ${seo.primaryMarket}`} currentService={svc.slug} />
     </>
   );

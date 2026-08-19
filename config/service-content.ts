@@ -7,6 +7,8 @@
  * (pricing, warranties, guarantees) — those come from config when verified.
  */
 
+import type { TrustIcon } from "@/components/ui/TrustBar";
+
 export interface ServiceFAQ {
   question: string;
   answer: string;
@@ -17,6 +19,13 @@ export interface ServiceContent {
   intro: string;
   /** Hero supporting copy (falls back to `intro`). */
   subheading?: string;
+  /**
+   * Up to 4 service-specific hero trust items, shown after the config-driven
+   * credentials. Static template copy (like HERO_BENEFITS) rather than client
+   * facts — keep it to claims true of any licensed plumber, since docs/06 §27
+   * requires every displayed trust element to be verified.
+   */
+  trustHighlights?: { icon: TrustIcon; label: string }[];
   /** AEO "Quick Answer" paragraph (2–4 sentences). Falls back to an assembled
    * default. Scaffolding until client-approved copy is written (docs/07 §20). */
   quickAnswer?: string;
@@ -28,12 +37,27 @@ export interface ServiceContent {
   problems: string[];
   /** Three service-specific FAQs. */
   faqs: ServiceFAQ[];
+  /**
+   * "Why timely repair matters" section. Optional and currently populated only
+   * for water-heater-repair (single-page iteration — docs/04 §8). `icon` is a
+   * Lucide name resolved via components/ui/LucideIcon, same as HomeProblem.
+   */
+  timelyRepair?: {
+    heading: string;
+    subheading: string;
+    items: { icon: string; title: string; description: string }[];
+  };
 }
 
 export const SERVICE_CONTENT: Record<string, ServiceContent> = {
   "emergency-plumbing": {
     intro:
       "Plumbing emergencies don't wait for business hours. When water is where it shouldn't be, calling is the fastest way to reach us.",
+    trustHighlights: [
+      { icon: "clock", label: "Rapid Dispatch When You Call" },
+      { icon: "badge-check", label: "Upfront Pricing Before Work Begins" },
+      { icon: "shield-check", label: "Equipped for Urgent Repairs" },
+    ],
     overview:
       "Our emergency plumbing service covers urgent problems that can't wait, burst pipes, active leaks, sewage backups, and sudden loss of water. Emergency help is available 24/7. Call us and we'll tell you what to do right now and confirm current availability for your area. We never promise a specific arrival time.",
     covers: [
@@ -69,6 +93,11 @@ export const SERVICE_CONTENT: Record<string, ServiceContent> = {
   },
   "drain-cleaning": {
     intro: "Slow or clogged drains rarely fix themselves, and store-bought chemicals often make things worse.",
+    trustHighlights: [
+      { icon: "shield-check", label: "Camera-Assisted Drain Inspection" },
+      { icon: "check-circle", label: "Clears Clogs at the Source" },
+      { icon: "badge-check", label: "Upfront Pricing Before Work Begins" },
+    ],
     quickAnswer:
       "Drain cleaning in Henderson and Las Vegas removes blockages from kitchen drains, bathroom drains, floor drains, and main sewer lines using professional snaking or hydrojetting equipment. Las Vegas Pro Plumbing provides drain cleaning throughout Clark County for homeowners and commercial properties dealing with slow drains, recurring clogs, or complete backups. Call (888) 308-3262 or submit a service request to schedule a same-day or next-day appointment.",
     overview:
@@ -106,6 +135,11 @@ export const SERVICE_CONTENT: Record<string, ServiceContent> = {
   },
   "water-heater-repair": {
     intro: "No hot water is more than an inconvenience, and Las Vegas's hard water is tough on water heaters.",
+    trustHighlights: [
+      { icon: "badge-check", label: "All Major Brands Serviced" },
+      { icon: "shield-check", label: "Safety-Checked Repairs" },
+      { icon: "badge-check", label: "Upfront Pricing Before Work Begins" },
+    ],
     overview:
       "We diagnose and repair both tank and tankless water heaters, restoring hot water, stopping leaks, and addressing the sediment buildup that Las Vegas's hard water accelerates. We'll tell you honestly whether a repair makes sense or whether replacement is the better value.",
     covers: [
@@ -138,9 +172,48 @@ export const SERVICE_CONTENT: Record<string, ServiceContent> = {
           "Popping or rumbling usually means sediment has collected at the bottom of the tank, common with hard water. Flushing the tank often helps.",
       },
     ],
+    timelyRepair: {
+      heading: "Why Timely Repair Matters",
+      subheading:
+        "Addressing water heater issues early saves you money and prevents unnecessary headaches.",
+      items: [
+        {
+          icon: "Droplets",
+          title: "Avoid Water Damage",
+          // Deliberately no dollar magnitude: a "thousands in damage" figure
+          // would be an unverifiable claim (docs/17 §22).
+          description:
+            "A small leak can worsen over time and lead to significant structural damage if left unaddressed.",
+        },
+        {
+          icon: "Thermometer",
+          title: "Restore Comfort",
+          description:
+            "Get back to enjoying hot showers, clean dishes, and properly washed clothes without delay.",
+        },
+        {
+          icon: "Wrench",
+          title: "Prevent Full Replacement",
+          description:
+            "Fixing minor issues now can extend your water heater's life and delay the need for a costly replacement.",
+        },
+        {
+          icon: "Gauge",
+          title: "Improve Efficiency",
+          // "can help lower" rather than an unconditional savings promise.
+          description:
+            "A repaired and maintained unit uses less energy, which can help lower monthly utility costs.",
+        },
+      ],
+    },
   },
   "water-heater-installation": {
     intro: "Replacing a water heater is a chance to right-size the system for your home and cut operating costs.",
+    trustHighlights: [
+      { icon: "badge-check", label: "Code-Compliant Installation" },
+      { icon: "check-circle", label: "Tank & Tankless Options" },
+      { icon: "badge-check", label: "Upfront Pricing Before Work Begins" },
+    ],
     overview:
       "We install and replace tank and tankless water heaters sized for your household's hot-water demand. We'll walk you through the tank-versus-tankless decision, energy efficiency, and the permit considerations that apply in the Las Vegas area, then handle the installation cleanly and correctly.",
     covers: [
@@ -176,6 +249,11 @@ export const SERVICE_CONTENT: Record<string, ServiceContent> = {
   },
   "leak-detection": {
     intro: "A hidden leak can quietly waste water and damage your home long before you see it.",
+    trustHighlights: [
+      { icon: "check-circle", label: "No-Guesswork Diagnostics" },
+      { icon: "shield-check", label: "Non-Invasive Detection Methods" },
+      { icon: "badge-check", label: "Upfront Pricing Before Work Begins" },
+    ],
     overview:
       "We locate hidden leaks, including slab leaks, which are common in Las Vegas due to soil conditions and hard-water corrosion of aging pipes. Using electronic leak-detection methods, we pinpoint the source with minimal disruption so the repair can be as targeted as possible.",
     covers: [
@@ -211,6 +289,11 @@ export const SERVICE_CONTENT: Record<string, ServiceContent> = {
   },
   "pipe-repair": {
     intro: "From a pinhole drip to a burst line, pipe problems get more expensive the longer they wait.",
+    trustHighlights: [
+      { icon: "check-circle", label: "Repairs for All Pipe Materials" },
+      { icon: "shield-check", label: "Minimally Disruptive Methods" },
+      { icon: "badge-check", label: "Upfront Pricing Before Work Begins" },
+    ],
     overview:
       "We repair and replace damaged, corroded, and leaking pipes, including burst pipes, pinhole leaks, and aging lines. Where it fits the situation, we can discuss trenchless options that reduce digging and disruption. We'll explain what's wrong and what your repair and replacement options are.",
     covers: [
@@ -246,6 +329,11 @@ export const SERVICE_CONTENT: Record<string, ServiceContent> = {
   },
   "sewer-line-repair": {
     intro: "Sewer problems are unpleasant and urgent, and they're often caused by issues you can't see.",
+    trustHighlights: [
+      { icon: "shield-check", label: "Camera-Verified Diagnosis" },
+      { icon: "check-circle", label: "Trenchless Options When Applicable" },
+      { icon: "badge-check", label: "Upfront Pricing Before Work Begins" },
+    ],
     overview:
       "We diagnose and repair sewer line problems, from backups and root intrusion to collapsed lines. A camera inspection lets us see exactly what's happening inside the line so the repair is based on evidence, not guesswork. Where suitable, trenchless repair reduces excavation.",
     covers: [
@@ -281,6 +369,11 @@ export const SERVICE_CONTENT: Record<string, ServiceContent> = {
   },
   "toilet-repair": {
     intro: "A running or weak-flushing toilet wastes water every day it goes unfixed.",
+    trustHighlights: [
+      { icon: "check-circle", label: "All Toilet Types & Brands" },
+      { icon: "shield-check", label: "Careful, Leak-Free Reseals" },
+      { icon: "badge-check", label: "Upfront Pricing Before Work Begins" },
+    ],
     overview:
       "We repair toilets that run, clog, flush weakly, or leak. Most issues come down to worn internal parts, flappers, fill valves, and wax rings, that are straightforward to replace. If a toilet is beyond economical repair, we'll tell you honestly.",
     covers: [
@@ -316,6 +409,11 @@ export const SERVICE_CONTENT: Record<string, ServiceContent> = {
   },
   "faucet-repair": {
     intro: "A dripping faucet is a small annoyance that adds up to real water waste.",
+    trustHighlights: [
+      { icon: "badge-check", label: "Fixture & Brand Specialists" },
+      { icon: "shield-check", label: "Clean, Careful Installation" },
+      { icon: "badge-check", label: "Upfront Pricing Before Work Begins" },
+    ],
     overview:
       "We repair and replace faucets throughout the home, fixing drips, restoring water pressure, and replacing worn cartridges and fixtures. Whether it's a kitchen, bathroom, or utility faucet, we'll stop the drip and get it working smoothly again.",
     covers: [
@@ -351,6 +449,11 @@ export const SERVICE_CONTENT: Record<string, ServiceContent> = {
   },
   "garbage-disposal-repair": {
     intro: "When the disposal jams or quits, the whole kitchen sink is out of commission.",
+    trustHighlights: [
+      { icon: "check-circle", label: "Repair or Replacement Options" },
+      { icon: "shield-check", label: "Safe Disposal of Old Units" },
+      { icon: "badge-check", label: "Upfront Pricing Before Work Begins" },
+    ],
     overview:
       "We repair and replace garbage disposals, clearing jams, fixing units that hum but won't spin, and addressing leaks. When a disposal is worn out or not worth repairing, we'll replace it with a properly sized unit.",
     covers: [

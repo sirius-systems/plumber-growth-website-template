@@ -2,9 +2,35 @@ import Link from "next/link";
 import { clientConfig } from "@/config/client";
 import { SERVICES, type PlumbingService } from "@/config/services";
 import { LucideIcon } from "@/components/ui/LucideIcon";
+import { ServiceCard } from "@/components/sections/ServiceCard";
 
-/** Related services + service areas (docs/04 §8.2, §27). Two columns on desktop. */
-export function ServiceLinks({ svc }: { svc: PlumbingService }) {
+/**
+ * Related services + service areas (docs/04 §8.2, §27).
+ *
+ * Restructured into the reference's two-part closing block: related services as
+ * the shared <ServiceCard> (image, name, description, link) instead of a text
+ * link list, then the service areas as an even tile grid.
+ *
+ * Every link is resolved exactly as before and nothing is added or dropped:
+ *   - related = `svc.relatedServices`, enabled only, config order, capped at 5
+ *   - areas   = `clientConfig.serviceAreas` in config order, with the same rule
+ *               that only the PRIMARY area links to its own location page and
+ *               every other tile goes to the /service-areas/ hub
+ *   - the "View all service areas →" link and its destination are unchanged
+ *
+ * The H2 and both H3 subheadings keep their original strings.
+ *
+ * @param showServiceAreas Set false on a page that renders its own service-area
+ *   section (water-heater-repair does), so the areas are not listed twice. The
+ *   default keeps the previous behaviour for every other service.
+ */
+export function ServiceLinks({
+  svc,
+  showServiceAreas = true,
+}: {
+  svc: PlumbingService;
+  showServiceAreas?: boolean;
+}) {
   const { serviceAreas } = clientConfig;
   const related = svc.relatedServices
     .map((slug) => SERVICES.find((s) => s.slug === slug && s.enabled))
@@ -12,63 +38,55 @@ export function ServiceLinks({ svc }: { svc: PlumbingService }) {
     .slice(0, 5);
   const primary = serviceAreas.find((a) => a.primary) ?? serviceAreas[0];
 
-  // minHeight lifts these list links to the 24px target floor (WCAG 2.2 2.5.8);
-  // the bare text box measured 22px.
-  const linkStyle = { display: "inline-flex", alignItems: "center", minHeight: "var(--space-6)", gap: "var(--space-2)", fontSize: "var(--font-size-base)", fontWeight: 500 };
-
   return (
-    <section className="section section-alternate">
+    <section className="section section-alternate" aria-labelledby="svc-links-heading">
       <div className="section__inner">
-        <h2 className="section-heading">
-          Related Services and Areas We Serve
+        <h2 id="svc-links-heading" className="section-heading svc-heading">
+          {showServiceAreas ? "Related Services and Areas We Serve" : "Related Services"}
         </h2>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: "var(--space-12)",
-            marginTop: "var(--space-8)",
-            maxWidth: "var(--container-md)",
-            marginInline: "auto",
-            alignItems: "start",
-          }}
-        >
-          <div>
-            <h3 style={{ marginTop: 0, fontSize: "var(--font-size-base)", color: "var(--color-primary-900)" }}>Related Services</h3>
-            <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "grid", gap: "var(--space-3)" }}>
+
+        {related.length > 0 && (
+          <div className="svc-links__group">
+            {/* The subheading is redundant when the H2 above is already
+                "Related Services" (areas suppressed), so it is dropped there. */}
+            {showServiceAreas && <h3 className="svc-links__subheading">Related Services</h3>}
+            {/* --centered, not auto-fill: a curated subset of two or three cards
+                would otherwise leave an empty phantom track and sit left. */}
+            <ul className="service-grid service-grid--centered">
               {related.map((r) => (
-                <li key={r.slug}>
-                  <Link href={`/services/${r.slug}/`} style={linkStyle}>
-                    <LucideIcon name="ChevronRight" size={14} color="var(--color-primary-600)" />
-                    {r.name}
-                  </Link>
+                <li key={r.slug} style={{ display: "flex" }}>
+                  <ServiceCard service={r} />
                 </li>
               ))}
             </ul>
           </div>
-          <div>
-            <h3 style={{ marginTop: 0, fontSize: "var(--font-size-base)", color: "var(--color-primary-900)" }}>Service Areas</h3>
-            <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "grid", gap: "var(--space-3)" }}>
-              {serviceAreas.map((area) => {
-                const href =
-                  area === primary && area.hasDetailPage && area.slug
-                    ? `/service-areas/${area.slug}/`
-                    : "/service-areas/";
-                return (
-                  <li key={area.name}>
-                    <Link href={href} style={linkStyle}>
-                      <LucideIcon name="MapPin" size={14} color="var(--color-primary-600)" />
-                      {area.name}
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
-            <p style={{ marginTop: "var(--space-3)" }}>
-              <Link href="/service-areas/">View all service areas →</Link>
-            </p>
-          </div>
+        )}
+
+        {showServiceAreas && (
+        <div className="svc-links__group">
+          <h3 className="svc-links__subheading">Service Areas</h3>
+          <ul className="svc-area-grid">
+            {serviceAreas.map((area) => {
+              const isPrimary = area === primary;
+              const href =
+                isPrimary && area.hasDetailPage && area.slug
+                  ? `/service-areas/${area.slug}/`
+                  : "/service-areas/";
+              return (
+                <li key={area.name}>
+                  <Link href={href} className="svc-area">
+                    <LucideIcon name="MapPin" size={18} color="var(--color-primary-600)" style={{ flex: "none" }} />
+                    {area.name}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+          <p className="svc-links__note">
+            <Link href="/service-areas/">View all service areas →</Link>
+          </p>
         </div>
+        )}
       </div>
     </section>
   );
