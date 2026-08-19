@@ -1324,6 +1324,14 @@ body {
   align-items: center;
   gap: var(--space-2);
 }
+/* The glyph is a fixed-size marker, never a flex item that absorbs pressure.
+   Without this it was squashed from 20px to 18px in the closing CTA's
+   two-column grid whenever a label wrapped, which also pulled that item's text
+   edge in to 26px while its neighbours sat at 28px — the two columns visibly
+   failed to share a left edge. */
+.hero-benefits__item > svg {
+  flex: none;
+}
 
 /* Closing conversion band (docs/04 §6). Deliberately NOT the same block as the
    page-opening hero: a deeper top-down scrim instead of the hero's left-right
@@ -1336,15 +1344,14 @@ body {
   background: linear-gradient(180deg, rgba(16, 43, 73, 0.9), rgba(16, 43, 73, 0.97));
 }
 /* The benefits list repeats the hero's three proof points, so it is set at
-   utility size in two columns here rather than restating the hero's stacked
-   base-size list. Same items, different rhythm. */
-@media (min-width: 30rem) {
-  .final-cta .hero-benefits {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    column-gap: var(--space-6);
-  }
-}
+   utility size here rather than restating the hero's base-size list. Same
+   items, different rhythm.
+
+   It stacks in a single column (inheriting the base .hero-benefits flex
+   column). The previous two-column grid put three items into a 2 + 1 layout
+   whose tracks were narrow enough to wrap the longest label, so one row stood
+   at double height while its neighbour floated mid-row — the columns never
+   shared a baseline. Stacking removes the wrap and the ragged final row. */
 .final-cta .hero-benefits {
   font-size: var(--font-size-sm);
 }
@@ -2707,7 +2714,9 @@ body {
 .svc-hero__covers {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--space-2) var(--space-6);
+  /* Row gap matches the trust band's --space-3 so both lists in this column run
+     on the same vertical pitch. */
+  gap: var(--space-3) var(--space-6);
   list-style: none;
   padding: 0;
   margin: var(--space-5) 0 0;
@@ -2718,31 +2727,36 @@ body {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
+/* Alignment matched to .hero-benefits__item: a 20px glyph, --space-2 gap and
+   centred, so this list and the trust band below the CTAs share one 28px text
+   edge and one icon axis. It previously used a 16px icon on a flex-start row
+   with a hand-tuned `marginTop` nudge, which sat 4px inside the trust list's
+   text edge — and that nudge had to be re-tuned whenever the icon or font size
+   moved. */
 .svc-hero__covers li {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: var(--space-2);
   color: var(--color-text-on-media);
 }
-/* Hero trust row: a ruled band under the CTAs rather than the stacked list.
-   Applied to the shared .hero-benefits markup — same items, same order, same
-   strings.
+.svc-hero__covers li > svg {
+  flex: none;
+}
+/* Hero trust group under the CTAs. Applied to the shared .hero-benefits markup
+   — same items, same order, same strings.
 
-   Two columns, NOT the reference's vertical-divider row: this hero keeps its
-   request-form card, so the copy column is ~45% wide and the three trust items
-   measure past it. With per-item `border-left` dividers the third item wrapped
-   to a second line and carried a divider at the start of the row, which read as
-   a rendering fault. A grid wraps cleanly at any width. */
-@media (min-width: 40rem) {
-  .svc-hero__trust.hero-benefits {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-3) var(--space-6);
-    margin-top: var(--space-8);
-    border-top: 1px solid rgba(255, 255, 255, 0.22);
-    padding-top: var(--space-5);
-    font-size: var(--font-size-sm);
-  }
+   Items stack in a single column, inheriting the base .hero-benefits flex
+   column and its --space-3 gap, which puts them on the same 34px pitch as the
+   covers list above. Neither the reference's vertical-divider row nor a
+   two-column grid survives this hero: it keeps its request-form card, so the
+   copy column is only ~45% wide and the three labels measure past it. Dividers
+   left the wrapped third item carrying a rule at the start of its row, and the
+   grid left a ragged 2 + 1 final row.
+
+   No separating rule: the group is set apart by whitespace alone. */
+.svc-hero__trust.hero-benefits {
+  margin-top: var(--space-8);
+  font-size: var(--font-size-sm);
 }
 
 /* ─── Editorial split (overview, benefits, timely-repair) ─── */

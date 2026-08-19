@@ -35,10 +35,24 @@ export function CommercialHero() {
             <h1 className="heading-accent">Commercial Plumbing Services in {region.name}</h1>
             <p style={{ maxWidth: "var(--measure-copy)", fontSize: "var(--font-size-lg)", color: "var(--color-text-on-media)" }}>{subheading}</p>
             <BenefitsList />
-            <ul style={{ listStyle: "none", padding: 0, margin: "var(--space-4) 0 0", fontSize: "var(--font-size-sm)" }}>
+            {/* Matched to the trust list above so every row in this column sits
+                on one 38px pitch. It needs a LARGER gap than .hero-benefits, not
+                the same one: these rows are 22px tall at --font-size-sm against
+                the trust list's 26px, so an identical gap would still leave two
+                different rhythms. --space-4 here + --space-3 above the list
+                closes both the internal pitch and the seam between the two.
+                Previously this list had no gap at all and ran at 22px. */}
+            <ul style={{ listStyle: "none", padding: 0, margin: "var(--space-3) 0 0", fontSize: "var(--font-size-sm)", display: "grid", gap: "var(--space-4)" }}>
+              {/* Icon size and alignment deliberately match .hero-benefits__item
+                  above (20px glyph, --space-2 gap, centred): that puts both
+                  lists' text on the same 28px left edge and their icons on one
+                  vertical axis. The previous 16px icon with a flex-start row and
+                  a hand-tuned `marginTop` sat 4px inside the trust list's text
+                  edge and 1px off its own text's centre — and that nudge had to
+                  be re-tuned every time the icon or font size moved. */}
               {bullets.map((b) => (
-                <li key={b.label} style={{ display: "flex", alignItems: "flex-start", gap: "var(--space-2)", color: "var(--color-text-on-media)" }}>
-                  <LucideIcon name={b.icon} size={16} color="var(--color-accent-500)" style={{ marginTop: "var(--space-1)", flex: "none" }} />
+                <li key={b.label} style={{ display: "flex", alignItems: "center", gap: "var(--space-2)", color: "var(--color-text-on-media)" }}>
+                  <LucideIcon name={b.icon} size={20} color="var(--color-accent-500)" style={{ flex: "none" }} />
                   {b.label}
                 </li>
               ))}

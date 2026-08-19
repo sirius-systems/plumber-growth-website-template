@@ -9,16 +9,11 @@ export function CommercialProblems() {
         <h2 className="section-heading">
           Common Commercial Plumbing Problems
         </h2>
-        <ul
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))",
-            gap: "var(--space-6)",
-            listStyle: "none",
-            padding: 0,
-            margin: "var(--space-8) 0 0",
-          }}
-        >
+        {/* .problems-grid is the shared 1 / 2 / 3-column step (globals.css), so
+            the six problems land as two rows of three on desktop. The previous
+            inline `auto-fill, minmax(260px, 1fr)` resolved to five tracks at the
+            container's full width and left a single orphan on the second row. */}
+        <ul className="problems-grid" style={{ marginTop: "var(--space-8)" }}>
           {commercialProblems.map((p) => (
             <li key={p.title} className="stacked-card" style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)" }}>
               <LucideIcon name={p.icon} size={28} color="var(--color-primary-600)" className="stacked-card-icon" />

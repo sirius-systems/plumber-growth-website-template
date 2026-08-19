@@ -55,12 +55,7 @@ export function ServiceHero({ svc, content }: { svc: PlumbingService; content?: 
               <ul className="svc-hero__covers">
                 {bullets.map((b) => (
                   <li key={b}>
-                    <LucideIcon
-                      name={coverIcon(b)}
-                      size={16}
-                      color="var(--color-accent-500)"
-                      style={{ marginTop: "var(--space-1)", flex: "none" }}
-                    />
+                    <LucideIcon name={coverIcon(b)} size={20} color="var(--color-accent-500)" />
                     {b}
                   </li>
                 ))}
