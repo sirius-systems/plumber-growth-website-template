@@ -92,12 +92,11 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
 
       {/* Template propagation of the water-heater-repair iteration (docs/04 §8):
           the shared section components now carry that premium layout, so every
-          service renders the same stack. The three variants it superseded
-          (WaterHeaterOverview / WaterHeaterProblems / WaterHeaterRelated) emit
-          the same strings through the shared components and are no longer
-          referenced; the two that carry content unique to this service —
-          TimelyRepair and WaterHeaterServiceArea — still render, each gated on
-          its own data rather than on a slug check.
+          service renders the same stack. Its overview / problems / related
+          variants have been removed — the shared components emit the same
+          strings — while the two sections carrying content unique to this
+          service, TimelyRepair and WaterHeaterServiceArea, still render, each
+          gated on its own data rather than on a slug check.
 
           Section tone alternates down the page:
             hero (media) → trust band (light) → quick answer (grey) →
