@@ -8,7 +8,7 @@ import { CommercialServicesGrid } from "@/components/sections/commercial/Commerc
 import { CommercialIndustries } from "@/components/sections/commercial/CommercialIndustries";
 import { CommercialProblems } from "@/components/sections/commercial/CommercialProblems";
 import { CommercialProcess } from "@/components/sections/commercial/CommercialProcess";
-import { CommercialMetrics, hasCommercialMetrics } from "@/components/sections/commercial/CommercialMetrics";
+import { CommercialMetrics } from "@/components/sections/commercial/CommercialMetrics";
 import { CommercialBenefits } from "@/components/sections/commercial/CommercialBenefits";
 import { CommercialLinks } from "@/components/sections/commercial/CommercialLinks";
 import { FaqSection } from "@/components/sections/rebuild/FaqSection";
@@ -27,7 +27,15 @@ export default function CommercialPage() {
 
   const { business, region } = clientConfig;
   const canonical = `${business.websiteUrl}/commercial-plumbing/`;
-  const metrics = hasCommercialMetrics();
+  // Tail tones are fixed rather than derived from whether the metrics band
+  // renders. CommercialBenefits used to take the alternate tone only when
+  // metrics appeared above it, so with no verified commercialStats the process,
+  // benefits and FAQ bands were all section-default and ran together as one
+  // undivided white run. Pinning benefits to alternate separates every seam in
+  // both configurations, because CommercialMetrics is section-emphasis (dark)
+  // and so never clashes with the white or grey either side of it:
+  //   with metrics:    process white -> metrics DARK -> benefits grey -> FAQ white -> links grey
+  //   without metrics: process white -> benefits grey -> FAQ white -> links grey
 
   const breadcrumbJsonLd = {
     "@context": "https://schema.org",
@@ -69,10 +77,12 @@ export default function CommercialPage() {
       <CommercialProcess />
       <CommercialMetrics />
       {/* Benefits alternates background so it never doubles the section above. */}
-      <CommercialBenefits alternate={metrics} />
+      <CommercialBenefits alternate />
       <FaqSection id="faq" items={commercialFaqs} heading="Frequently Asked Questions" subheading={`Commercial plumbing service in ${region.name}`} />
       <CommercialLinks />
-      <FinalCta heading="Request Commercial Plumbing Service" />
+      {/* \u00A0 keeps "Plumbing Service" on one line, so the heading
+          breaks after "Commercial" instead of orphaning "Service". */}
+      <FinalCta heading={"Request Commercial Plumbing\u00A0Service"} />
     </>
   );
 }
