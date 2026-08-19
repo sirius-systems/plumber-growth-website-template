@@ -24,7 +24,7 @@ export function HomeHero() {
   const qualifier = rest.join(":").trim();
 
   return (
-    <section className="hero home-hero">
+    <section className="hero hero--tall home-hero">
       <div className="hero-media" aria-hidden="true">
         <Image
           src={hero.image}
@@ -35,7 +35,7 @@ export function HomeHero() {
           style={{ objectFit: "cover", objectPosition: "center" }}
         />
       </div>
-      <div className="hero-overlay home-hero__overlay" aria-hidden="true" />
+      <div className="hero-overlay hero-overlay--deep" aria-hidden="true" />
 
       <div className="hero-content section__inner">
         <div className="hero-copy home-hero__copy">

@@ -25,9 +25,17 @@ export const HERO_BENEFITS: { icon: string; label: string }[] = [
  * utility-size columns so the closing band does not restate the hero verbatim.
  * An inline style would have won over that rule.
  */
-export function BenefitsList({ style }: { style?: CSSProperties }) {
+export function BenefitsList({
+  style,
+  className,
+}: {
+  style?: CSSProperties;
+  /** Optional extra class merged onto the <ul>, e.g. the service hero's
+   *  rule-separated row variant. Additive: omitting it renders as before. */
+  className?: string;
+}) {
   return (
-    <ul role="list" className="hero-benefits" style={style}>
+    <ul role="list" className={className ? `hero-benefits ${className}` : "hero-benefits"} style={style}>
       {HERO_BENEFITS.map((b) => (
         <li key={b.label} className="hero-benefits__item">
           <LucideIcon name={b.icon} size={20} color="var(--color-accent-500)" />

@@ -10,10 +10,13 @@ import { HeroCtaButtons } from "@/components/ui/HeroCtaButtons";
 export function CommercialHero() {
   const { marketing, region } = clientConfig;
   const subheading = clientConfig.commercialSubheading ?? commercialSubheading;
-  const bullets = [
-    "24/7 emergency support for commercial properties",
-    "Multi-unit and multi-system capabilities",
-    "Written proposals and post-job documentation",
+  // Each bullet carries the icon that describes it rather than a repeated
+  // checkmark; the strings are unchanged. `icon` is a Lucide name resolved via
+  // components/ui/LucideIcon.
+  const bullets: { icon: string; label: string }[] = [
+    { icon: "Clock", label: "24/7 emergency support for commercial properties" },
+    { icon: "Building2", label: "Multi-unit and multi-system capabilities" },
+    { icon: "FileText", label: "Written proposals and post-job documentation" },
   ];
 
 
@@ -34,9 +37,9 @@ export function CommercialHero() {
             <BenefitsList />
             <ul style={{ listStyle: "none", padding: 0, margin: "var(--space-4) 0 0", fontSize: "var(--font-size-sm)" }}>
               {bullets.map((b) => (
-                <li key={b} style={{ display: "flex", alignItems: "flex-start", gap: "var(--space-2)", color: "var(--color-text-on-media)" }}>
-                  <LucideIcon name="Check" size={14} color="var(--color-accent-500)" style={{ marginTop: "var(--space-1)", flex: "none" }} />
-                  {b}
+                <li key={b.label} style={{ display: "flex", alignItems: "flex-start", gap: "var(--space-2)", color: "var(--color-text-on-media)" }}>
+                  <LucideIcon name={b.icon} size={16} color="var(--color-accent-500)" style={{ marginTop: "var(--space-1)", flex: "none" }} />
+                  {b.label}
                 </li>
               ))}
             </ul>

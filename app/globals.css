@@ -1252,39 +1252,57 @@ body {
 .hero-overlay {
   background: linear-gradient(90deg, rgba(16, 43, 73, 0.82), rgba(16, 43, 73, 0.72));
 }
+/* Deeper left-weighted scrim for heroes whose copy column runs the full height
+   (homepage and service pages). Defined once and shared: it previously existed
+   as two byte-identical rules, `.home-hero__overlay` and `.svc-hero__overlay`,
+   which would have drifted the moment either was tuned.
+
+   The weak end holds at 0.74 rather than the base rule's 0.72 floor, so the
+   on-media text tokens still clear WCAG 1.4.3 over a bright client photo. */
+.hero-overlay--deep {
+  background: linear-gradient(
+    100deg,
+    rgba(16, 43, 73, 0.95) 0%,
+    rgba(16, 43, 73, 0.88) 48%,
+    rgba(16, 43, 73, 0.74) 100%
+  );
+}
 .hero-content {
   position: relative;
   z-index: 1;
 }
 
-/* Homepage hero sizing (docs/06 §26). Replaces the inline
-   `minHeight: 580; paddingBlock: 80px`, which was a raw-value opt-out of the
-   spacing scale: 580px + 80px of block padding does not respond to viewport at
-   all, so at 375px the hero was taller than the screen before the form card had
-   even started. The floor is now viewport-relative and the block padding uses
-   the same section-rhythm tokens as every other band. */
-.hero--home {
+/* Tall hero sizing (docs/06 §26), shared by the homepage and the service pages.
+   Replaces the inline `minHeight: 580; paddingBlock: 80px` those heroes used to
+   carry, which was a raw-value opt-out of the spacing scale: it applied
+   identically at 375px and 1440px, so the hero was taller than the screen
+   before the form card had even started. The floor is viewport-relative and the
+   block padding uses the same section-rhythm tokens as every other band.
+
+   Padding sits on `> .hero-content` rather than on the copy column so it works
+   for the single-column homepage hero and the two-column service hero alike. */
+.hero--tall {
   display: flex;
   align-items: center;
-  min-height: min(36.25rem, 92vh);
+  min-height: min(40rem, 88vh);
 }
-.hero--home > .hero-content {
+.hero--tall > .hero-content {
   padding-block: var(--section-padding-mobile-loose);
 }
 @media (min-width: 48rem) {
-  .hero--home > .hero-content {
+  .hero--tall > .hero-content {
     padding-block: var(--section-padding-tablet-loose);
   }
 }
 @media (min-width: 64rem) {
-  .hero--home > .hero-content {
+  .hero--tall > .hero-content {
     padding-block: var(--section-padding-desktop-loose);
   }
 }
-/* Below 48rem the hero stacks (copy over form card) and is content-tall; a
-   min-height would only add dead space above the fold. */
+/* Below 48rem the hero is content-tall (the service hero stacks copy over form
+   card); a min-height would only add dead space above the fold. */
 @media (max-width: 48rem) {
-  .hero--home {
+  .hero--tall {
     min-height: 0;
   }
 }
@@ -1890,42 +1908,13 @@ body {
 }
 
 /* ─── Hero ─── */
-.home-hero {
-  display: flex;
-  align-items: center;
-  min-height: min(40rem, 88vh);
-}
-/* A stronger scrim than the shared .hero-overlay: the copy column runs the full
-   height here with no form card beside it, and the weak end stays at 0.74 so
-   on-media text clears 1.4.3 even if a client swaps in a bright photo. */
-.home-hero__overlay {
-  background: linear-gradient(
-    100deg,
-    rgba(16, 43, 73, 0.95) 0%,
-    rgba(16, 43, 73, 0.88) 48%,
-    rgba(16, 43, 73, 0.74) 100%
-  );
-}
+/* Sizing, scrim and block padding come from the shared `.hero--tall` and
+   `.hero-overlay--deep` classes near the top of this file. Only what is
+   specific to the homepage hero lives here. */
 .home-hero__copy {
   /* Wide enough for the four config-gated trust chips to sit on one line at
      desktop; the H1 and lede keep their own tighter measures. */
   max-width: 52rem;
-  padding-block: var(--section-padding-mobile-loose);
-}
-@media (min-width: 48rem) {
-  .home-hero__copy {
-    padding-block: var(--section-padding-tablet-loose);
-  }
-}
-@media (min-width: 64rem) {
-  .home-hero__copy {
-    padding-block: var(--section-padding-desktop-loose);
-  }
-}
-@media (max-width: 48rem) {
-  .home-hero {
-    min-height: 0;
-  }
 }
 .home-hero__headline {
   margin: 0 0 var(--space-4);
@@ -2655,6 +2644,402 @@ body {
   }
   .home-authority__actions {
     justify-content: center;
+  }
+}
+
+/* ═══ Service pages (components/sections/Service*.tsx) ══════════════════
+   Layout and chrome for the individual service templates. Every string on
+   these pages comes from config/service-content.ts and config/*; nothing here
+   introduces copy. Prefixed `svc-` so it cannot collide with the `home-`
+   system above. */
+
+/* Section eyebrow. Same construction as .home-eyebrow: navy label with a short
+   amber rule, because #c9830d on white measures ~3.1:1 and fails WCAG 1.4.3 at
+   this size — the accent is carried by the rule, not the text. */
+.svc-eyebrow {
+  margin: 0 0 var(--space-3);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-primary-700);
+}
+.svc-eyebrow::before {
+  content: "";
+  display: inline-block;
+  width: var(--space-6);
+  height: 2px;
+  margin-right: var(--space-2);
+  vertical-align: middle;
+  background: var(--brand-accent);
+}
+.svc-eyebrow--on-dark {
+  color: var(--color-accent-500);
+}
+.svc-heading {
+  font-size: var(--font-size-3xl);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  margin-top: 0;
+}
+.svc-section-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--space-8);
+}
+
+/* ─── Hero ─── */
+/* Sizing, scrim and block padding come from the shared `.hero--tall` and
+   `.hero-overlay--deep` classes near the top of this file, so this hero and the
+   homepage hero stay on one system. Only what is specific to the service hero
+   lives here. */
+.svc-hero__copy h1 {
+  margin: var(--space-3) 0 var(--space-4);
+}
+.svc-hero__lede {
+  margin: 0;
+  max-width: var(--measure-copy);
+  font-size: var(--font-size-lg);
+  color: var(--color-text-on-media);
+}
+/* The `covers` bullets, unchanged in content and count (first four). Two
+   columns from 40rem so four items read as a block rather than a long ladder. */
+.svc-hero__covers {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-2) var(--space-6);
+  list-style: none;
+  padding: 0;
+  margin: var(--space-5) 0 0;
+  font-size: var(--font-size-sm);
+}
+@media (min-width: 40rem) {
+  .svc-hero__covers {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+.svc-hero__covers li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  color: var(--color-text-on-media);
+}
+/* Hero trust row: a ruled band under the CTAs rather than the stacked list.
+   Applied to the shared .hero-benefits markup — same items, same order, same
+   strings.
+
+   Two columns, NOT the reference's vertical-divider row: this hero keeps its
+   request-form card, so the copy column is ~45% wide and the three trust items
+   measure past it. With per-item `border-left` dividers the third item wrapped
+   to a second line and carried a divider at the start of the row, which read as
+   a rendering fault. A grid wraps cleanly at any width. */
+@media (min-width: 40rem) {
+  .svc-hero__trust.hero-benefits {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-3) var(--space-6);
+    margin-top: var(--space-8);
+    border-top: 1px solid rgba(255, 255, 255, 0.22);
+    padding-top: var(--space-5);
+    font-size: var(--font-size-sm);
+  }
+}
+
+/* ─── Editorial split (overview, benefits, timely-repair) ─── */
+.svc-split {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-10);
+  align-items: center;
+}
+@media (min-width: 64rem) {
+  .svc-split {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: var(--space-16);
+  }
+  /* Image column second on wide screens without reordering the DOM, so the
+     reading order stays copy-then-image for assistive tech. The ratio flips
+     with it: `order: 2` moves the media into track 2, so the copy lands in
+     track 1 and that track has to be the wide one — otherwise the heading is
+     squeezed into the 5fr column and wraps to three lines. */
+  .svc-split--image-end {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  }
+  .svc-split--image-end > .svc-split__media {
+    order: 2;
+  }
+}
+.svc-split__media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+/* For a portrait asset (the team illustration is 4:5). Cropping it to the 4:3
+   default cut the figure off at the frame edge; this gives it its native ratio
+   and caps the width so the row does not become disproportionately tall. */
+.svc-split__media--portrait {
+  aspect-ratio: 4 / 5;
+  max-width: 22rem;
+  margin-inline: auto;
+}
+.svc-split__body {
+  max-width: var(--measure-reading);
+  line-height: var(--line-height-loose);
+  margin: 0;
+}
+
+/* Quick-facts panel beside the overview copy. */
+.svc-facts {
+  margin-top: var(--space-8);
+  padding: var(--space-6);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-left: 3px solid var(--color-accent-500);
+  border-radius: var(--radius-md);
+}
+.svc-facts__title {
+  margin: 0 0 var(--space-4);
+  font-weight: 700;
+  color: var(--color-primary-900);
+}
+.svc-facts__list {
+  display: grid;
+  gap: var(--space-3);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.svc-facts__list li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--font-size-sm);
+}
+
+/* ─── Problem cards ─── */
+.svc-problem-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: var(--space-5);
+  list-style: none;
+  padding: 0;
+  margin: var(--space-8) 0 0;
+}
+.svc-problem-grid > li {
+  display: flex;
+}
+.svc-problem {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  width: 100%;
+  padding: var(--space-6);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+.svc-problem__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--space-10);
+  height: var(--space-10);
+  flex: none;
+  border-radius: var(--radius-pill);
+  /* Amber-tinted disc, not red-on-white: these are symptoms in a scannable
+     index, and a red flood across four cards reads as an error state. The
+     warning glyph itself keeps --color-danger. */
+  background: var(--color-primary-50);
+}
+.svc-problem__text {
+  margin: 0;
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-body);
+  color: var(--color-text);
+}
+
+/* ─── Process band (dark) ─── */
+.svc-process {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: var(--space-8);
+  list-style: none;
+  padding: 0;
+  margin: var(--space-10) 0 0;
+  counter-reset: none;
+}
+.svc-process__step {
+  position: relative;
+}
+.svc-process__marker {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--space-12);
+  height: var(--space-12);
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  color: var(--color-neutral-0);
+}
+.svc-process__number {
+  position: absolute;
+  top: calc(var(--space-2) * -1);
+  right: calc(var(--space-2) * -1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--space-6);
+  height: var(--space-6);
+  border-radius: var(--radius-pill);
+  background: var(--brand-accent);
+  color: var(--color-neutral-900);
+  font-size: var(--font-size-xs);
+  font-weight: 800;
+}
+.svc-process__title {
+  margin: var(--space-4) 0 var(--space-2);
+  font-size: var(--font-size-lg);
+}
+.svc-process__body {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-body);
+  color: var(--color-text-on-media);
+}
+/* Restrained dashed connector between markers; decorative, and it disappears
+   the moment the grid wraps to a single column. */
+@media (min-width: 64rem) {
+  .svc-process__step:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    top: var(--space-6);
+    left: var(--space-16);
+    right: calc(var(--space-8) * -1);
+    border-top: 2px dashed rgba(255, 255, 255, 0.28);
+  }
+}
+
+/* ─── Benefit / why-choose rows ─── */
+.svc-benefit-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-5);
+  list-style: none;
+  padding: 0;
+  margin: var(--space-8) 0 0;
+}
+@media (min-width: 40rem) {
+  .svc-benefit-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+.svc-benefit {
+  display: flex;
+  gap: var(--space-4);
+  align-items: flex-start;
+}
+.svc-benefit__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--space-10);
+  height: var(--space-10);
+  flex: none;
+  border-radius: var(--radius-pill);
+  background: var(--color-primary-50);
+  color: var(--color-primary-600);
+}
+.svc-benefit__title {
+  margin: 0 0 var(--space-1);
+  font-size: var(--font-size-base);
+  color: var(--color-primary-900);
+}
+.svc-benefit__desc {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-body);
+  color: var(--color-text-muted);
+}
+
+/* ─── Related services + service areas ─── */
+.svc-links__group + .svc-links__group {
+  margin-top: var(--space-16);
+}
+.svc-links__subheading {
+  margin: 0 0 var(--space-6);
+  text-align: center;
+  font-size: var(--font-size-xl);
+  color: var(--color-primary-900);
+}
+.svc-area-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+  list-style: none;
+  padding: 0;
+  margin: 0 auto;
+}
+@media (min-width: 64rem) {
+  .svc-area-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    max-width: 64rem;
+  }
+}
+.svc-area-grid > li {
+  display: flex;
+}
+.svc-area {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  min-height: var(--space-16);
+  padding: var(--space-4);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-weight: 700;
+  color: var(--color-primary-900);
+}
+a.svc-area:hover {
+  background: var(--color-primary-50);
+  border-color: var(--color-primary-600);
+  color: var(--color-primary-900);
+}
+.svc-links__note {
+  margin: var(--space-6) 0 0;
+  text-align: center;
+}
+
+/* Mobile: centre card and split content, matching the site-wide convention
+   documented above for .stacked-card / .home-* classes. */
+@media (max-width: 48rem) {
+  .svc-eyebrow,
+  .svc-links__subheading {
+    text-align: center;
+  }
+  .svc-problem,
+  .svc-process__step {
+    text-align: center;
+    align-items: center;
+  }
+  .svc-benefit {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .svc-process__marker {
+    margin-inline: auto;
+  }
+  .svc-split__body,
+  .svc-facts {
+    max-width: none;
   }
 }
 
